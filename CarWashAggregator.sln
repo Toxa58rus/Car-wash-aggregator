@@ -7,13 +7,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{499887CD-751C-4A01-B219-83063A35E734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Orders.Business", "CarWashAggregator\CarWashAggregator.Orders.Business\CarWashAggregator.Orders.Business.csproj", "{33A2E15E-C10B-4C68-BE34-288BA0157F62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Orders.Business", "CarWashAggregator\Orders\CarWashAggregator.Orders.Business\CarWashAggregator.Orders.Business.csproj", "{33A2E15E-C10B-4C68-BE34-288BA0157F62}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E338BFAC-7764-42C7-B6BF-4194FEEF4854} = {E338BFAC-7764-42C7-B6BF-4194FEEF4854}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Orders.Domain", "CarWashAggregator\CarWashAggregator.Orders.Domain\CarWashAggregator.Orders.Domain.csproj", "{6164E776-F4C2-406E-9CDC-C040F60542FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Orders.Domain", "CarWashAggregator\Orders\CarWashAggregator.Orders.Domain\CarWashAggregator.Orders.Domain.csproj", "{6164E776-F4C2-406E-9CDC-C040F60542FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Orders.Deamon", "CarWashAggregator\CarWashAggregator.Orders.Deamon\CarWashAggregator.Orders.Deamon.csproj", "{FCB2B85C-FA76-4F2F-9A1E-9DF4FD26741B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Orders.Deamon", "CarWashAggregator\Orders\CarWashAggregator.Orders.Deamon\CarWashAggregator.Orders.Deamon.csproj", "{FCB2B85C-FA76-4F2F-9A1E-9DF4FD26741B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6164E776-F4C2-406E-9CDC-C040F60542FA} = {6164E776-F4C2-406E-9CDC-C040F60542FA}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Orders.Infra", "CarWashAggregator\CarWashAggregator.Orders.Infra\CarWashAggregator.Orders.Infra.csproj", "{E338BFAC-7764-42C7-B6BF-4194FEEF4854}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Orders.Infra", "CarWashAggregator\Orders\CarWashAggregator.Orders.Infra\CarWashAggregator.Orders.Infra.csproj", "{E338BFAC-7764-42C7-B6BF-4194FEEF4854}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

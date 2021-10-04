@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarWashAggregator.Orders.Domain.Contracts
 {
-    public interface IDbRepository
+    public interface IOrderRepository
     {
         IQueryable<T> Get<T>() where T : class, IEntity;
         Task<Guid> Add<T>(T newEntity) where T : class, IEntity;

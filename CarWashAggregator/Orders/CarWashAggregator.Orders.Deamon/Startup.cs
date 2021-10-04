@@ -1,9 +1,10 @@
+using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Infra.IoC;
 using CarWashAggregator.Orders.Business.EventHandlers;
 using CarWashAggregator.Orders.Business.Interfaces;
 using CarWashAggregator.Orders.Business.Services;
 using CarWashAggregator.Orders.Domain.Contracts;
 using CarWashAggregator.Orders.Events;
-using CarWashAggregator.Orders.Infra.Bus;
 using CarWashAggregator.Orders.Infra.Context;
 using CarWashAggregator.Orders.Infra.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -17,39 +18,36 @@ namespace CarWashAggregator.Orders.Deamon
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(options =>
-            {
-                options.UseNpgsql("ConnectionString");
-            });
-
-            services.AddTransient<IEventBus, RabbitMQBus>(sp =>
-            {
-                var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
-                return new RabbitMQBus(scopeFactory);
-            });
-
-
             services.AddMvc();
 
-            //Subscriptions
-            services.AddTransient<OrderCreatedEventHandler>();
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseNpgsql(_configuration.GetConnectionString("DataBase"));
+            });
 
             //Services
             services.AddTransient<IOrderService, OrderService>();
 
             //Data
-            services.AddTransient<IDbRepository, DbRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<DataContext>();
+
+            RegisterServices(services);
+
+        }
+        private void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services, _configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

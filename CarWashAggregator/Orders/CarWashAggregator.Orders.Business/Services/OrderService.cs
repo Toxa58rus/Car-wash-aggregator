@@ -8,9 +8,9 @@ namespace CarWashAggregator.Orders.Business.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IDbRepository _dbRepository;
+        private readonly IOrderRepository _dbRepository;
 
-        public OrderService(IDbRepository dbRepository)
+        public OrderService(IOrderRepository dbRepository)
         {
             _dbRepository = dbRepository;
         }

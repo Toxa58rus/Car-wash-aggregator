@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace CarWashAggregator.Orders.Infra.Repository
 {
-    public class DbRepository : IDbRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly DataContext _context;
 
-        public DbRepository(DataContext context)
+        public OrderRepository(DataContext context)
         {
             _context = context;
         }

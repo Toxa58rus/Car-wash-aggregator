@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CarWashAggregator.Orders.Domain.Contracts
+namespace CarWashAggregator.Common.Domain.Contracts
 {
     public abstract class Event
     {

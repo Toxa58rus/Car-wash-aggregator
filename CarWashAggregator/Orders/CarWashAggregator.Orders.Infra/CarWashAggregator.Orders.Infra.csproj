@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
     <ProjectReference Include="..\CarWashAggregator.Orders.Domain\CarWashAggregator.Orders.Domain.csproj" />
   </ItemGroup>
 

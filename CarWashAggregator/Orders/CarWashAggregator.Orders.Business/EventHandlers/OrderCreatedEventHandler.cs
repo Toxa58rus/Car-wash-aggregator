@@ -1,4 +1,5 @@
-﻿using CarWashAggregator.Orders.Domain.Contracts;
+﻿using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Orders.Domain.Contracts;
 using CarWashAggregator.Orders.Domain.Models;
 using CarWashAggregator.Orders.Events;
 using System.Threading.Tasks;
@@ -7,9 +8,9 @@ namespace CarWashAggregator.Orders.Business.EventHandlers
 {
     public class OrderCreatedEventHandler : IEventHandler<OrderCreatedEvent>
     {
-        private readonly IDbRepository _dbRepository;
+        private readonly IOrderRepository _dbRepository;
 
-        public OrderCreatedEventHandler(IDbRepository DbRepository)
+        public OrderCreatedEventHandler(IOrderRepository DbRepository)
         {
             _dbRepository = DbRepository;
         }

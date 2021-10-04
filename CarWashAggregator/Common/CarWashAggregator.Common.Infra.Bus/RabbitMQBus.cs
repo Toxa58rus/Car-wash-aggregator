@@ -1,4 +1,5 @@
-﻿using CarWashAggregator.Orders.Domain.Contracts;
+﻿using CarWashAggregator.Common.Domain.Contracts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -9,16 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarWashAggregator.Orders.Infra.Bus
+namespace CarWashAggregator.Common.Infra.Bus
 {
     public sealed class RabbitMQBus : IEventBus
     {
         private readonly Dictionary<string, List<Type>> _handlers;
         private readonly List<Type> _eventTypes;
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConfiguration _configuration;
 
-        public RabbitMQBus(IServiceScopeFactory serviceScopeFactory)
+        public RabbitMQBus(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration)
         {
+            _configuration = configuration;
             _serviceScopeFactory = serviceScopeFactory;
             _handlers = new Dictionary<string, List<Type>>();
             _eventTypes = new List<Type>();
@@ -56,7 +59,7 @@ namespace CarWashAggregator.Orders.Infra.Bus
         {
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
+                HostName = _configuration.GetConnectionString("Bus"),
                 DispatchConsumersAsync = true
             };
 
@@ -77,15 +80,7 @@ namespace CarWashAggregator.Orders.Infra.Bus
         {
             var eventName = e.RoutingKey;
             var message = Encoding.UTF8.GetString(e.Body.ToArray());
-
-            try
-            {
-                await ProcessEvent(eventName, message).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            await ProcessEvent(eventName, message).ConfigureAwait(false);
         }
 
         private async Task ProcessEvent(string eventName, string message)

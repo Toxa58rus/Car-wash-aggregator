@@ -1,4 +1,4 @@
-﻿using CarWashAggregator.Orders.Domain.Contracts;
+﻿using CarWashAggregator.Common.Domain.Contracts;
 using System;
 
 

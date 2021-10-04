@@ -2,7 +2,7 @@
 using System;
 
 
-namespace CarWashAggregator.Orders.Orders.Events
+namespace CarWashAggregator.Orders.Events
 {
     public class OrderCreatedEvent : Event
     {

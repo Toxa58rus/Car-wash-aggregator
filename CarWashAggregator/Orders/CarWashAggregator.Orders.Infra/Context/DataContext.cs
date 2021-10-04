@@ -15,7 +15,7 @@ namespace CarWashAggregator.Orders.Infra.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-          
+
         }
         public async Task<int> SaveChangesAsync()
         {

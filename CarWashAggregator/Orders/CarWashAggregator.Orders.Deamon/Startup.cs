@@ -1,11 +1,11 @@
+using CarWashAggregator.Orders.Business.EventHandlers;
 using CarWashAggregator.Orders.Business.Interfaces;
 using CarWashAggregator.Orders.Business.Services;
 using CarWashAggregator.Orders.Domain.Contracts;
-using CarWashAggregator.Orders.Domain.EventHandlers;
+using CarWashAggregator.Orders.Events;
 using CarWashAggregator.Orders.Infra.Bus;
 using CarWashAggregator.Orders.Infra.Context;
 using CarWashAggregator.Orders.Infra.Repository;
-using CarWashAggregator.Orders.Orders.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

@@ -2,7 +2,7 @@
 
 namespace CarWashAggregator.Orders.Domain.Models
 {
-    public class Status
+    public class Status : BaseEntity
     {
         public string Name { get; set; }
 

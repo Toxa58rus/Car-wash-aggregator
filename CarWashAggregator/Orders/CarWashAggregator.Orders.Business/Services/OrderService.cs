@@ -10,12 +10,12 @@ namespace CarWashAggregator.Orders.Business.Services
     {
         private readonly IDbRepository _dbRepository;
 
-        public OrderService(IDbRepository accountRepository)
+        public OrderService(IDbRepository dbRepository)
         {
-            _dbRepository = accountRepository;
+            _dbRepository = dbRepository;
         }
 
-        public IEnumerable<Order> GetAccounts()
+        public IEnumerable<Order> GetOrders()
         {
             return _dbRepository.Get<Order>().AsEnumerable();
         }

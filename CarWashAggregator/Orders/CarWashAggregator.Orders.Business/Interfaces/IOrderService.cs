@@ -5,6 +5,6 @@ namespace CarWashAggregator.Orders.Business.Interfaces
 {
     public interface IOrderService
     {
-        IEnumerable<Order> GetAccounts();
+        IEnumerable<Order> GetOrders();
     }
 }

@@ -13,7 +13,10 @@ namespace CarWashAggregator.Orders.Infra.Context
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+          
+        }
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();

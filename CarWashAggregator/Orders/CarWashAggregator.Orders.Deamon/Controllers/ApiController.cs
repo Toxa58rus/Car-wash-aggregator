@@ -1,10 +1,11 @@
 ﻿using CarWashAggregator.Orders.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CarWashAggregator.Orders.Deamon.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("[controller]")]
     public class ApiController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -17,7 +18,16 @@ namespace CarWashAggregator.Orders.Deamon.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Ok("started");
+            try
+            {
+                var ordersCount = _orderService.GetOrders().ToList().Count;
+                return Ok("Started, " + ordersCount);
+            }
+            catch
+            {
+                return Ok("Started, no database");
+            }
         }
+
     }
 }

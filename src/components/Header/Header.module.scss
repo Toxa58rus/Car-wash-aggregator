@@ -1,0 +1,45 @@
+@import "/src/styles/colors.scss";
+@import "/src/styles/breakpoints.scss";
+
+.header {
+  background: $bg-light;
+}
+
+.wrap {
+  max-width: 1130px;
+  margin: 0 auto;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  img {
+    height: 43px;
+  }
+
+  @media (max-width: $xl - 1) {
+    padding: 0 30px;
+  }
+}
+
+.nav {
+  width: 75%;
+}
+
+.navList {
+  position: relative;
+  display: flex;
+}
+
+.listItem {
+  margin: 0 20px;
+
+  &:last-child {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.listItemLink:hover {
+  border-bottom: 1px solid black;
+}

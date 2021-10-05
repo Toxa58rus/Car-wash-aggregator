@@ -1,0 +1,15 @@
+@import "/src/styles/colors.scss";
+
+.button {
+  height: 30px;
+  background: $gray-dark;
+  border-radius: 6px;
+}
+
+.standart {
+  width: 160px;
+}
+
+.maxWidth {
+  width: 100%;
+}

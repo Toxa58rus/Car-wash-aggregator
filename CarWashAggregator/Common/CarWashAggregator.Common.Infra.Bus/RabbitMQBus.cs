@@ -27,6 +27,23 @@ namespace CarWashAggregator.Common.Infra.Bus
             _eventTypes = new List<Type>();
         }
 
+        public void Publish<T>(T @event) where T : Event
+        {
+            var factory = new ConnectionFactory() { HostName = _configuration.GetConnectionString("Bus") };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                var eventName = @event.GetType().Name;
+
+                channel.QueueDeclare(eventName, false, false, false, null);
+
+                var message = JsonConvert.SerializeObject(@event);
+                var body = Encoding.UTF8.GetBytes(message);
+
+                channel.BasicPublish("", eventName, null, body);
+            }
+        }
+
         public void Subscribe<T, TH>()
             where T : Event
             where TH : IEventHandler<T>

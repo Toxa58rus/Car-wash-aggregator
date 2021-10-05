@@ -1,6 +1,6 @@
 ﻿using CarWashAggregator.Orders.Domain.Contracts;
-using CarWashAggregator.Orders.Domain.Models;
-using CarWashAggregator.Orders.Infra.Context;
+using CarWashAggregator.Orders.Domain.Entities;
+using CarWashAggregator.Orders.Infra.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +10,9 @@ namespace CarWashAggregator.Orders.Infra.Repository
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly DataContext _context;
+        private readonly OrderContext _context;
 
-        public OrderRepository(DataContext context)
+        public OrderRepository(OrderContext context)
         {
             _context = context;
         }

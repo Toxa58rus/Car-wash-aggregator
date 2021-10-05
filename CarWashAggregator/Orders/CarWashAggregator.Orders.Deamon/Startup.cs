@@ -5,7 +5,7 @@ using CarWashAggregator.Orders.Business.Interfaces;
 using CarWashAggregator.Orders.Business.Services;
 using CarWashAggregator.Orders.Domain.Contracts;
 using CarWashAggregator.Orders.Events;
-using CarWashAggregator.Orders.Infra.Context;
+using CarWashAggregator.Orders.Infra.Data;
 using CarWashAggregator.Orders.Infra.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +30,7 @@ namespace CarWashAggregator.Orders.Deamon
         {
             services.AddMvc();
 
-            services.AddDbContext<DataContext>(options =>
+            services.AddDbContext<OrderContext>(options =>
             {
                 options.UseNpgsql(_configuration.GetConnectionString("DataBase"));
             });
@@ -40,7 +40,7 @@ namespace CarWashAggregator.Orders.Deamon
 
             //Data
             services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<DataContext>();
+            services.AddTransient<OrderContext>();
 
             RegisterServices(services);
 

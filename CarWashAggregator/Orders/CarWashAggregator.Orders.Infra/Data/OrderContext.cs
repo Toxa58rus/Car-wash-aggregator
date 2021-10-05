@@ -1,21 +1,23 @@
-﻿using CarWashAggregator.Orders.Domain.Models;
+﻿using CarWashAggregator.Orders.Domain.Entities;
+using CarWashAggregator.Orders.Infra.Data.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarWashAggregator.Orders.Infra.Context
+namespace CarWashAggregator.Orders.Infra.Data
 {
-    public class DataContext : DbContext
+    public class OrderContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
         public DbSet<Status> Statuses { get; set; }
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public OrderContext(DbContextOptions<OrderContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.ApplyConfiguration(new OrderConfiguration())
+                .ApplyConfiguration(new StatusConfiguration());
         }
         public async Task<int> SaveChangesAsync()
         {

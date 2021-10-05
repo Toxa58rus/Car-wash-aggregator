@@ -1,6 +1,6 @@
 using System;
 
-namespace Deamon
+namespace CarWashAggregator.ApiGateway.Deamon
 {
     public class WeatherForecast
     {

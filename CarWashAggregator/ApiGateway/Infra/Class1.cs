@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Infra
+﻿namespace CarWashAggregator.ApiGateway.Infra
 {
     public class Class1
     {

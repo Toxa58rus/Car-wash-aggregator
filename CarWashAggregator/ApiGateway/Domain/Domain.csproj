@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>CarWashAggregator.ApiGateway.Domain</AssemblyName>
+        <RootNamespace>CarWashAggregator.ApiGateway.Domain</RootNamespace>
     </PropertyGroup>
 
 </Project>

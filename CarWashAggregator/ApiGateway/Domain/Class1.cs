@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Domain
+﻿namespace CarWashAggregator.ApiGateway.Domain
 {
     public class Class1
     {

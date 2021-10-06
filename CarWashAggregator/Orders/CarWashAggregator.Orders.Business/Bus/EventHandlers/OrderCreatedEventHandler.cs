@@ -1,7 +1,7 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Orders.Business.Events;
 using CarWashAggregator.Orders.Domain.Contracts;
-using CarWashAggregator.Orders.Domain.Models;
+using CarWashAggregator.Orders.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace CarWashAggregator.Orders.Business.EventHandlers

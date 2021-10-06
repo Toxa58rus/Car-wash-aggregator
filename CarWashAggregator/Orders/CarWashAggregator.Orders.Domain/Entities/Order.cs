@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CarWashAggregator.Orders.Domain.Models
+namespace CarWashAggregator.Orders.Domain.Entities
 {
     public class Order : BaseEntity
     {

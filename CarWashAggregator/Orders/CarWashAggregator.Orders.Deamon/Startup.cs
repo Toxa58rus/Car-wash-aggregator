@@ -1,10 +1,12 @@
 using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Infra.IoC;
+using CarWashAggregator.Orders.Business.Bus.QueryHandlers;
+using CarWashAggregator.Orders.Business.Bus.Querys;
 using CarWashAggregator.Orders.Business.EventHandlers;
+using CarWashAggregator.Orders.Business.Events;
 using CarWashAggregator.Orders.Business.Interfaces;
 using CarWashAggregator.Orders.Business.Services;
 using CarWashAggregator.Orders.Domain.Contracts;
-using CarWashAggregator.Orders.Events;
 using CarWashAggregator.Orders.Infra.Context;
 using CarWashAggregator.Orders.Infra.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -42,12 +44,16 @@ namespace CarWashAggregator.Orders.Deamon
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<DataContext>();
 
+            //Subscriptions
+            services.AddTransient<OrderCreatedEventHandler>();
+            services.AddTransient<OrdersQueryHandler>();
+
             RegisterServices(services);
 
         }
         private void RegisterServices(IServiceCollection services)
         {
-            DependencyContainer.RegisterServices(services, _configuration);
+            DependencyContainer.RegisterBusService(services, _configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +77,8 @@ namespace CarWashAggregator.Orders.Deamon
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<OrderCreatedEvent, OrderCreatedEventHandler>();
+            eventBus.SubscribeToEvent<OrderCreatedEvent, OrderCreatedEventHandler>();
+            eventBus.SubscribeToQuery<OrdersQuery, OrdersQueryHandler>();
         }
     }
 }

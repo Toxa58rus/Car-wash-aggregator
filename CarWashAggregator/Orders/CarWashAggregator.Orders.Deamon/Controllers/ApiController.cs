@@ -1,6 +1,7 @@
-﻿using CarWashAggregator.Orders.Business.Interfaces;
+﻿using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Orders.Business.Bus.Querys;
+using CarWashAggregator.Orders.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace CarWashAggregator.Orders.Deamon.Controllers
 {
@@ -9,10 +10,12 @@ namespace CarWashAggregator.Orders.Deamon.Controllers
     public class ApiController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IEventBus _bus;
 
-        public ApiController(IOrderService orderService)
+        public ApiController(IOrderService orderService, IEventBus bus)
         {
             _orderService = orderService;
+            _bus = bus;
         }
 
         [HttpGet]
@@ -20,14 +23,14 @@ namespace CarWashAggregator.Orders.Deamon.Controllers
         {
             try
             {
-                var ordersCount = _orderService.GetOrders().ToList().Count;
-                return Ok("Started, " + ordersCount);
+                //var ordersCount = _orderService.GetOrders().ToList().Count;
+                _bus.RequestQuery(new OrdersQuery());
+                return Ok("Started, ");
             }
             catch
             {
                 return Ok("Started, no database");
             }
         }
-
     }
 }

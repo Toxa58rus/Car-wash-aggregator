@@ -1,7 +1,7 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Orders.Business.Events;
 using CarWashAggregator.Orders.Domain.Contracts;
 using CarWashAggregator.Orders.Domain.Models;
-using CarWashAggregator.Orders.Events;
 using System.Threading.Tasks;
 
 namespace CarWashAggregator.Orders.Business.EventHandlers
@@ -19,10 +19,10 @@ namespace CarWashAggregator.Orders.Business.EventHandlers
         {
             await _dbRepository.Add(new Order()
             {
-                DateReservation = @event.DateReservation,
-                UserId = @event.UserId,
-                Price = @event.Price,
-                СarWashId = @event.СarWashId
+                DateReservation = @event.order.DateReservation,
+                UserId = @event.order.UserId,
+                Price = @event.order.Price,
+                СarWashId = @event.order.СarWashId
             });
             await _dbRepository.SaveChangesAsync();
         }

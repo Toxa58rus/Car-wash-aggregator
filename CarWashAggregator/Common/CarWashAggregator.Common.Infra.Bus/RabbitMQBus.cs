@@ -13,6 +13,7 @@ namespace CarWashAggregator.Common.Infra.Bus
 
         }
 
+        //return T
         public void RequestQuery<T>(T request) where T : Query
         {
             var message = JsonConvert.SerializeObject(request);

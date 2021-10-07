@@ -1,9 +1,9 @@
 using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Infra.IoC;
+using CarWashAggregator.Orders.Business.Bus.EventHandlers;
+using CarWashAggregator.Orders.Business.Bus.Events;
 using CarWashAggregator.Orders.Business.Bus.QueryHandlers;
 using CarWashAggregator.Orders.Business.Bus.Querys;
-using CarWashAggregator.Orders.Business.EventHandlers;
-using CarWashAggregator.Orders.Business.Events;
 using CarWashAggregator.Orders.Business.Interfaces;
 using CarWashAggregator.Orders.Business.Services;
 using CarWashAggregator.Orders.Domain.Contracts;

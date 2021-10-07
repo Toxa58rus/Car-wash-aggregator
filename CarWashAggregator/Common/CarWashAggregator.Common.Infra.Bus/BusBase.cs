@@ -24,6 +24,7 @@ namespace CarWashAggregator.Common.Infra.Bus
             _serviceScopeFactory = serviceScopeFactory;
             _connectionFactory = new ConnectionFactory()
             {
+                // static class helper 
                 HostName = configuration.GetConnectionString("Bus"),
                 DispatchConsumersAsync = true
             };
@@ -120,7 +121,7 @@ namespace CarWashAggregator.Common.Infra.Bus
                         autoAck: false);
         }
 
-        protected async Task ProcessMessage(BasicDeliverEventArgs deliveredArgs)
+        private async Task ProcessMessage(BasicDeliverEventArgs deliveredArgs)
         {
             var messageTypeName = deliveredArgs.RoutingKey;
 

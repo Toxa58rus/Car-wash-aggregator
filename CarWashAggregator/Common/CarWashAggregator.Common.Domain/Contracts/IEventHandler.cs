@@ -7,4 +7,5 @@ namespace CarWashAggregator.Common.Domain.Contracts
     {
         Task Handle(TEvent @event);
     }
+
 }

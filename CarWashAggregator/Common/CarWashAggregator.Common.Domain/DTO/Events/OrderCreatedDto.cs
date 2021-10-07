@@ -1,10 +1,8 @@
-﻿using CarWashAggregator.Common.Domain.Contracts;
-using System;
+﻿using System;
 
-
-namespace CarWashAggregator.Orders.Events
+namespace CarWashAggregator.Common.Domain.DTO.Events
 {
-    public class OrderCreatedEvent : Event
+    public class OrderCreatedDto
     {
         public Guid UserId { get; set; }
         public Guid СarWashId { get; set; }

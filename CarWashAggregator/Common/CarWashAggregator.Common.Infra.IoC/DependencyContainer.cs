@@ -1,6 +1,5 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Infra.Bus;
-using CarWashAggregator.Orders.Business.EventHandlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,7 +7,7 @@ namespace CarWashAggregator.Common.Infra.IoC
 {
     public class DependencyContainer
     {
-        public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
+        public static void RegisterBusService(IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IEventBus, RabbitMQBus>(sp =>
             {
@@ -16,8 +15,6 @@ namespace CarWashAggregator.Common.Infra.IoC
                 return new RabbitMQBus(scopeFactory, configuration);
             });
 
-            //Subscriptions
-            services.AddTransient<OrderCreatedEventHandler>();
 
         }
     }

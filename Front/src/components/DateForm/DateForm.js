@@ -5,6 +5,7 @@ import cn from "classnames";
 import "react-calendar/dist/Calendar.css";
 import { getDate } from "../../helpers/dateFormatter";
 
+import Input from "../Input/Input";
 import styles from "./DateForm.module.scss";
 
 import calendarIcon from "../../icons/calendar.svg";
@@ -22,17 +23,16 @@ const DateForm = (props) => {
     [styles.active]: Boolean(calendarIsOpen),
   });
 
-  const inputCn = cn(styles.input, {
-    [styles.error]: meta && (meta.error || meta.submitError) && meta.touched,
-  });
-
   return (
     <div className={styles.container}>
       <img src={calendarIcon} alt="calendar" />
-      {meta && (meta.error || meta.submitError) && meta.touched && (
-        <div className={styles.errorText}>{meta.error}</div>
-      )}
-      <input className={inputCn} value={value} {...rest} readOnly />
+      <Input
+        value={value}
+        placeholder="Дата *"
+        meta={meta}
+        {...rest}
+        readOnly
+      />
       <div className={calendarCn}>
         <ReactCalendar
           value={date}

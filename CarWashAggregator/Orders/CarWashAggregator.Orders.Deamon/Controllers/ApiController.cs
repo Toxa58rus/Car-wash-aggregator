@@ -2,6 +2,7 @@
 using CarWashAggregator.Orders.Business.Bus.Querys;
 using CarWashAggregator.Orders.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CarWashAggregator.Orders.Deamon.Controllers
 {
@@ -19,18 +20,15 @@ namespace CarWashAggregator.Orders.Deamon.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            try
-            {
-                //var ordersCount = _orderService.GetOrders().ToList().Count;
-                _bus.RequestQuery(new OrdersQuery());
-                return Ok("Started, ");
-            }
-            catch
-            {
-                return Ok("Started, no database");
-            }
+
+            //var ordersCount = _orderService.GetOrders().ToList().Count;
+            OrdersQuery ordersQuery = new OrdersQuery();
+            ordersQuery = await _bus.RequestQueryAsync(new OrdersQuery() { Orders = new System.Collections.Generic.List<Common.Domain.DTO.Querys.OrderQueryDto>() }) ;
+            return Ok("Started, " + ordersQuery.Orders.ToString());
+
+
         }
     }
 }

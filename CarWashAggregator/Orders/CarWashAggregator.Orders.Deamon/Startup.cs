@@ -1,3 +1,4 @@
+using CarWashAggregator.Common.Domain;
 using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Infra.IoC;
 using CarWashAggregator.Orders.Business.Bus.EventHandlers;
@@ -34,7 +35,7 @@ namespace CarWashAggregator.Orders.Deamon
 
             services.AddDbContext<OrderContext>(options =>
             {
-                options.UseNpgsql(_configuration.GetConnectionString("DataBase"));
+                options.UseNpgsql(Helper.DataBaseConnectionString);
             });
 
             //Services
@@ -53,7 +54,7 @@ namespace CarWashAggregator.Orders.Deamon
         }
         private void RegisterServices(IServiceCollection services)
         {
-            DependencyContainer.RegisterBusService(services, _configuration);
+            DependencyContainer.RegisterBusService(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

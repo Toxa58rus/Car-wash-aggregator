@@ -7,12 +7,12 @@ namespace CarWashAggregator.Common.Infra.IoC
 {
     public class DependencyContainer
     {
-        public static void RegisterBusService(IServiceCollection services, IConfiguration configuration)
+        public static void RegisterBusService(IServiceCollection services)
         {
             services.AddTransient<IEventBus, RabbitMQBus>(sp =>
             {
                 var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
-                return new RabbitMQBus(scopeFactory, configuration);
+                return new RabbitMQBus(scopeFactory);
             });
 
 

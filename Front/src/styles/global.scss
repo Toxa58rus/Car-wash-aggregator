@@ -1,3 +1,5 @@
+@import "/src/styles/breakpoints.scss";
+
 ul {
   list-style: none;
   margin: 0;
@@ -27,4 +29,9 @@ h2 {
   font-size: 36px;
   line-height: 42px;
   margin: 0;
+
+  @media (max-width: $sm - 1) {
+    font-size: 32px;
+    line-height: 36px;
+  }
 }

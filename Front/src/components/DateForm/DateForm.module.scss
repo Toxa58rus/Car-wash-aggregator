@@ -1,0 +1,68 @@
+@import "/src/styles/colors.scss";
+@import "/src/styles/breakpoints.scss";
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  box-sizing: border-box;
+  padding: 9px 10px;
+  background: $white;
+  border: 0;
+  border-radius: 8px;
+  width: 100%;
+  height: 36px;
+  outline: none;
+
+  span {
+    opacity: 0.7;
+  }
+}
+
+.calendar {
+  position: absolute;
+  top: 50px;
+  left: -20px;
+  height: 0px;
+  overflow: hidden;
+  width: 350px;
+
+  @media (max-width: $sm - 1) {
+    width: calc(100% + 40px);
+  }
+
+  :global {
+    .react-calendar {
+      width: 100%;
+    }
+  }
+}
+
+.active {
+  display: table;
+  width: 350px;
+  height: 320px;
+  z-index: 99;
+
+  @media (max-width: $sm - 1) {
+    width: calc(100% + 40px);
+    overflow: hidden;
+  }
+}
+
+.error {
+  border: 2px solid $red;
+  color: $red;
+}
+
+.errorText {
+  position: absolute;
+  font-size: 10px;
+  bottom: 36px;
+  left: 37px;
+  color: $red-error;
+}

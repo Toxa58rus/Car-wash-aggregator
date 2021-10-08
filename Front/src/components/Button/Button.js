@@ -5,7 +5,7 @@ import cn from "classnames";
 import styles from "./Button.module.scss";
 
 const Button = (props) => {
-  const { children, onClick, className, size } = props;
+  const { children, onClick, className, size, type, ...rest } = props;
 
   const btnCN = cn(styles.button, {
     [styles[size]]: Boolean(size),
@@ -13,7 +13,7 @@ const Button = (props) => {
   });
 
   return (
-    <button onClick={onClick} className={btnCN}>
+    <button onClick={onClick} className={btnCN} type={type} {...rest}>
       {children}
     </button>
   );
@@ -23,6 +23,7 @@ Button.defaultProps = {
   size: "standart",
   onClick: null,
   className: null,
+  type: "button",
 };
 
 Button.propTypes = {
@@ -33,6 +34,7 @@ Button.propTypes = {
     PropTypes.array,
     PropTypes.element,
   ]).isRequired,
+  type: PropTypes.string,
   size: PropTypes.oneOf(["standart", "maxWidth"]),
 };
 

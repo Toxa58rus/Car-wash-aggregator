@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CarWashAggregator.Common.Infra.Bus
 {
-    public class BusBase
+    internal class BusBase
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ConnectionFactory _connectionFactory;

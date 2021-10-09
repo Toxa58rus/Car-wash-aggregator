@@ -1,3 +1,5 @@
+@import "/src/styles/breakpoints.scss";
+
 ul {
   list-style: none;
   margin: 0;
@@ -15,4 +17,21 @@ button {
   outline: none;
   padding: 0;
   box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+h2 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 42px;
+  margin: 0;
+
+  @media (max-width: $sm - 1) {
+    font-size: 32px;
+    line-height: 36px;
+  }
 }

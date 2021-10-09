@@ -1,0 +1,114 @@
+@import "/src/styles/colors.scss";
+@import "/src/styles/breakpoints.scss";
+
+.page {
+  width: 100%;
+  padding-bottom: 300px;
+
+  @media (max-width: $xl - 1) {
+    padding-bottom: 200px;
+  }
+}
+
+.wrap {
+  box-sizing: border-box;
+  max-width: 1130px;
+  margin: 0 auto;
+
+  @media (max-width: $xl - 1) {
+    padding: 0 30px;
+  }
+}
+
+.tittlePage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 70px 0;
+
+  @media (max-width: $xl - 1) {
+    margin: 40px 0;
+  }
+}
+
+.inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.carWashIMG {
+  min-height: 292px;
+  min-width: 900px;
+  background: $gray-light;
+  margin-bottom: 40px;
+
+  @media (max-width: $xl - 1) {
+    margin: 0 auto;
+    padding: 0 30px;
+    min-height: 292px;
+    min-width: 450px;
+  }
+
+  @media (max-width: $sm - 1) {
+    min-height: 150px;
+    min-width: 200px;
+  }
+}
+
+.description {
+  font-size: 14px;
+  line-height: 16px;
+  margin: 20px 0 30px;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 10px;
+  }
+}
+
+.form {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 65px;
+  width: 100%;
+  background: $gray-light;
+  margin: 55px 0 0;
+  padding: 15px 20px 15px 10px;
+
+  @media (max-width: $m - 1) {
+    flex-direction: column;
+    height: 250px;
+    padding: 15px 20px 20px;
+  }
+}
+
+.formInner {
+  position: relative;
+  display: flex;
+  margin: 0 10px;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+
+  img {
+    margin-right: 12px;
+    height: 17px;
+  }
+
+  @media (max-width: $xl - 1) {
+    height: 60px;
+  }
+}
+
+.submit {
+  height: 34px;
+
+  @media (max-width: $m - 1) {
+    margin-top: 10px;
+  }
+}

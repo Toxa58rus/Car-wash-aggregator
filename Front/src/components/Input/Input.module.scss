@@ -1,0 +1,33 @@
+@import "/src/styles/colors.scss";
+
+.container {
+  position: relative;
+  height: 36px;
+  width: 100%;
+}
+
+.input {
+  box-sizing: border-box;
+  outline: none;
+  border: 0;
+  border-radius: 6px;
+  padding-left: 10px;
+}
+
+.label {
+  position: absolute;
+  bottom: 36px;
+  left: 5px;
+  font-size: 10px;
+  color: $red-error;
+}
+
+.error {
+  border: 2px solid $red;
+  color: $red;
+}
+
+.standart {
+  height: 36px;
+  width: 100%;
+}

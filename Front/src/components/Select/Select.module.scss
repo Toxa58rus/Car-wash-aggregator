@@ -1,0 +1,50 @@
+@import "/src/styles/colors.scss";
+
+.contain {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+
+  :global {
+    .select {
+      &__control {
+        height: 30px;
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 10px;
+}
+
+.focused {
+  background: $gray-light;
+  cursor: pointer;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.status {
+  font-size: 11px;
+}
+
+.label {
+  position: absolute;
+  bottom: 38px;
+  left: 5px;
+  font-size: 10px;
+  color: $red-error;
+}
+
+.error {
+  border: 2px solid $red;
+}

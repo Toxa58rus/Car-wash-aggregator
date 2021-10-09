@@ -4,9 +4,7 @@ namespace CarWashAggregator.Common.Domain.Contracts
 {
     public interface IEventBus
     {
-        Task<T> RequestQueryAsync<T>(T request) where T : Query;
-
-        void ReplyToQuery<T>(T reply, string replyingQueue, string correlationId, ulong deliveryTag) where T : Query;
+        Task<T> RequestQuery<T>(T request) where T : Query;
 
         void PublishEvent<T>(T @event) where T : Event;
 

@@ -67,53 +67,44 @@ namespace CarWashAggregator.Common.Infra.Bus
                     return;
 
                 var messageType = _messageTypes.SingleOrDefault(t => t.Name == routingKey);
-                var handler = GetHandler(routingKey);
                 var body = ea.Body.ToArray();
                 var response = Encoding.UTF8.GetString(body);
                 var message = JsonConvert.DeserializeObject(response, messageType);
                 tcs.SetResult(message);
+                channel.Close();
+                //Не работает?
                 connection.Close();
             };
-
             channel.BasicConsume(consumer, replyQueueName, autoAck: true);
             channel.BasicPublish("", routingKey, props, messageBytes);
             return tcs.Task;
         }
 
-        protected void ReplyQuery(byte[] messageBytes, string routingKey, string correlationId, ulong deliveryTag)
-        {
-            using (var connection = _connectionFactory.CreateConnection())
-            {
-                using (var channel = connection.CreateModel())
-                {
-                    var props = channel.CreateBasicProperties();
-                    props.CorrelationId = correlationId;
 
-                    channel.BasicPublish("", routingKey, props, messageBytes);
-                    channel.BasicAck(deliveryTag, false);
-                }
-            }
-        }
 
-        protected void Subscribe<T, TH>()
+        protected void Subscribe<T, TH>(bool qosEnabled)
         {
             var messageType = typeof(T);
             var handlerType = typeof(TH);
             _messageHandlers.Add(messageType.Name, handlerType);
             _messageTypes.Add(messageType);
-            StartBasicConsume(messageType.Name);
+            StartBasicConsume(messageType.Name, qosEnabled);
         }
 
-        private void StartBasicConsume(string routingKey)
+        private void StartBasicConsume(string routingKey, bool qosEnabled)
         {
             var connection = _connectionFactory.CreateConnection();
             var channel = connection.CreateModel();
             channel.QueueDeclare(routingKey, false, false, false, null);
+            if (qosEnabled)
+            {
+                channel.BasicQos(0, 1, false);
+            }
 
             var consumer = new AsyncEventingBasicConsumer(channel);
             consumer.Received += async (model, ea) =>
             {
-                await ProcessMessage(ea).ConfigureAwait(false);
+                await ProcessMessage(model, ea).ConfigureAwait(false);
             };
             channel.BasicConsume(
                         consumer: consumer,
@@ -121,7 +112,7 @@ namespace CarWashAggregator.Common.Infra.Bus
                         autoAck: false);
         }
 
-        private async Task ProcessMessage(BasicDeliverEventArgs deliveredArgs)
+        private async Task ProcessMessage(object sender, BasicDeliverEventArgs deliveredArgs)
         {
             var messageTypeName = deliveredArgs.RoutingKey;
 
@@ -129,20 +120,31 @@ namespace CarWashAggregator.Common.Infra.Bus
             {
                 var handler = GetHandler(messageTypeName);
                 var messageType = _messageTypes.SingleOrDefault(t => t.Name == messageTypeName);
-                var props = deliveredArgs.BasicProperties;
+                var deliveredProps = deliveredArgs.BasicProperties;
                 var body = deliveredArgs.Body.ToArray();
-                var response = Encoding.UTF8.GetString(body);
-                var message = JsonConvert.DeserializeObject(response, messageType);
+                var deliver = Encoding.UTF8.GetString(body);
+                var message = JsonConvert.DeserializeObject(deliver, messageType);
 
-                if (props.ReplyTo is null)
+                if (deliveredProps.ReplyTo is null)
                 {
                     var concreteType = typeof(IEventHandler<>).MakeGenericType(messageType);
-                    await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { message });
+                    await (concreteType.GetMethod("Handle").Invoke(handler, new object[] { message }) as Task).ConfigureAwait(false);
                 }
                 else
                 {
                     var concreteType = typeof(IQueryHandler<>).MakeGenericType(messageType);
-                    await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { message, props.ReplyTo, props.CorrelationId, deliveredArgs.DeliveryTag });
+                    var handleMsg = concreteType.GetMethod("Handle").Invoke(handler, new object[] { message }) as Task;
+                    await handleMsg.ConfigureAwait(false);
+                    var a = (object)((dynamic)handleMsg).Result;
+                    var response = JsonConvert.SerializeObject(a);
+                    var responseMessage = Encoding.UTF8.GetBytes(response);
+
+                    var channel = ((AsyncEventingBasicConsumer)sender).Model;
+                    var replyProps = channel.CreateBasicProperties();
+                    replyProps.CorrelationId = deliveredProps.CorrelationId;
+
+                    channel.BasicPublish("", deliveredProps.ReplyTo, replyProps, responseMessage);
+                    channel.BasicAck(deliveredArgs.DeliveryTag, false);
                 }
             }
         }

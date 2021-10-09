@@ -24,9 +24,10 @@ namespace CarWashAggregator.Orders.Deamon.Controllers
         {
 
             //var ordersCount = _orderService.GetOrders().ToList().Count;
+            //_bus.PublishEvent(new OrderCreatedEvent());
             OrdersQuery ordersQuery = new OrdersQuery();
-            ordersQuery = await _bus.RequestQueryAsync(new OrdersQuery() { Orders = new System.Collections.Generic.List<Common.Domain.DTO.Querys.OrderQueryDto>() }) ;
-            return Ok("Started, " + ordersQuery.Orders.ToString());
+            ordersQuery = await _bus.RequestQuery(new OrdersQuery() { Orders = new System.Collections.Generic.List<Common.Domain.DTO.Querys.OrderQueryDto>() });
+            return Ok("Started, " + ordersQuery);
 
 
         }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CarWashAggregator.Common.Infra.Bus
 {
@@ -13,13 +14,12 @@ namespace CarWashAggregator.Common.Infra.Bus
 
         }
 
-        //return T
-        public void RequestQuery<T>(T request) where T : Query
+        public async Task<T> RequestQueryAsync<T>(T request) where T : Query
         {
             var message = JsonConvert.SerializeObject(request);
             var body = Encoding.UTF8.GetBytes(message);
-
-            base.Publish(body, typeof(T).Name, true);
+            var reply = (T)await base.PublishQuery(body, typeof(T).Name);
+            return reply;
         }
 
         public void ReplyToQuery<T>(T reply, string routingKey, string correlationId, ulong deliveryTag) where T : Query
@@ -27,7 +27,8 @@ namespace CarWashAggregator.Common.Infra.Bus
             var message = JsonConvert.SerializeObject(reply);
             var body = Encoding.UTF8.GetBytes(message);
 
-            base.Reply(body, routingKey, correlationId, deliveryTag);
+            base.ReplyQuery(body, routingKey, correlationId, deliveryTag);
+
         }
 
         public void PublishEvent<T>(T @event) where T : Event
@@ -47,7 +48,7 @@ namespace CarWashAggregator.Common.Infra.Bus
 
         public void SubscribeToQuery<T, TH>()
           where T : Query
-          where TH : IRequestedQueryHandler<T>
+          where TH : IQueryHandler<T>
         {
             base.Subscribe<T, TH>();
         }

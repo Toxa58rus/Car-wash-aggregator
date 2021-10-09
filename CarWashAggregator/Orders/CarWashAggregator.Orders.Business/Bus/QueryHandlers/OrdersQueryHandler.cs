@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace CarWashAggregator.Orders.Business.Bus.QueryHandlers
 {
 
-    public class OrdersQueryHandler : IRequestedQueryHandler<OrdersQuery>
+    public class OrdersQueryHandler : IQueryHandler<OrdersQuery>
     {
         private readonly IEventBus _bus;
 

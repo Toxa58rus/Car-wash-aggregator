@@ -22,19 +22,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{2B5782
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Domain", "CarWashAggregator\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj", "{5CA2F1B2-AB09-4131-B486-0238C262D48A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Common.Infra.IoC", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.IoC\CarWashAggregator.Common.Infra.IoC.csproj", "{014460B2-A012-4EE0-A815-9A6AB1CF009F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Infra.IoC", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.IoC\CarWashAggregator.Common.Infra.IoC.csproj", "{014460B2-A012-4EE0-A815-9A6AB1CF009F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Common.Infra.Bus", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.Bus\CarWashAggregator.Common.Infra.Bus.csproj", "{82C7F7DF-C968-4D21-812A-3D7543991323}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Infra.Bus", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.Bus\CarWashAggregator.Common.Infra.Bus.csproj", "{82C7F7DF-C968-4D21-812A-3D7543991323}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{7FF3E4DC-4855-4C29-9E10-7888918E0073}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deamon", "CarWashAggregator\ApiGateway\Deamon\Deamon.csproj", "{723DB901-DE47-47CE-AC1A-F339B8FF5EF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deamon", "CarWashAggregator\ApiGateway\Deamon\Deamon.csproj", "{723DB901-DE47-47CE-AC1A-F339B8FF5EF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "CarWashAggregator\ApiGateway\Domain\Domain.csproj", "{0A815CA8-A704-4839-A5C8-B2C13C7EA901}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "CarWashAggregator\ApiGateway\Domain\Domain.csproj", "{0A815CA8-A704-4839-A5C8-B2C13C7EA901}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "CarWashAggregator\ApiGateway\Infra\Infra.csproj", "{F360B0AE-90D0-48E9-AD7A-FA854D35C2CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "CarWashAggregator\ApiGateway\Infra\Infra.csproj", "{F360B0AE-90D0-48E9-AD7A-FA854D35C2CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "CarWashAggregator\ApiGateway\Business\Business.csproj", "{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "CarWashAggregator\ApiGateway\Business\Business.csproj", "{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{613F1422-E0BD-40FF-974E-A0B9E947C80F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Notification.Deamon", "CarWashAggregator\Notification\Deamon\CarWashAggregator.Notification.Deamon\CarWashAggregator.Notification.Deamon.csproj", "{0F42A096-525E-4E48-A0DA-568122E49BB6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Notification.Domain", "CarWashAggregator\Notification\CarWashAggregator.Notification.Domain\CarWashAggregator.Notification.Domain.csproj", "{9B3D01BD-D72F-47C6-9721-91A8A74C87CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Notification.Bl", "CarWashAggregator\Notification\CarWashAggregator.Notification.Bl\CarWashAggregator.Notification.Bl.csproj", "{B53669A7-AD45-426F-95C9-638D49838852}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Notification.Infra", "CarWashAggregator\Notification\CarWashAggregator.Notification.Infra\CarWashAggregator.Notification.Infra.csproj", "{589DD89A-C06F-40C1-AF3F-5B5BF476B936}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +96,22 @@ Global
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F42A096-525E-4E48-A0DA-568122E49BB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F42A096-525E-4E48-A0DA-568122E49BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F42A096-525E-4E48-A0DA-568122E49BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F42A096-525E-4E48-A0DA-568122E49BB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B3D01BD-D72F-47C6-9721-91A8A74C87CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B3D01BD-D72F-47C6-9721-91A8A74C87CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B3D01BD-D72F-47C6-9721-91A8A74C87CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B3D01BD-D72F-47C6-9721-91A8A74C87CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B53669A7-AD45-426F-95C9-638D49838852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B53669A7-AD45-426F-95C9-638D49838852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B53669A7-AD45-426F-95C9-638D49838852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B53669A7-AD45-426F-95C9-638D49838852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589DD89A-C06F-40C1-AF3F-5B5BF476B936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589DD89A-C06F-40C1-AF3F-5B5BF476B936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589DD89A-C06F-40C1-AF3F-5B5BF476B936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589DD89A-C06F-40C1-AF3F-5B5BF476B936}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +130,11 @@ Global
 		{0A815CA8-A704-4839-A5C8-B2C13C7EA901} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
 		{F360B0AE-90D0-48E9-AD7A-FA854D35C2CA} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
+		{613F1422-E0BD-40FF-974E-A0B9E947C80F} = {F7BF6CB8-7155-434D-90C7-42081CA88BEE}
+		{0F42A096-525E-4E48-A0DA-568122E49BB6} = {613F1422-E0BD-40FF-974E-A0B9E947C80F}
+		{9B3D01BD-D72F-47C6-9721-91A8A74C87CD} = {613F1422-E0BD-40FF-974E-A0B9E947C80F}
+		{B53669A7-AD45-426F-95C9-638D49838852} = {613F1422-E0BD-40FF-974E-A0B9E947C80F}
+		{589DD89A-C06F-40C1-AF3F-5B5BF476B936} = {613F1422-E0BD-40FF-974E-A0B9E947C80F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {782CB2B7-2CD4-4A6F-9700-C27257A3F9C5}

@@ -35,7 +35,7 @@ namespace CarWashAggregator.Orders.Deamon
 
             services.AddDbContext<OrderContext>(options =>
             {
-                options.UseNpgsql(Helper.DataBaseConnectionString);
+                options.UseNpgsql(_configuration.GetConnectionString(Helper.DataBaseConnectionSection));
             });
 
             //Services
@@ -49,12 +49,12 @@ namespace CarWashAggregator.Orders.Deamon
             services.AddTransient<OrderCreatedEventHandler>();
             services.AddTransient<OrdersQueryHandler>();
 
-            RegisterServices(services);
+            RegisterServices(services, _configuration);
 
         }
-        private void RegisterServices(IServiceCollection services)
+        private void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
-            DependencyContainer.RegisterBusService(services);
+            DependencyContainer.RegisterBusService(services, configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

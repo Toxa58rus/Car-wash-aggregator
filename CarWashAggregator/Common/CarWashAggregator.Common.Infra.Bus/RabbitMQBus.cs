@@ -9,7 +9,7 @@ namespace CarWashAggregator.Common.Infra.Bus
 {
     public sealed class RabbitMQBus : BusBase, IEventBus
     {
-        public RabbitMQBus(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory)
+        public RabbitMQBus(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration) : base(serviceScopeFactory, configuration)
         {
 
         }

@@ -20,12 +20,12 @@ namespace CarWashAggregator.Common.Infra.Bus
         private readonly static Dictionary<string, Type> _messageHandlers = new Dictionary<string, Type>();
         private readonly static List<Type> _messageTypes = new List<Type>();
 
-        protected BusBase(IServiceScopeFactory serviceScopeFactory)
+        protected BusBase(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _connectionFactory = new ConnectionFactory()
             {
-                HostName = Helper.BusConnectionString,
+                HostName = configuration.GetConnectionString(Helper.BusConnectionSection),
                 DispatchConsumersAsync = true
             };
         }

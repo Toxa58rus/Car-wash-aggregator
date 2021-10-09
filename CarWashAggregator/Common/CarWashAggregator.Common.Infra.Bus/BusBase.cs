@@ -44,8 +44,10 @@ namespace CarWashAggregator.Common.Infra.Bus
         {
             var connection = _connectionFactory.CreateConnection();
             var channel = connection.CreateModel();
-            channel.QueueDeclare(routingKey, false, false, false, null);
-            channel.BasicPublish("", routingKey, null, messageBytes);
+            var props = channel.CreateBasicProperties();
+            props.Persistent = true;
+            channel.QueueDeclare(routingKey, true, false, false, null);
+            channel.BasicPublish("", routingKey, props, messageBytes);
             connection.Close();
         }
 
@@ -58,6 +60,7 @@ namespace CarWashAggregator.Common.Infra.Bus
             var correlationId = Guid.NewGuid().ToString();
             props.CorrelationId = correlationId;
             props.ReplyTo = replyQueueName;
+            props.Persistent = true;
             var consumer = new AsyncEventingBasicConsumer(channel);
             var tcs = new TaskCompletionSource<object>();
 
@@ -72,8 +75,7 @@ namespace CarWashAggregator.Common.Infra.Bus
                 var message = JsonConvert.DeserializeObject(response, messageType);
                 tcs.SetResult(message);
                 channel.Close();
-                //Не работает?
-                connection.Close();
+                //Не работает?? connection.Close();
             };
             channel.BasicConsume(consumer, replyQueueName, autoAck: true);
             channel.BasicPublish("", routingKey, props, messageBytes);
@@ -95,7 +97,7 @@ namespace CarWashAggregator.Common.Infra.Bus
         {
             var connection = _connectionFactory.CreateConnection();
             var channel = connection.CreateModel();
-            channel.QueueDeclare(routingKey, false, false, false, null);
+            channel.QueueDeclare(routingKey, true, false, false, null);
             if (qosEnabled)
             {
                 channel.BasicQos(0, 1, false);
@@ -135,13 +137,14 @@ namespace CarWashAggregator.Common.Infra.Bus
                     var concreteType = typeof(IQueryHandler<>).MakeGenericType(messageType);
                     var handleMsg = concreteType.GetMethod("Handle").Invoke(handler, new object[] { message }) as Task;
                     await handleMsg.ConfigureAwait(false);
-                    var a = (object)((dynamic)handleMsg).Result;
-                    var response = JsonConvert.SerializeObject(a);
+                    var reply = (object)((dynamic)handleMsg).Result;
+                    var response = JsonConvert.SerializeObject(reply);
                     var responseMessage = Encoding.UTF8.GetBytes(response);
 
                     var channel = ((AsyncEventingBasicConsumer)sender).Model;
                     var replyProps = channel.CreateBasicProperties();
                     replyProps.CorrelationId = deliveredProps.CorrelationId;
+                    replyProps.Persistent = true;
 
                     channel.BasicPublish("", deliveredProps.ReplyTo, replyProps, responseMessage);
                     channel.BasicAck(deliveredArgs.DeliveryTag, false);

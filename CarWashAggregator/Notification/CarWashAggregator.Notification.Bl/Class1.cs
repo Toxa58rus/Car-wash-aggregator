@@ -1,5 +1,6 @@
 ﻿using System;
 using CarWashAggregator.Notification.Domain;
+using CarWashAggregator.Notification.Infra;
 
 namespace CarWashAggregator.Notification.Bl
 {

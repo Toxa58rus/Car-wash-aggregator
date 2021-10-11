@@ -7,6 +7,9 @@ namespace CarWashAggregator.Notification.Domain
         public DateTime date { get; set; } = DateTime.UtcNow;
         public string text{ get; set; }
         public string theme { get; set; }
+        public Guid IdUser { get; set; }
+
+
         public DateTime GetDateTime()
         { 
             return date;
@@ -18,6 +21,10 @@ namespace CarWashAggregator.Notification.Domain
         public string GetTheme(string theme)
         {
             return theme;
+        }
+        public Guid GetIdUser(Guid IdUser)
+        {
+            return IdUser;
         }
     }
 }

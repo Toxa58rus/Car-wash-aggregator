@@ -42,9 +42,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Notificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Notification.Domain", "CarWashAggregator\Notification\CarWashAggregator.Notification.Domain\CarWashAggregator.Notification.Domain.csproj", "{9B3D01BD-D72F-47C6-9721-91A8A74C87CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Notification.Bl", "CarWashAggregator\Notification\CarWashAggregator.Notification.Bl\CarWashAggregator.Notification.Bl.csproj", "{B53669A7-AD45-426F-95C9-638D49838852}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Notification.Bl", "CarWashAggregator\Notification\CarWashAggregator.Notification.Bl\CarWashAggregator.Notification.Bl.csproj", "{B53669A7-AD45-426F-95C9-638D49838852}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Notification.Infra", "CarWashAggregator\Notification\CarWashAggregator.Notification.Infra\CarWashAggregator.Notification.Infra.csproj", "{589DD89A-C06F-40C1-AF3F-5B5BF476B936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Notification.Infra", "CarWashAggregator\Notification\CarWashAggregator.Notification.Infra\CarWashAggregator.Notification.Infra.csproj", "{589DD89A-C06F-40C1-AF3F-5B5BF476B936}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "CarWashAggregator\Notification\TestProject1\TestProject1.csproj", "{C6D67BD8-FB84-4471-BEEE-697F88896181}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +114,10 @@ Global
 		{589DD89A-C06F-40C1-AF3F-5B5BF476B936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{589DD89A-C06F-40C1-AF3F-5B5BF476B936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{589DD89A-C06F-40C1-AF3F-5B5BF476B936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6D67BD8-FB84-4471-BEEE-697F88896181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6D67BD8-FB84-4471-BEEE-697F88896181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6D67BD8-FB84-4471-BEEE-697F88896181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6D67BD8-FB84-4471-BEEE-697F88896181}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +141,7 @@ Global
 		{9B3D01BD-D72F-47C6-9721-91A8A74C87CD} = {613F1422-E0BD-40FF-974E-A0B9E947C80F}
 		{B53669A7-AD45-426F-95C9-638D49838852} = {613F1422-E0BD-40FF-974E-A0B9E947C80F}
 		{589DD89A-C06F-40C1-AF3F-5B5BF476B936} = {613F1422-E0BD-40FF-974E-A0B9E947C80F}
+		{C6D67BD8-FB84-4471-BEEE-697F88896181} = {613F1422-E0BD-40FF-974E-A0B9E947C80F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {782CB2B7-2CD4-4A6F-9700-C27257A3F9C5}

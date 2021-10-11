@@ -10,19 +10,19 @@ namespace CarWashAggregator.Orders.Business.Bus.EventHandlers
     {
         private readonly IOrderRepository _dbRepository;
 
-        public OrderCreatedEventHandler(IOrderRepository DbRepository)
+        public OrderCreatedEventHandler(IOrderRepository dbRepository)
         {
-            _dbRepository = DbRepository;
+            _dbRepository = dbRepository;
         }
 
         public async Task Handle(OrderCreatedEvent @event)
         {
             await _dbRepository.Add(new Order()
             {
-                DateReservation = @event.order.DateReservation,
-                UserId = @event.order.UserId,
-                Price = @event.order.Price,
-                СarWashId = @event.order.СarWashId
+                DateReservation = @event.Order.DateReservation,
+                UserId = @event.Order.UserId,
+                Price = @event.Order.Price,
+                СarWashId = @event.Order.СarWashId
             });
             await _dbRepository.SaveChangesAsync();
         }

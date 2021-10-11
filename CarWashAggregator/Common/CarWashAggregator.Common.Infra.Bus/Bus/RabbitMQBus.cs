@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace CarWashAggregator.Common.Infra.Bus
 {
-    public sealed class RabbitMQBus : BusBase, IEventBus
+    internal sealed class RabbitMQBus : BusBase, IEventBus
     {
         public RabbitMQBus(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration) : base(serviceScopeFactory, configuration)
         {
 
         }
 
-        public async Task<T> RequestQuery<T>(T request) where T : Query
+        public Task<T> RequestQuery<T>(T request) where T : Query
         {
             var message = JsonConvert.SerializeObject(request);
             var body = Encoding.UTF8.GetBytes(message);
-            var reply = await (base.PublishQuery(body, typeof(T).Name)) as T;
-            return reply;
+            var reply = base.PublishQuery(body, typeof(T)) as T;
+            return Task.FromResult(reply);
         }
 
         public void PublishEvent<T>(T @event) where T : Event

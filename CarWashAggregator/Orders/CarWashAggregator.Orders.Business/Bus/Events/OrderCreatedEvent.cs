@@ -5,6 +5,6 @@ namespace CarWashAggregator.Orders.Business.Bus.Events
 {
     public class OrderCreatedEvent : Event
     {
-        public OrderCreatedDto order;
+        public OrderCreatedDto Order;
     }
 }

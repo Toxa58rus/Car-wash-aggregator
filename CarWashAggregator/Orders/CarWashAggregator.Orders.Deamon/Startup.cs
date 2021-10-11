@@ -1,6 +1,6 @@
 using CarWashAggregator.Common.Domain;
 using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Common.Infra.IoC;
+using CarWashAggregator.Common.Infra;
 using CarWashAggregator.Orders.Business.Bus.EventHandlers;
 using CarWashAggregator.Orders.Business.Bus.Events;
 using CarWashAggregator.Orders.Business.Bus.QueryHandlers;
@@ -49,7 +49,7 @@ namespace CarWashAggregator.Orders.Deamon
             services.AddTransient<OrderCreatedEventHandler>();
             services.AddTransient<OrdersQueryHandler>();
 
-            DependencyContainer.RegisterBusService(services, _configuration);
+            BusContainer.RegisterBusService(services, _configuration);
 
         }
 

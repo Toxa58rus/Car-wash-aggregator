@@ -14,11 +14,10 @@ namespace CarWashAggregator.Orders.Business.Bus.QueryHandlers
             _bus = bus;
         }
 
-        public Task Handle(OrdersQuery query, string replyTo, string correlationId, ulong deliveryTag)
+        public Task<OrdersQuery> Handle(OrdersQuery query)
         {
             //some_logic
-            _bus.ReplyToQuery(query, replyTo, correlationId, deliveryTag);
-            return Task.FromResult(true);
+            return Task.FromResult(query);
         }
     }
 }

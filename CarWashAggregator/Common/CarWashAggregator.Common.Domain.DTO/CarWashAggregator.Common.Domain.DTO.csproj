@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApiGateway\Events\" />
+    <Folder Include="ApiGateway\Querys\Request\" />
+    <Folder Include="ApiGateway\Querys\Response\" />
+    <Folder Include="Authorization\Events\" />
+    <Folder Include="Authorization\Querys\Request\" />
+    <Folder Include="Authorization\Querys\Response\" />
+    <Folder Include="CarWash\Events\" />
+    <Folder Include="CarWash\Querys\Request\" />
+    <Folder Include="CarWash\Querys\Response\" />
+    <Folder Include="Order\Events\" />
+    <Folder Include="Reviews\Events\" />
+    <Folder Include="Reviews\Querys\Request\" />
+    <Folder Include="Reviews\Querys\Response\" />
+    <Folder Include="User\Events\" />
+    <Folder Include="User\Querys\Request\" />
+    <Folder Include="User\Querys\Response\" />
+  </ItemGroup>
+
+</Project>

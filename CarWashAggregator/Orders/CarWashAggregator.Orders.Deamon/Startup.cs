@@ -1,10 +1,9 @@
 using CarWashAggregator.Common.Domain;
 using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Common.Infra.IoC;
-using CarWashAggregator.Orders.Business.Bus.EventHandlers;
-using CarWashAggregator.Orders.Business.Bus.Events;
-using CarWashAggregator.Orders.Business.Bus.QueryHandlers;
-using CarWashAggregator.Orders.Business.Bus.Querys;
+using CarWashAggregator.Common.Domain.DTO.Order.Querys.Request;
+using CarWashAggregator.Common.Domain.DTO.Order.Querys.Response;
+using CarWashAggregator.Common.Infra;
+using CarWashAggregator.Orders.Business.Handlers.QueryHandlers;
 using CarWashAggregator.Orders.Business.Interfaces;
 using CarWashAggregator.Orders.Business.Services;
 using CarWashAggregator.Orders.Domain.Contracts;
@@ -31,8 +30,6 @@ namespace CarWashAggregator.Orders.Deamon
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
             services.AddDbContext<OrderContext>(options =>
             {
                 options.UseNpgsql(_configuration.GetConnectionString(Helper.DataBaseConnectionSection));
@@ -42,14 +39,13 @@ namespace CarWashAggregator.Orders.Deamon
             services.AddTransient<IOrderService, OrderService>();
 
             //Data
-            services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<OrderContext>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             //Subscriptions
-            services.AddTransient<OrderCreatedEventHandler>();
-            services.AddTransient<OrdersQueryHandler>();
+            services.AddTransient<RequestByIdHandler>();
 
-            DependencyContainer.RegisterBusService(services, _configuration);
+            services.AddMvc();
+            BusContainer.RegisterBusService(services, _configuration);
 
         }
 
@@ -74,8 +70,7 @@ namespace CarWashAggregator.Orders.Deamon
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.SubscribeToEvent<OrderCreatedEvent, OrderCreatedEventHandler>();
-            eventBus.SubscribeToQuery<OrdersQuery, OrdersQueryHandler>();
+            eventBus.SubscribeToQuery<RequestOrderById, ResponseOneOrder, RequestByIdHandler>();
         }
     }
 }

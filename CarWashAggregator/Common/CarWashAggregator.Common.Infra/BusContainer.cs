@@ -3,9 +3,9 @@ using CarWashAggregator.Common.Infra.Bus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CarWashAggregator.Common.Infra.IoC
+namespace CarWashAggregator.Common.Infra
 {
-    public class DependencyContainer
+    public class BusContainer
     {
         public static void RegisterBusService(IServiceCollection services, IConfiguration configuration)
         {
@@ -14,8 +14,6 @@ namespace CarWashAggregator.Common.Infra.IoC
                 var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
                 return new RabbitMQBus(scopeFactory, configuration);
             });
-
-
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CarWashAggregator.CarWashes.BL.Interfaces;
+using CarWashAggregator.CarWashes.Domain.Interfaces;
 using CarWashAggregator.CarWashes.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

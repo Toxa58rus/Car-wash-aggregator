@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CarWashAggregator.CarWashes.BL.Interfaces;
+using CarWashAggregator.CarWashes.Domain.Interfaces;
 using CarWashAggregator.CarWashes.BL.Services;
 using CarWashAggregator.CarWashes.Domain.Repositories;
 using CarWashAggregator.CarWashes.Infra;

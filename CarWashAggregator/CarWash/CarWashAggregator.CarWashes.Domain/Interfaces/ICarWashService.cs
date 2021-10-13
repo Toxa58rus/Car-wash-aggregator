@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarWashAggregator.CarWashes.BL.Interfaces
+namespace CarWashAggregator.CarWashes.Domain.Interfaces
 {
     public interface ICarWashService
     {

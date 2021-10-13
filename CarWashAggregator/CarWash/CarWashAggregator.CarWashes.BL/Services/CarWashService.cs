@@ -1,4 +1,4 @@
-﻿using CarWashAggregator.CarWashes.BL.Interfaces;
+﻿using CarWashAggregator.CarWashes.Domain.Interfaces;
 using CarWashAggregator.CarWashes.Domain.Models;
 using CarWashAggregator.CarWashes.Domain.Repositories;
 using System;

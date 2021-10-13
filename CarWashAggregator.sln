@@ -22,19 +22,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{2B5782
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Domain", "CarWashAggregator\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj", "{5CA2F1B2-AB09-4131-B486-0238C262D48A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Common.Infra.IoC", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.IoC\CarWashAggregator.Common.Infra.IoC.csproj", "{014460B2-A012-4EE0-A815-9A6AB1CF009F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Infra.IoC", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.IoC\CarWashAggregator.Common.Infra.IoC.csproj", "{014460B2-A012-4EE0-A815-9A6AB1CF009F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Common.Infra.Bus", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.Bus\CarWashAggregator.Common.Infra.Bus.csproj", "{82C7F7DF-C968-4D21-812A-3D7543991323}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Infra.Bus", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.Bus\CarWashAggregator.Common.Infra.Bus.csproj", "{82C7F7DF-C968-4D21-812A-3D7543991323}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{7FF3E4DC-4855-4C29-9E10-7888918E0073}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deamon", "CarWashAggregator\ApiGateway\Deamon\Deamon.csproj", "{723DB901-DE47-47CE-AC1A-F339B8FF5EF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deamon", "CarWashAggregator\ApiGateway\Deamon\Deamon.csproj", "{723DB901-DE47-47CE-AC1A-F339B8FF5EF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "CarWashAggregator\ApiGateway\Domain\Domain.csproj", "{0A815CA8-A704-4839-A5C8-B2C13C7EA901}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "CarWashAggregator\ApiGateway\Domain\Domain.csproj", "{0A815CA8-A704-4839-A5C8-B2C13C7EA901}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "CarWashAggregator\ApiGateway\Infra\Infra.csproj", "{F360B0AE-90D0-48E9-AD7A-FA854D35C2CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "CarWashAggregator\ApiGateway\Infra\Infra.csproj", "{F360B0AE-90D0-48E9-AD7A-FA854D35C2CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "CarWashAggregator\ApiGateway\Business\Business.csproj", "{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "CarWashAggregator\ApiGateway\Business\Business.csproj", "{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarWash", "CarWash", "{E63FCF5C-AB75-4D9D-BB6D-F43F5FF5418C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.CarWashes.BL", "CarWashAggregator\CarWash\CarWashAggregator.CarWashes.BL\CarWashAggregator.CarWashes.BL.csproj", "{77D9C579-BB48-4CA9-90E3-CC27CD613AD1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.CarWashes.Deamon", "CarWashAggregator\CarWash\CarWashAggregator.CarWashes.Deamon\CarWashAggregator.CarWashes.Deamon.csproj", "{3E6E6E89-6E66-4934-BADB-7076C0FEE728}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.CarWashes.Domain", "CarWashAggregator\CarWash\CarWashAggregator.CarWashes.Domain\CarWashAggregator.CarWashes.Domain.csproj", "{CE1F7ECC-7F39-4819-A025-3BE6F3252196}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.CarWashes.Infra", "CarWashAggregator\CarWash\CarWashAggregator.CarWashes.Infra\CarWashAggregator.CarWashes.Infra.csproj", "{769E44EA-31CC-4CC5-A53A-54FFD2E0CC4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +96,22 @@ Global
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D9C579-BB48-4CA9-90E3-CC27CD613AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D9C579-BB48-4CA9-90E3-CC27CD613AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D9C579-BB48-4CA9-90E3-CC27CD613AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D9C579-BB48-4CA9-90E3-CC27CD613AD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E6E6E89-6E66-4934-BADB-7076C0FEE728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E6E6E89-6E66-4934-BADB-7076C0FEE728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E6E6E89-6E66-4934-BADB-7076C0FEE728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6E6E89-6E66-4934-BADB-7076C0FEE728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE1F7ECC-7F39-4819-A025-3BE6F3252196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE1F7ECC-7F39-4819-A025-3BE6F3252196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE1F7ECC-7F39-4819-A025-3BE6F3252196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE1F7ECC-7F39-4819-A025-3BE6F3252196}.Release|Any CPU.Build.0 = Release|Any CPU
+		{769E44EA-31CC-4CC5-A53A-54FFD2E0CC4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{769E44EA-31CC-4CC5-A53A-54FFD2E0CC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{769E44EA-31CC-4CC5-A53A-54FFD2E0CC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{769E44EA-31CC-4CC5-A53A-54FFD2E0CC4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +130,11 @@ Global
 		{0A815CA8-A704-4839-A5C8-B2C13C7EA901} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
 		{F360B0AE-90D0-48E9-AD7A-FA854D35C2CA} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
+		{E63FCF5C-AB75-4D9D-BB6D-F43F5FF5418C} = {F7BF6CB8-7155-434D-90C7-42081CA88BEE}
+		{77D9C579-BB48-4CA9-90E3-CC27CD613AD1} = {E63FCF5C-AB75-4D9D-BB6D-F43F5FF5418C}
+		{3E6E6E89-6E66-4934-BADB-7076C0FEE728} = {E63FCF5C-AB75-4D9D-BB6D-F43F5FF5418C}
+		{CE1F7ECC-7F39-4819-A025-3BE6F3252196} = {E63FCF5C-AB75-4D9D-BB6D-F43F5FF5418C}
+		{769E44EA-31CC-4CC5-A53A-54FFD2E0CC4E} = {E63FCF5C-AB75-4D9D-BB6D-F43F5FF5418C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {782CB2B7-2CD4-4A6F-9700-C27257A3F9C5}

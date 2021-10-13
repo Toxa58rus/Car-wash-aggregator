@@ -1,0 +1,24 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>File</title>
+</head>
+<body>
+    @using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <p>
+            <input type="file" value="Выбрать файл" name="file" />
+        </p>
+        <p>
+            <input type="submit" value="Отправить" />
+        </p>
+    }
+</body>
+</html>

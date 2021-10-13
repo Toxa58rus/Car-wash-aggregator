@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{2B5782
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Domain", "CarWashAggregator\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj", "{5CA2F1B2-AB09-4131-B486-0238C262D48A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Infra", "CarWashAggregator\Common\CarWashAggregator.Common.Infra.Bus\CarWashAggregator.Common.Infra.csproj", "{82C7F7DF-C968-4D21-812A-3D7543991323}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Infra", "CarWashAggregator\Common\CarWashAggregator.Common.Infra\CarWashAggregator.Common.Infra.csproj", "{82C7F7DF-C968-4D21-812A-3D7543991323}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{7FF3E4DC-4855-4C29-9E10-7888918E0073}"
 EndProject
@@ -33,6 +33,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "CarWashAggregator\ApiGateway\Infra\Infra.csproj", "{F360B0AE-90D0-48E9-AD7A-FA854D35C2CA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "CarWashAggregator\ApiGateway\Business\Business.csproj", "{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Common.Domain.DTO", "CarWashAggregator\Common\CarWashAggregator.Common.Domain.DTO\CarWashAggregator.Common.Domain.DTO.csproj", "{34F6FC41-ED72-4B2E-9C81-B8A0C90E7AD9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5CA2F1B2-AB09-4131-B486-0238C262D48A} = {5CA2F1B2-AB09-4131-B486-0238C262D48A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +85,10 @@ Global
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F6FC41-ED72-4B2E-9C81-B8A0C90E7AD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F6FC41-ED72-4B2E-9C81-B8A0C90E7AD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F6FC41-ED72-4B2E-9C81-B8A0C90E7AD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F6FC41-ED72-4B2E-9C81-B8A0C90E7AD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +106,7 @@ Global
 		{0A815CA8-A704-4839-A5C8-B2C13C7EA901} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
 		{F360B0AE-90D0-48E9-AD7A-FA854D35C2CA} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
 		{BC1BF79C-8858-4E4B-B1BD-CA733868E2D8} = {7FF3E4DC-4855-4C29-9E10-7888918E0073}
+		{34F6FC41-ED72-4B2E-9C81-B8A0C90E7AD9} = {2B57820D-C658-4BF6-B27A-6C56CF429598}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {782CB2B7-2CD4-4A6F-9700-C27257A3F9C5}

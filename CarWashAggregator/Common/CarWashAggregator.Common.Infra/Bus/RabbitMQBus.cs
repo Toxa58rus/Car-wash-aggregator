@@ -14,12 +14,13 @@ namespace CarWashAggregator.Common.Infra.Bus
 
         }
 
-        public Task<T> RequestQuery<T>(T request) where T : Query
+        public Task<TResponse> RequestQuery<TRequest, TResponse>(TRequest request) where TRequest : Query where TResponse : Query
         {
             var message = JsonConvert.SerializeObject(request);
             var body = Encoding.UTF8.GetBytes(message);
-            var reply = base.PublishQuery(body, typeof(T)) as T;
-            return Task.FromResult(reply);
+            var responseJson = base.PublishQuery(body, typeof(TRequest)) as string;
+            var response = JsonConvert.DeserializeObject<TResponse>(responseJson);
+            return Task.FromResult(response);
         }
 
         public void PublishEvent<T>(T @event) where T : Event
@@ -34,14 +35,15 @@ namespace CarWashAggregator.Common.Infra.Bus
             where T : Event
             where TH : IEventHandler<T>
         {
-            base.Subscribe<T, TH>(false);
+            base.SubToEvent<T, TH>();
         }
 
-        public void SubscribeToQuery<T, TH>()
-          where T : Query
-          where TH : IQueryHandler<T>
+        public void SubscribeToQuery<TRequest, TResponse, THandler>()
+          where TRequest : Query
+          where TResponse : Query
+          where THandler : IQueryHandler<TRequest, TResponse>
         {
-            base.Subscribe<T, TH>(true);
+            base.SubToQuery<TRequest, TResponse, THandler>();
         }
 
     }

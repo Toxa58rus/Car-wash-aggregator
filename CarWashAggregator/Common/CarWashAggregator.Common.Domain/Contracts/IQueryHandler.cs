@@ -2,10 +2,15 @@
 
 namespace CarWashAggregator.Common.Domain.Contracts
 {
-    public interface IQueryHandler<TQuery>
-       where TQuery : Query
+    public interface IQueryHandler<in TRequest, TResponse> : IQueryHandler
+       where TRequest : Query
+       where TResponse : Query
     {
-        Task<TQuery> Handle(TQuery query);
+        Task<TResponse> Handle(TRequest request);
     }
 
+    public interface IQueryHandler
+    {
+
+    }
 }

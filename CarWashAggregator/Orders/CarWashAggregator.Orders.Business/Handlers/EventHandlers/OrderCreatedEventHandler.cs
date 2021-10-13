@@ -1,12 +1,12 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Orders.Business.Bus.Events;
+using CarWashAggregator.Common.Domain.DTO.Order.Events;
 using CarWashAggregator.Orders.Domain.Contracts;
 using CarWashAggregator.Orders.Domain.Entities;
 using System.Threading.Tasks;
 
-namespace CarWashAggregator.Orders.Business.Bus.EventHandlers
+namespace CarWashAggregator.Orders.Business.Handlers.EventHandlers
 {
-    public class OrderCreatedEventHandler : IEventHandler<OrderCreatedEvent>
+    public class OrderCreatedEventHandler : IEventHandler<OrderCreated>
     {
         private readonly IOrderRepository _dbRepository;
 
@@ -15,14 +15,14 @@ namespace CarWashAggregator.Orders.Business.Bus.EventHandlers
             _dbRepository = dbRepository;
         }
 
-        public async Task Handle(OrderCreatedEvent @event)
+        public async Task Handle(OrderCreated @event)
         {
             await _dbRepository.Add(new Order()
             {
-                DateReservation = @event.Order.DateReservation,
-                UserId = @event.Order.UserId,
-                Price = @event.Order.Price,
-                СarWashId = @event.Order.СarWashId
+                DateReservation = @event.DateReservation,
+                UserId = @event.UserId,
+                Price = @event.Price,
+                СarWashId = @event.СarWashId
             });
             await _dbRepository.SaveChangesAsync();
         }

@@ -18,11 +18,13 @@ namespace CarWashAggregator.Common.Infra.Bus
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConnection _connection;
         private readonly Dictionary<string, Type> _messageHandlers;
+        private readonly Dictionary<string, Type> _responseTypes;
         private readonly List<Type> _messageTypes;
 
         protected BusBase(IServiceScopeFactory serviceScopeFactory, IConfiguration configuration)
         {
             _messageHandlers = new Dictionary<string, Type>();
+            _responseTypes = new Dictionary<string, Type>();
             _messageTypes = new List<Type>();
             _serviceScopeFactory = serviceScopeFactory;
             var connectionFactory = new ConnectionFactory()
@@ -31,16 +33,6 @@ namespace CarWashAggregator.Common.Infra.Bus
                 DispatchConsumersAsync = true
             };
             _connection = connectionFactory.CreateConnection();
-        }
-
-        private object GetHandler(string messageTypeName)
-        {
-            using (var scope = _serviceScopeFactory.CreateScope())
-            {
-                var subscription = _messageHandlers[messageTypeName];
-                var handler = scope.ServiceProvider.GetService(subscription);
-                return handler;
-            }
         }
 
         protected void Publish(byte[] messageBytes, string routingKey)
@@ -72,9 +64,8 @@ namespace CarWashAggregator.Common.Infra.Bus
 
                 var body = ea.Body.ToArray();
                 var response = Encoding.UTF8.GetString(body);
-                var message = JsonConvert.DeserializeObject(response, messageType);
                 channel.Close();
-                tcs.SetResult(message);
+                tcs.SetResult(response);
             };
             channel.BasicConsume(consumer: consumer, queue: replyQueueName, autoAck: false);
             channel.BasicPublish("", messageType.Name, props, messageBytes);
@@ -82,15 +73,24 @@ namespace CarWashAggregator.Common.Infra.Bus
             return tcs.Task.GetAwaiter().GetResult();
         }
 
-
-
-        protected void Subscribe<T, TH>(bool qosEnabled)
+        protected void SubToEvent<T, TH>()
         {
             var messageType = typeof(T);
             var handlerType = typeof(TH);
             _messageHandlers.Add(messageType.Name, handlerType);
             _messageTypes.Add(messageType);
-            StartBasicConsume(messageType.Name, qosEnabled);
+            StartBasicConsume(messageType.Name, false);
+        }
+        protected void SubToQuery<TRequest, TResponse, THandler>()
+        {
+            var messageType = typeof(TRequest);
+            var responseType = typeof(TResponse);
+            var handlerType = typeof(THandler);
+            var messageTypeName = messageType.Name;
+            _messageHandlers.Add(messageTypeName, handlerType);
+            _messageTypes.Add(messageType);
+            _responseTypes.Add(messageTypeName, responseType);
+            StartBasicConsume(messageTypeName, true);
         }
 
         private void StartBasicConsume(string routingKey, bool qosEnabled)
@@ -114,40 +114,46 @@ namespace CarWashAggregator.Common.Infra.Bus
         {
             var messageTypeName = deliveredArgs.RoutingKey;
 
-            if (_messageHandlers.ContainsKey(messageTypeName))
+            if (!_messageHandlers.ContainsKey(messageTypeName))
+                return;
+
+            var messageType = _messageTypes.SingleOrDefault(t => t.Name == messageTypeName);
+            var deliveredProps = deliveredArgs.BasicProperties;
+            var body = deliveredArgs.Body.ToArray();
+            var deliver = Encoding.UTF8.GetString(body);
+            var message = JsonConvert.DeserializeObject(deliver, messageType);
+            var channel = ((AsyncEventingBasicConsumer)sender).Model;
+
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
-                var handler = GetHandler(messageTypeName);
-                var messageType = _messageTypes.SingleOrDefault(t => t.Name == messageTypeName);
-                var deliveredProps = deliveredArgs.BasicProperties;
-                var body = deliveredArgs.Body.ToArray();
-                var deliver = Encoding.UTF8.GetString(body);
-                var message = JsonConvert.DeserializeObject(deliver, messageType);
-                var channel = ((AsyncEventingBasicConsumer)sender).Model;
+                var subscription = _messageHandlers[messageTypeName];
+                var handler = scope.ServiceProvider.GetService(subscription);
 
                 if (deliveredProps.ReplyTo is null)
                 {
                     var concreteType = typeof(IEventHandler<>).MakeGenericType(messageType);
-                    await (concreteType.GetMethod("Handle").Invoke(handler, new object[] { message }) as Task).ConfigureAwait(false);
+                    await (concreteType.GetMethod("Handle").Invoke(handler, new object[] { message }) as Task)
+                        .ConfigureAwait(false);
                     channel.BasicAck(deliveredArgs.DeliveryTag, false);
                 }
                 else
                 {
-                    var concreteType = typeof(IQueryHandler<>).MakeGenericType(messageType);
+                    var responseType = _responseTypes[messageTypeName];
+                    var concreteType = typeof(IQueryHandler<,>).MakeGenericType(messageType, responseType);
                     var handleMsg = concreteType.GetMethod("Handle").Invoke(handler, new object[] { message }) as Task;
                     await handleMsg.ConfigureAwait(false);
                     var reply = (object)((dynamic)handleMsg).Result;
                     var response = JsonConvert.SerializeObject(reply);
                     var responseMessage = Encoding.UTF8.GetBytes(response);
 
-
                     var replyProps = channel.CreateBasicProperties();
                     replyProps.CorrelationId = deliveredProps.CorrelationId;
                     replyProps.Persistent = true;
-
                     channel.BasicPublish("", deliveredProps.ReplyTo, replyProps, responseMessage);
                     channel.BasicAck(deliveredArgs.DeliveryTag, false);
                 }
             }
+
         }
 
     }

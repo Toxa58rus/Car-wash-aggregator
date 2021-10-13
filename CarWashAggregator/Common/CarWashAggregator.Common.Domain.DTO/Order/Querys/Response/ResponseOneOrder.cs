@@ -9,7 +9,6 @@ namespace CarWashAggregator.Common.Domain.DTO.Order.Querys.Response
         public Guid СarWashId { get; set; }
         public DateTime DateReservation { get; set; }
         public decimal Price { get; set; }
-
-        //add properties
+        public string Status { get; set; }
     }
 }

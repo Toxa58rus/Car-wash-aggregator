@@ -1,10 +1,8 @@
 using CarWashAggregator.Common.Domain;
 using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Common.Domain.DTO.Order.Events;
 using CarWashAggregator.Common.Domain.DTO.Order.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.Order.Querys.Response;
 using CarWashAggregator.Common.Infra;
-using CarWashAggregator.Orders.Business.Handlers.EventHandlers;
 using CarWashAggregator.Orders.Business.Handlers.QueryHandlers;
 using CarWashAggregator.Orders.Business.Interfaces;
 using CarWashAggregator.Orders.Business.Services;
@@ -44,7 +42,6 @@ namespace CarWashAggregator.Orders.Deamon
             services.AddScoped<IOrderRepository, OrderRepository>();
 
             //Subscriptions
-            services.AddTransient<OrderCreatedEventHandler>();
             services.AddTransient<RequestByIdHandler>();
 
             services.AddMvc();
@@ -73,7 +70,6 @@ namespace CarWashAggregator.Orders.Deamon
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.SubscribeToEvent<OrderCreated, OrderCreatedEventHandler>();
             eventBus.SubscribeToQuery<RequestOrderById, ResponseOneOrder, RequestByIdHandler>();
         }
     }

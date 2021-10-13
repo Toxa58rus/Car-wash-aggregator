@@ -14,7 +14,9 @@ namespace CarWashAggregator.Common.Infra.Bus
 
         }
 
-        public Task<TResponse> RequestQuery<TRequest, TResponse>(TRequest request) where TRequest : Query where TResponse : Query
+        public Task<TResponse> RequestQuery<TRequest, TResponse>(TRequest request)
+            where TRequest : Query
+            where TResponse : Query
         {
             var message = JsonConvert.SerializeObject(request);
             var body = Encoding.UTF8.GetBytes(message);

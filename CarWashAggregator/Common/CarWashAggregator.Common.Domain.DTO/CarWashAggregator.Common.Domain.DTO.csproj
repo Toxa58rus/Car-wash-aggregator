@@ -18,6 +18,7 @@
     <Folder Include="CarWash\Events\" />
     <Folder Include="CarWash\Querys\Request\" />
     <Folder Include="CarWash\Querys\Response\" />
+    <Folder Include="Order\Events\" />
     <Folder Include="Reviews\Events\" />
     <Folder Include="Reviews\Querys\Request\" />
     <Folder Include="Reviews\Querys\Response\" />

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\CarWashAggregator.Orders.Domain\CarWashAggregator.Orders.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\EventHandlers\" />
+  </ItemGroup>
+
 </Project>

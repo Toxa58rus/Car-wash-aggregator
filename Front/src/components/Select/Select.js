@@ -21,6 +21,8 @@ const Select = ({ options, defaultValue, placeholder, meta, ...rest }) => {
         options={options}
         defaultValue={defaultValue}
         isOptionDisabled={(option) => option.status === "Booked"}
+        getOptionLabel={(option) => option.name}
+        getOptionValue={(option) => option.id}
         components={{
           Option: SelectOtion,
         }}

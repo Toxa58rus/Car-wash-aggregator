@@ -1,0 +1,247 @@
+@import 'src/styles/colors';
+
+.login {
+  width: 100%;
+  min-height: 100vh;
+  background: $bg-layout;
+  background-position: bottom;
+  background-repeat: no-repeat;
+}
+
+.wrap {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-top: 60px;
+}
+
+.header {
+  max-width: 856px;
+  display: flex;
+  margin: 0 auto;
+  padding: 0 auto;
+}
+
+.headerContaner {
+  width: 634px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.containerBox {
+  position: relative;
+  width: 50%;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 24px;
+  height: 64px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.containerBoxBtn {
+  position: absolute;
+  left: 0;
+  height: 64px;
+  color: rgba($black, 0.5);
+  background: $bg-layout;
+  font-size: 24px;
+  line-height: 23px;
+  text-transform: none;
+  border-radius: 0;
+  border: 0;
+
+  &:hover,
+  &:focus {
+    color: rgba($black, 0.8);
+    background: $gray-light;
+  }
+}
+
+.containerBoxBtnActive {
+  position: absolute;
+  height: 64px;
+  color: $gray-dark;
+  background: $bg-layout;
+  font-size: 24px;
+  line-height: 23px;
+  text-transform: none;
+  border-radius: 0;
+  border-bottom: 2px solid $gray-dark;
+
+  &:hover,
+  &:focus {
+    background: $gray-light;
+  }
+}
+
+.loginForm {
+  max-width: 856px;
+  padding: 30px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-top: 30px;
+  background: $gray-light;
+  border-radius: 8px;
+}
+
+.loginContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.inputs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inner {
+  width: 50%;
+  box-sizing: border-box;
+
+  &:first-child {
+    padding-right: 7.5px;
+  }
+
+  &:last-child {
+    padding-left: 7.5px;
+  }
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.containerLine {
+  width: 43.9%;
+  height: 1px;
+  background: $black;
+  opacity: 0.15;
+}
+
+.containerText {
+  width: 106px;
+  height: 30px;
+  box-sizing: border-box;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 150%;
+  text-align: center;
+  color: $black;
+  opacity: 0.5;
+}
+
+.sigInBtn {
+  margin: 30px 0 0;
+  height: 40px;
+  background: $yellow;
+  font-size: 17px;
+  line-height: 16px;
+
+  &:hover,
+  &:focus {
+    background: lighten($yellow, 10);
+  }
+}
+
+.loginLink {
+  height: 20px;
+  font-size: 14px;
+  line-height: 14px;
+  border-bottom: 1px solid $yellow;
+  text-decoration: none;
+  color: $black;
+  padding: 0 5px;
+}
+
+.loginContainer:last-child {
+  margin-bottom: 0;
+}
+
+.additionalInfo {
+  margin: 0 auto;
+  padding-top: 30px;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+@media (min-width: 0) and (max-width: 768px) {
+  .login {
+    background: $white;
+    background-image: none;
+  }
+
+  .containerBoxBtn {
+    background: transparent;
+    font-size: 18px;
+    line-height: 17px;
+
+    &:focus {
+      background: transparent;
+    }
+  }
+
+  .containerBoxBtnActive {
+    background: transparent;
+
+    &:focus {
+      background: transparent;
+    }
+  }
+
+  .loginForm {
+    padding: 30px 15px 20px;
+  }
+
+  .formTitle {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .socialBtn {
+    background: $gray-light;
+
+    span {
+      display: none;
+    }
+  }
+
+  .loginContainer {
+    margin-bottom: 15px;
+  }
+
+  .containerText {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 15px;
+    height: 15px;
+  }
+
+  .inputs {
+    display: block;
+  }
+
+  .mobileInner {
+    width: 100%;
+    margin: 15px 0;
+    padding: 0 !important;
+  }
+
+  .additionalInfo {
+    padding: 0 15px;
+    line-height: 150%;
+  }
+
+  .loginLink {
+    line-height: 150%;
+  }
+
+  .sigInBtn {
+    margin: 15px 0;
+  }
+}

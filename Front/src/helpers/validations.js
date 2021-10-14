@@ -28,9 +28,7 @@ const composeValidators =
 const validEmail = (value) => {
   if (!value) return undefined;
 
-  return validEmailRegExp.test(value)
-    ? undefined
-    : "E-mail address is entered incorrectly";
+  return validEmailRegExp.test(value) ? undefined : " Не корректный E-mail";
 };
 
 export {

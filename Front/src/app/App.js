@@ -5,6 +5,7 @@ import "../styles/global.scss";
 import IndexPage from "../components/Pages/IndexPage/IndexPage";
 import CarWash from "../components/Pages/CarWash/CarWash";
 import LoginPage from "../components/Pages/LoginPage/LoginPage";
+import ProfilePage from "../components/Pages/Profile/ProfilePage";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route exact path="/car-wash/:id" component={CarWash} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/register" component={LoginPage} />
+        <Route exact path="/profile/settings" component={ProfilePage} />
+        <Route exact path="/profile/orders" component={ProfilePage} />
       </Switch>
     </BrowserRouter>
   );

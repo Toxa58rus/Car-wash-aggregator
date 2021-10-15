@@ -117,6 +117,69 @@
     justify-content: space-between;
   }
 }
+
+.profileBtn {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.btnInner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mobileMenuSublist {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: $bg-light;
+  
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+.sublistActive {
+  width: 100%;
+  transition: all 0.3s;
+  padding: 0 20px;
+  
+}
+
+.closeSublistBtn {
+  background: transparent;
+  font-size: inherit;
+  font-weight: inherit;
+  margin-top: 12px;
+}
+
+.closeBtnInner {
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 7px;
+    height: 20px;
+  }
+}
+
+.sublistItem {
+  font-weight: bold;
+  height: 50px;
+  padding: 0 20px;
+
+  &:first-child {
+    padding: 0;
+  }
+}
+
 .mobile {
   display: none;
 

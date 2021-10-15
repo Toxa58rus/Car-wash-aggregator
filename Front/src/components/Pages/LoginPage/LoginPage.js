@@ -27,6 +27,7 @@ const LoginPage = (props) => {
     token: "aljkhsdbefisuwasjdebswvcoijknokwqalpmgfv",
     name: "ra",
     pass: "asdas",
+    role: 1,
   });
   const dispatch = useDispatch();
 
@@ -48,6 +49,7 @@ const LoginPage = (props) => {
     }));
     console.log(state);
     dispatch(setSession(state));
+    history.push(routes.root);
   };
   const register = (data) => {
     console.log(data);

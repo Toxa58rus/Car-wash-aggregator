@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <ProjectReference Include="..\..\CarWash\CarWashAggregator.CarWashes.Domain\CarWashAggregator.CarWashes.Domain.csproj" />
 	  <ProjectReference Include="..\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
   </ItemGroup>
 
@@ -15,9 +16,6 @@
     <Folder Include="Authorization\Events\" />
     <Folder Include="Authorization\Querys\Request\" />
     <Folder Include="Authorization\Querys\Response\" />
-    <Folder Include="CarWash\Events\" />
-    <Folder Include="CarWash\Querys\Request\" />
-    <Folder Include="CarWash\Querys\Response\" />
     <Folder Include="Order\Events\" />
     <Folder Include="Reviews\Events\" />
     <Folder Include="Reviews\Querys\Request\" />

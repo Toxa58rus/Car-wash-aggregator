@@ -37,8 +37,8 @@ namespace CarWashAggregator.CarWashes.Infra.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("bytea");
+                    b.Property<string>("Image")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -52,6 +52,10 @@ namespace CarWashAggregator.CarWashes.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CarWashes");
+
+                    b
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                        .HasAnnotation("Relational:MaxIdentifierLength", 63);
                 });
 #pragma warning restore 612, 618
         }

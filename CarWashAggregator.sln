@@ -62,6 +62,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Authoriza
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Authorization.Deamon", "CarWashAggregator\Authorization\CarWashAggregator.Authorization.Deamon\CarWashAggregator.Authorization.Deamon.csproj", "{918C2CDF-B22E-4625-88B9-A7A96BD24F4D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Review", "Review", "{0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Review.BL", "CarWashAggregator\Review\CarWashAggregator.Review.BL\CarWashAggregator.Review.BL.csproj", "{44C90326-59B9-4831-A3BD-462EE145486A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Review.Domain", "CarWashAggregator\Review\CarWashAggregator.Review.Domain\CarWashAggregator.Review.Domain.csproj", "{1F86A2A8-FB74-4A59-B734-12878ABD76A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Review.Infra", "CarWashAggregator\Review\CarWashAggregator.Review.Infra\CarWashAggregator.Review.Infra.csproj", "{18B64005-2620-4DE5-BD31-00157A1B91FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Review.Deamon", "CarWashAggregator\Review\CarWashAggregator.Review.Deamon\CarWashAggregator.Review.Deamon.csproj", "{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -144,6 +154,22 @@ Global
 		{918C2CDF-B22E-4625-88B9-A7A96BD24F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{918C2CDF-B22E-4625-88B9-A7A96BD24F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{918C2CDF-B22E-4625-88B9-A7A96BD24F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44C90326-59B9-4831-A3BD-462EE145486A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44C90326-59B9-4831-A3BD-462EE145486A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44C90326-59B9-4831-A3BD-462EE145486A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44C90326-59B9-4831-A3BD-462EE145486A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B64005-2620-4DE5-BD31-00157A1B91FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B64005-2620-4DE5-BD31-00157A1B91FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B64005-2620-4DE5-BD31-00157A1B91FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B64005-2620-4DE5-BD31-00157A1B91FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -172,6 +198,11 @@ Global
 		{EFF1F4E0-BC2F-46E0-ADDE-A77B0AC57B17} = {FE8D7023-E094-458D-AECB-B66B5E0F65A4}
 		{D50A6C01-2E67-4FE7-A703-0070C1F5210C} = {FE8D7023-E094-458D-AECB-B66B5E0F65A4}
 		{918C2CDF-B22E-4625-88B9-A7A96BD24F4D} = {FE8D7023-E094-458D-AECB-B66B5E0F65A4}
+		{0AE016B7-7BC6-448E-A7FB-DA11C9B9991A} = {F7BF6CB8-7155-434D-90C7-42081CA88BEE}
+		{44C90326-59B9-4831-A3BD-462EE145486A} = {0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4} = {0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}
+		{18B64005-2620-4DE5-BD31-00157A1B91FC} = {0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208} = {0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {782CB2B7-2CD4-4A6F-9700-C27257A3F9C5}

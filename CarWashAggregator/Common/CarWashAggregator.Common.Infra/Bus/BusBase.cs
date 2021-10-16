@@ -29,7 +29,7 @@ namespace CarWashAggregator.Common.Infra.Bus
             _serviceScopeFactory = serviceScopeFactory;
             var connectionFactory = new ConnectionFactory()
             {
-                HostName = configuration.GetConnectionString(Helper.BusConnectionSection),
+                Uri = new Uri(configuration.GetConnectionString(Helper.BusConnectionSection)),
                 DispatchConsumersAsync = true
             };
             _connection = connectionFactory.CreateConnection();

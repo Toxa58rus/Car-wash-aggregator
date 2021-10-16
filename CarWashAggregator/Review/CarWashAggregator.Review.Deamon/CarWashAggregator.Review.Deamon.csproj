@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.20">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Infra\CarWashAggregator.Common.Infra.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.Review.BL\CarWashAggregator.Review.BL.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.Review.Infra\CarWashAggregator.Review.Infra.csproj" />
+  </ItemGroup>
+
+
+</Project>

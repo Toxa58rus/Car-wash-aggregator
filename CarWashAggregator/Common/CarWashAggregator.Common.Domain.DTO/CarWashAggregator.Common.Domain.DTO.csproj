@@ -18,8 +18,6 @@
     <Folder Include="Authorization\Querys\Response\" />
     <Folder Include="Order\Events\" />
     <Folder Include="Reviews\Events\" />
-    <Folder Include="Reviews\Querys\Request\" />
-    <Folder Include="Reviews\Querys\Response\" />
     <Folder Include="User\Events\" />
     <Folder Include="User\Querys\Request\" />
     <Folder Include="User\Querys\Response\" />

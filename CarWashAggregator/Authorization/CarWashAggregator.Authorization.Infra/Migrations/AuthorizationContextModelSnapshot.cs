@@ -30,6 +30,9 @@ namespace CarWashAggregator.Authorization.Infra.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("HashPassword")
                         .IsRequired()
                         .HasColumnType("text")

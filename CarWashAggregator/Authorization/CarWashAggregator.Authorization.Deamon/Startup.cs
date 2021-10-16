@@ -1,3 +1,6 @@
+using CarWashAggregator.Authorization.Business.JwtAuth.Contracts;
+using CarWashAggregator.Authorization.Business.JwtAuth.Implementation;
+using CarWashAggregator.Authorization.Business.JwtAuth.Models;
 using CarWashAggregator.Authorization.Domain.Contracts;
 using CarWashAggregator.Authorization.Infra.Data;
 using CarWashAggregator.Authorization.Infra.Repository;
@@ -25,6 +28,10 @@ namespace CarWashAggregator.Authorization.Deamon
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var jwtTokenConfig = _configuration.GetSection(Helper.JwtSection).Get<JwtTokenConfig>();
+            services.AddSingleton(jwtTokenConfig);
+            services.AddScoped<IAuthorizationManager, AuthorizationManager>();
+
             services.AddDbContext<AuthorizationContext>(options =>
             {
                 options.UseNpgsql(_configuration.GetConnectionString(Helper.DataBaseConnectionSection));

@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarWashAggregator.Authorization.Infra.Migrations
 {
     [DbContext(typeof(AuthorizationContext))]
-    [Migration("20211013230836_init")]
+    [Migration("20211016012741_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,9 @@ namespace CarWashAggregator.Authorization.Infra.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("HashPassword")
                         .IsRequired()

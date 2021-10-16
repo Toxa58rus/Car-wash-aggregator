@@ -1,14 +1,13 @@
-﻿using System;
+﻿using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.CarWashes.Domain.Models;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace CarWashAggregator.CarWashes.Domain.Models
+namespace CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Response
 {
-    public class CarWash
+    public class ResponseGetCarWashQuery : Query
     {
-        [Key]
-        public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }

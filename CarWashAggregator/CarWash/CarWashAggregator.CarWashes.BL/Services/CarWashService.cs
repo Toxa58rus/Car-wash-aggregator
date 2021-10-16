@@ -17,15 +17,50 @@ namespace CarWashAggregator.CarWashes.BL.Services
             _carWashRepository = carWashRepository;
         }
 
-        public IEnumerable<CarWash> GetCarWashes()
+        public async Task<IEnumerable<CarWash>> GetCarWashesAsync()
         {
-            return _carWashRepository.GetCarWashList();
+            return await _carWashRepository.GetCarWashListAsync();
         }
 
         public async Task<Guid> CreateCarWashAsync(CarWash carWash)
         {
-            await _carWashRepository.CreateAsync(carWash);
+            await _carWashRepository.CreateCarWashAsync(carWash);
             return carWash.Id;
+        }
+
+        public async Task<CarWash> GetCarWashAsync(Guid id)
+        {
+            return await _carWashRepository.GetCarWashAsync(id);
+        }
+
+        public async Task UpdateCarWashAsync(CarWash carWash)
+        {
+            await _carWashRepository.UpdateCarWashAsync(carWash);
+        }
+
+        public async Task DeleteCarWashAsync(CarWash carWash)
+        {
+            await _carWashRepository.DeleteCarWashAsync(carWash);
+        }
+
+        public async Task DeleteCarWashByIdAsync(Guid id)
+        {
+            await _carWashRepository.DeleteCarWashByIdAsync(id);
+        }
+
+        public async Task UpdateCarWashRatingAsync(Guid carWashId, double AVG_Rating)
+        {
+            await _carWashRepository.UpdateCarWashRatingAsync(carWashId, AVG_Rating);
+        }
+
+        public Task<IEnumerable<CarWash>> GetCarWashesPaginatedAsync(int pageSize, int page)
+        {
+            return _carWashRepository.GetCarWashesPaginatedAsync(pageSize, page);
+        }
+
+        public async Task<int> CountCarWashesAsync()
+        {
+            return await _carWashRepository.CountCarWashesAsync();
         }
     }
 }

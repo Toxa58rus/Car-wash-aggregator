@@ -8,7 +8,14 @@ namespace CarWashAggregator.CarWashes.Domain.Repositories
 {
     public interface ICarWashRepository
     {
-        IEnumerable<CarWash> GetCarWashList();
-        Task<Guid> CreateAsync(CarWash carWash);
+        Task<CarWash> GetCarWashAsync(Guid id);
+        Task<IEnumerable<CarWash>> GetCarWashListAsync();
+        Task<IEnumerable<CarWash>> GetCarWashesPaginatedAsync(int pageSize, int page);
+        Task<int> CountCarWashesAsync();
+        Task<Guid> CreateCarWashAsync(CarWash carWash);
+        Task UpdateCarWashAsync(CarWash carWash);
+        Task UpdateCarWashRatingAsync(Guid carWashId, double AVG_Rating);
+        Task DeleteCarWashAsync(CarWash carWash);
+        Task DeleteCarWashByIdAsync(Guid id);
     }
 }

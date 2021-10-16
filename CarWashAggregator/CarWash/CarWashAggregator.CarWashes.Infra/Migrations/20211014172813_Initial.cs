@@ -15,7 +15,7 @@ namespace CarWashAggregator.CarWashes.Infra.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<double>(type: "double precision", nullable: false),
-                    Image = table.Column<byte[]>(type: "bytea", nullable: true),
+                    Image = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     AVG_Rating = table.Column<double>(type: "double precision", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: true),

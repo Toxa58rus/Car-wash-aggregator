@@ -34,8 +34,8 @@ namespace CarWashAggregator.CarWashes.Infra
             builder.Property<string>("Description")
                     .HasColumnType("text");
 
-            builder.Property<byte[]>("Image")
-                    .HasColumnType("bytea");
+            builder.Property<string>("Image")
+                    .HasColumnType("text");
 
             builder.Property<string>("Name")
                     .HasColumnType("text");

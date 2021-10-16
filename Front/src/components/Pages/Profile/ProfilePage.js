@@ -1,14 +1,20 @@
 import React from "react";
 import routes from "../../../helpers/routes";
 import cn from "classnames";
-import { ORDERS_STATUS } from "../../../constants/ORDER-STATUS";
+
+import { selectSession } from "../../../state/session";
+import { useSelector } from "react-redux";
 
 import Button from "../../Button/Button";
 import Header from "../../Header/Header";
-import OrderCard from "../../OrderCard/OrderCard";
+import ProfileOrders from "./ProfileOrders";
 import styles from "./ProfilePage.module.scss";
+import { ROLES } from "../../../constants/ROLES";
 
 const ProfilePage = ({ history }) => {
+  const session = useSelector(selectSession);
+  const role = session.role;
+
   const setSettingsTab = () => {
     history.replace(routes.profileSettings);
   };
@@ -24,12 +30,22 @@ const ProfilePage = ({ history }) => {
   const ordersBtn = cn(styles.menuBtn, {
     [styles.activeMenuBtn]: history.location.pathname === routes.profileOrders,
   });
+  const carWashBtn = cn(styles.menuBtn, {
+    [styles.activeMenuBtn]:
+      history.location.pathname === routes.profileCarWashes,
+  });
 
   return (
     <div className={styles.page}>
       <Header />
       <div className={styles.wrap}>
-        <h2 className={styles.title}>Title PAge</h2>
+        <h2 className={styles.title}>
+          {history.location.pathname === routes.profileSettings &&
+            "Настройки профиля"}
+          {history.location.pathname === routes.profileOrders &&
+            "История бронирования"}
+          {history.location.pathname === routes.profileCarWashes && "Мойки"}
+        </h2>
         <div className={styles.container}>
           <div className={styles.profileMenu}>
             <Button
@@ -46,11 +62,20 @@ const ProfilePage = ({ history }) => {
             >
               История бронирования
             </Button>
+            {role === ROLES.PARTNER && (
+              <Button
+                className={carWashBtn}
+                size="maxWidth"
+                onClick={setOrdersTab}
+              >
+                Мойки
+              </Button>
+            )}
           </div>
           <div className={styles.containerWrap}>
-            <OrderCard status={ORDERS_STATUS.BOOKED} />
-            <OrderCard status={ORDERS_STATUS.FINISHED} />
-            <OrderCard status={ORDERS_STATUS.CANCELED} />
+            {history.location.pathname === routes.profileOrders && (
+              <ProfileOrders />
+            )}
           </div>
         </div>
       </div>

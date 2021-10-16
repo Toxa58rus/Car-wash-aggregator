@@ -3,6 +3,7 @@
 
 .header {
   background: $bg-light;
+  z-index: 9999;
 }
 
 .wrap {
@@ -52,7 +53,7 @@
   height: 100%;
 
   @media (max-width: $sm - 1) {
-    position: absolute;
+    position: fixed;
     width: 0;
     left: 0;
     top: 0;
@@ -60,6 +61,7 @@
     overflow: hidden;
     transition: ease 0.3s;
     background: $bg-light;
+    z-index: 99999;
   }
 }
 
@@ -126,8 +128,12 @@
 }
 
 .btnInner {
-  display: flex;
-  justify-content: space-between;
+  display: none;
+
+  @media (max-width: $sm - 1) {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .mobileMenuSublist {
@@ -190,8 +196,7 @@
 
 @media (max-width: $sm - 1) {
   .activeMobileMenu {
-    @media (max-width: $sm - 1) {
       width: 100%;
-    }
+      overflow: hidden;
   }
 }

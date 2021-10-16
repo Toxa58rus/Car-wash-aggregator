@@ -20,6 +20,7 @@ import backIcon from "../../icons/arrow-back.svg";
 const Header = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const session = useSelector(selectSession);
+  const role = session.role;
 
   const handleOpenMobileMenu = () => {
     setMobileMenu("mobileMenu");
@@ -77,7 +78,7 @@ const Header = () => {
                 size="maxWidth"
                 onClick={handleOpenMobileSubMenu}
               >
-                <div className={cn(styles.btnInner, styles.mobile)}>
+                <div className={styles.btnInner}>
                   Профиль{" "}
                   <img src={arrowRight} alt="icon" className={styles.mobile} />
                 </div>
@@ -99,7 +100,10 @@ const Header = () => {
                   </Button>
                 </li>
                 <li className={styles.sublistItem}>
-                  <a className={styles.listItemLink} href={routes.root}>
+                  <a
+                    className={styles.listItemLink}
+                    href={routes.profileSettings}
+                  >
                     Настройки профиля
                     <img
                       src={arrowRight}
@@ -109,7 +113,10 @@ const Header = () => {
                   </a>
                 </li>
                 <li className={styles.sublistItem}>
-                  <a className={styles.listItemLink} href={routes.root}>
+                  <a
+                    className={styles.listItemLink}
+                    href={routes.profileOrders}
+                  >
                     Заказы
                     <img
                       src={arrowRight}
@@ -118,6 +125,21 @@ const Header = () => {
                     />
                   </a>
                 </li>
+                {role === ROLES.PARTNER && (
+                  <li className={styles.sublistItem}>
+                    <a
+                      className={styles.listItemLink}
+                      href={routes.profileCarWashes}
+                    >
+                      Мойки
+                      <img
+                        src={arrowRight}
+                        alt="icon"
+                        className={styles.mobile}
+                      />
+                    </a>
+                  </li>
+                )}
               </ul>
             )}
 

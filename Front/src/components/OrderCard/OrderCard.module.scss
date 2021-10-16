@@ -1,4 +1,5 @@
 @import 'src/styles/colors';
+@import 'src/styles/breakpoints.scss';
 
 .contain {
   padding: 20px 30px 30px;
@@ -25,6 +26,17 @@
     font-weight: 400;
     margin-right: 10px;
   }
+
+  @media (max-width: $sm - 1) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin: 0;
+      align-items: flex-start;
+    }
+  }
 }
 
 .infoItem {
@@ -32,6 +44,10 @@
 
   &:last-child {
     margin-bottom: 0;
+
+    @media (max-width: $sm - 1) {
+      margin-bottom: 10px;
+    }
   }
 }
 
@@ -42,6 +58,18 @@
   width: 35%;
   justify-content: space-between;
   align-items: flex-end;
+
+  @media (max-width: $sm - 1) {
+    width: 100%;
+    height: auto;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: $sm - 1) {
+  .status {
+    margin-bottom: 15px;
+  }
 }
 
 .cancelBtn {
@@ -52,4 +80,20 @@
 .reviewBtn {
   height: 40px;
   background: $yellow;
+}
+
+@media (max-width: $sm - 1) {
+  .phoneCarWash {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin-bottom: 10px;
+    }
+  }
+
+  .info {
+    width: 100%;
+  }
 }

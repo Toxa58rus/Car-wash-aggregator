@@ -33,7 +33,7 @@ const OrderCard = ({ status }) => {
         <div className={styles.orderActions}>
           {status === ORDERS_STATUS.BOOKED && (
             <>
-              <div>
+              <div className={styles.status}>
                 <span>Статус:</span>
                 {ORDERS_STATUS_NAMES[status]}
               </div>
@@ -44,7 +44,7 @@ const OrderCard = ({ status }) => {
           )}
           {status === ORDERS_STATUS.FINISHED && (
             <>
-              <div>
+              <div className={styles.status}>
                 <span>Статус:</span>
                 {ORDERS_STATUS_NAMES[status]}
               </div>
@@ -55,7 +55,7 @@ const OrderCard = ({ status }) => {
           )}
           {status === ORDERS_STATUS.CANCELED && (
             <>
-              <div>
+              <div className={styles.status}>
                 <span>Статус:</span>
                 {ORDERS_STATUS_NAMES[status]}
               </div>

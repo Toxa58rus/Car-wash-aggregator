@@ -17,6 +17,7 @@ function App() {
         <Route exact path="/register" component={LoginPage} />
         <Route exact path="/profile/settings" component={ProfilePage} />
         <Route exact path="/profile/orders" component={ProfilePage} />
+        <Route exact path="/profile/car-washes" component={ProfilePage} />
       </Switch>
     </BrowserRouter>
   );

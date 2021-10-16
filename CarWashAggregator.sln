@@ -52,6 +52,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authorization", "Authorization", "{FE8D7023-E094-458D-AECB-B66B5E0F65A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Authorization.Business", "CarWashAggregator\Authorization\CarWashAggregator.Authorization.Business\CarWashAggregator.Authorization.Business.csproj", "{A52F79A6-4809-4F6B-9BBF-6B690AB1E60A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5CA2F1B2-AB09-4131-B486-0238C262D48A} = {5CA2F1B2-AB09-4131-B486-0238C262D48A}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Authorization.Domain", "CarWashAggregator\Authorization\CarWashAggregator.Authorization.Domain\CarWashAggregator.Authorization.Domain.csproj", "{EFF1F4E0-BC2F-46E0-ADDE-A77B0AC57B17}"
 EndProject

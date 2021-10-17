@@ -8,12 +8,12 @@ using System.Text;
 
 namespace CarWashAggregator.User.infa.Data
 {
-    public class UserContext:DbContext
+    public class Usercontext:DbContext
     {
         public DbSet<Car> Cars { get; set; }
         public DbSet<UserInfo> UserInfos { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public UserContext(DbContextOptions<UserContext> options) : base(options)
+        public Usercontext(DbContextOptions<Usercontext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

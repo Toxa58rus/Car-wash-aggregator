@@ -11,8 +11,8 @@ namespace CarWashAggregator.User.infa.Repository
 {
     class UserReposirory : IUserRepository
     {
-        private readonly UserContext _context;
-        public UserReposirory(UserContext context)
+        private readonly Usercontext _context;
+        public UserReposirory(Usercontext context)
         {
             _context = context;
         }

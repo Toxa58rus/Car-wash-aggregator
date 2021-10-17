@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Handlers\EventHandlers\" />
-    <Folder Include="Handlers\QueryHandlers\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
+	  <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain.DTO\CarWashAggregator.Common.Domain.DTO.csproj" />
+	  <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
     <ProjectReference Include="..\CarWashAggregator.Authorization.Domain\CarWashAggregator.Authorization.Domain.csproj" />
   </ItemGroup>
 

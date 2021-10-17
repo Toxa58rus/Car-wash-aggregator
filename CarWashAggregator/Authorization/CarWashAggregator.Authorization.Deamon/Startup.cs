@@ -1,3 +1,4 @@
+using CarWashAggregator.Authorization.Business.Handlers.QueryHandlers;
 using CarWashAggregator.Authorization.Business.JwtAuth.Contracts;
 using CarWashAggregator.Authorization.Business.JwtAuth.Implementation;
 using CarWashAggregator.Authorization.Business.JwtAuth.Models;
@@ -6,6 +7,8 @@ using CarWashAggregator.Authorization.Infra.Data;
 using CarWashAggregator.Authorization.Infra.Repository;
 using CarWashAggregator.Common.Domain;
 using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request;
+using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response;
 using CarWashAggregator.Common.Infra;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,7 +44,7 @@ namespace CarWashAggregator.Authorization.Deamon
             services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
 
             //Subscriptions
-
+            services.AddTransient<ValidationCheckHandler>();
 
             services.AddMvc();
             BusContainer.RegisterBusService(services, _configuration);
@@ -65,6 +68,7 @@ namespace CarWashAggregator.Authorization.Deamon
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.SubscribeToQuery<RequestValidationCheck, ResponseValidationCheck, ValidationCheckHandler>();
         }
     }
 }

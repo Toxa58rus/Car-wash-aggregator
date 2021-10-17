@@ -14,8 +14,6 @@
     <Folder Include="ApiGateway\Querys\Request\" />
     <Folder Include="ApiGateway\Querys\Response\" />
     <Folder Include="Authorization\Events\" />
-    <Folder Include="Authorization\Querys\Request\" />
-    <Folder Include="Authorization\Querys\Response\" />
     <Folder Include="Order\Events\" />
     <Folder Include="Reviews\Events\" />
     <Folder Include="User\Events\" />

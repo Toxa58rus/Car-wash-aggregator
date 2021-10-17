@@ -39,13 +39,14 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             {
                 return new JwtAuthResult()
                 {
-                    Error = "User already exist"
+                    ErrorMessage = "User already exist"
                 };
             }
 
             //TODO UserCreatedEvent -> UserService
+
             var refreshToken = GenerateRefreshToken();
-            var newUserId = await _authorizationRepository.Add(new AuthorizationData()
+            await _authorizationRepository.Add(new AuthorizationData()
             {
                 UserLogin = login,
                 HashPassword = hashPassword,
@@ -79,7 +80,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             {
                 return new JwtAuthResult()
                 {
-                    Error = "Login/Password is not valid"
+                    ErrorMessage = "Login/Password is not valid"
                 };
             }
 
@@ -134,7 +135,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             {
                 return new JwtAuthResult()
                 {
-                    Error = "Invalid token"
+                    ErrorMessage = "Invalid token"
                 };
             }
             var jwtToken = DecodeJwtToken(accessToken);
@@ -143,7 +144,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             {
                 return new JwtAuthResult()
                 {
-                    Error = "Invalid token"
+                    ErrorMessage = "Invalid token"
                 };
             }
 
@@ -159,7 +160,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             {
                 return new JwtAuthResult()
                 {
-                    Error = ex.Message
+                    ErrorMessage = ex.Message
                 };
             }
 
@@ -167,7 +168,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             {
                 return new JwtAuthResult()
                 {
-                    Error = "RefreshToken expired"
+                    ErrorMessage = "Invalid token"
                 };
             }
 

@@ -3,7 +3,6 @@
 
 .header {
   background: $bg-light;
-  z-index: 9999;
 }
 
 .wrap {
@@ -61,7 +60,7 @@
     overflow: hidden;
     transition: ease 0.3s;
     background: $bg-light;
-    z-index: 99999;
+    z-index: 999;
   }
 }
 
@@ -156,7 +155,6 @@
   width: 100%;
   transition: all 0.3s;
   padding: 0 20px;
-  
 }
 
 .closeSublistBtn {

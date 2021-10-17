@@ -20,7 +20,7 @@ import backIcon from "../../icons/arrow-back.svg";
 const Header = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const session = useSelector(selectSession);
-  const role = session.role;
+  const role = session && session.role;
 
   const handleOpenMobileMenu = () => {
     setMobileMenu("mobileMenu");
@@ -85,53 +85,28 @@ const Header = () => {
               </Button>
             </li>
 
-            {session && session.role === ROLES.CLIENT && (
-              <ul className={sublistCn}>
-                <li className={styles.sublistItem}>
-                  <Button
-                    className={styles.closeSublistBtn}
-                    size="maxWidth"
-                    onClick={handleOpenMobileMenu}
-                  >
-                    <div className={styles.closeBtnInner}>
-                      <img src={backIcon} alt="icon" />
-                      Профиль
-                    </div>
-                  </Button>
-                </li>
-                <li className={styles.sublistItem}>
-                  <a
-                    className={styles.listItemLink}
-                    href={routes.profileSettings}
-                  >
-                    Настройки профиля
-                    <img
-                      src={arrowRight}
-                      alt="icon"
-                      className={styles.mobile}
-                    />
-                  </a>
-                </li>
-                <li className={styles.sublistItem}>
-                  <a
-                    className={styles.listItemLink}
-                    href={routes.profileOrders}
-                  >
-                    Заказы
-                    <img
-                      src={arrowRight}
-                      alt="icon"
-                      className={styles.mobile}
-                    />
-                  </a>
-                </li>
-                {role === ROLES.PARTNER && (
+            {session &&
+              (session.role === ROLES.PARTNER ||
+                session.role === ROLES.CLIENT) && (
+                <ul className={sublistCn}>
+                  <li className={styles.sublistItem}>
+                    <Button
+                      className={styles.closeSublistBtn}
+                      size="maxWidth"
+                      onClick={handleOpenMobileMenu}
+                    >
+                      <div className={styles.closeBtnInner}>
+                        <img src={backIcon} alt="icon" />
+                        Профиль
+                      </div>
+                    </Button>
+                  </li>
                   <li className={styles.sublistItem}>
                     <a
                       className={styles.listItemLink}
-                      href={routes.profileCarWashes}
+                      href={routes.profileSettings}
                     >
-                      Мойки
+                      Настройки профиля
                       <img
                         src={arrowRight}
                         alt="icon"
@@ -139,9 +114,36 @@ const Header = () => {
                       />
                     </a>
                   </li>
-                )}
-              </ul>
-            )}
+                  <li className={styles.sublistItem}>
+                    <a
+                      className={styles.listItemLink}
+                      href={routes.profileOrders}
+                    >
+                      Заказы
+                      <img
+                        src={arrowRight}
+                        alt="icon"
+                        className={styles.mobile}
+                      />
+                    </a>
+                  </li>
+                  {role === ROLES.PARTNER && (
+                    <li className={styles.sublistItem}>
+                      <a
+                        className={styles.listItemLink}
+                        href={routes.profileCarWashes}
+                      >
+                        Мойки
+                        <img
+                          src={arrowRight}
+                          alt="icon"
+                          className={styles.mobile}
+                        />
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              )}
 
             <li className={styles.listItem}>
               <img src={phoneIcon} alt="phone" />

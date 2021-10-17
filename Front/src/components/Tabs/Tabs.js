@@ -54,7 +54,6 @@ Tabs.defaultProps = {
   onChangeTab: null,
   selected: null,
   tabs: null,
-  size: "primary",
 };
 
 Tabs.propTypes = {
@@ -65,7 +64,6 @@ Tabs.propTypes = {
   onChangeTab: PropTypes.func,
   selected: PropTypes.number,
   tabs: PropTypes.arrayOf(PropTypes.object),
-  size: PropTypes.string,
 };
 
 export default Tabs;

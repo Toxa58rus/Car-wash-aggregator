@@ -1,5 +1,7 @@
 import React from "react";
 import cn from "classnames";
+import PropTypes from "prop-types";
+
 import Button from "../Button/Button";
 import styles from "./Tabs.module.scss";
 
@@ -22,6 +24,20 @@ const Tab = (props) => {
       {label}
     </Button>
   );
+};
+
+Tab.defaultProps = {
+  id: null,
+  className: null,
+};
+
+Tab.propTypes = {
+  activeTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  id: PropTypes.number,
+  className: PropTypes.string,
 };
 
 export default Tab;

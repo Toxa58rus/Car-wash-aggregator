@@ -51,9 +51,10 @@
   background: transparent;
   height: 50px;
   border-radius: 0;
+  border-bottom: 1px solid $gray-dark;
 
-  &:first-child {
-    border-bottom: 1px solid $gray-dark;
+  &:last-child {
+    border-bottom: none;
   }
 }
 

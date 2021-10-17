@@ -21,7 +21,9 @@ const ProfilePage = ({ history }) => {
   const setOrdersTab = () => {
     history.replace(routes.profileOrders);
   };
-  console.log(history);
+  const setCarWashTab = () => {
+    history.replace(routes.profileCarWashes);
+  };
 
   const settingsBtn = cn(styles.menuBtn, {
     [styles.activeMenuBtn]:
@@ -66,7 +68,7 @@ const ProfilePage = ({ history }) => {
               <Button
                 className={carWashBtn}
                 size="maxWidth"
-                onClick={setOrdersTab}
+                onClick={setCarWashTab}
               >
                 Мойки
               </Button>

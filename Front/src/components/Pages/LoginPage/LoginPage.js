@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import cn from "classnames";
 import { Form, Field } from "react-final-form";
 import routes from "../../../helpers/routes";
-import { useDispatch, useSelector } from "react-redux";
-import { setSession, selectSession } from "../../../state/session";
+import { useDispatch } from "react-redux";
+import { setSession } from "../../../state/session";
 import { ROLES_OPTIONS } from "../../../constants/ROLES";
 import {
   composeValidators,
@@ -22,12 +22,11 @@ const LoginPage = (props) => {
   const { history } = props;
 
   const [tab, setTab] = useState(history.location.pathname);
-  const session = useSelector(selectSession);
   const [state, setState] = useState({
     token: "aljkhsdbefisuwasjdebswvcoijknokwqalpmgfv",
     name: "ra",
     pass: "asdas",
-    role: 1,
+    role: 2,
   });
   const dispatch = useDispatch();
 
@@ -47,15 +46,13 @@ const LoginPage = (props) => {
       name: data.email,
       data: data.password,
     }));
-    console.log(state);
+
     dispatch(setSession(state));
     history.push(routes.root);
   };
   const register = (data) => {
     console.log(data);
   };
-
-  console.log(session);
 
   const loginBtnCn = cn(styles.containerBoxBtn, {
     [styles.containerBoxBtnActive]: tab === routes.login,

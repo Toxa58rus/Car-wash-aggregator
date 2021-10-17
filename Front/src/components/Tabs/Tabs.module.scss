@@ -1,0 +1,17 @@
+@import '/src/styles/colors.scss';
+
+.tabBtn {
+  background: transparent;
+  width: auto;
+  height: 40px;
+  border-radius: 0;
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.tabBtnActive {
+  border-bottom: 2px solid $gray-dark;
+}

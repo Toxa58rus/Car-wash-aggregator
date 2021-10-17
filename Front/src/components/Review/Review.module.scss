@@ -1,0 +1,66 @@
+@import '/src/styles/colors.scss';
+@import '/src/styles/breakpoints.scss';
+
+.contain {
+    background: $white;
+    width: 100%;
+    border-radius: 8px;
+    text-align: start;
+    padding: 40px 30px 30px;
+    box-sizing: border-box;
+  
+    @media (max-width: $lg - 1) {
+      border-radius: 0;
+      height: 100%;
+      padding: 40px 15px;
+    }
+  }
+  
+  .title {
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 130%;
+  
+    @media (max-width: $lg - 1) {
+      display: none;
+    }
+  }
+  
+  .inner {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  
+    span {
+      margin-left: 10px;
+    }
+  }
+
+  .rate {
+    display: flex;
+    align-items: center;
+
+     @media (max-width: $sm - 1) {
+       flex-direction: column;
+     }
+  }
+  
+  .textarea {
+    resize: vertical;
+    padding: 15px 18px;
+    font-size: 15px;
+    height: 150px;
+    line-height: 14px;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 8px;
+    border-color: $gray-dark;
+    outline: none;
+  }
+
+  .reviewBtn {
+    height: 40px;
+    margin-top: 20px;
+    background: $yellow;
+  }
+  

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CarWashAggregator.Orders.Business.interfaces;
 using System.Collections;
+using CarWashAggregator.User.Domain.Enities;
 
 namespace CarWashAggregator.User.Deamon.Controllers
 {
@@ -19,9 +20,9 @@ namespace CarWashAggregator.User.Deamon.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<string> Get()
+        public Task<JsonResult> Get()
         {
-            return Json(_carUserService.GetUsers());
+            return Json(await _carUserService.GetUsers());
         }
 
         // GET api/values/5

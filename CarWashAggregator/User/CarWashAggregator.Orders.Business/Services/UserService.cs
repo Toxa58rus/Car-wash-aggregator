@@ -18,7 +18,7 @@ namespace CarWashAggregator.Orders.Business.Services
         }
         public IEnumerable<UserInfo> GetUsers()
         {
-            return _dbRepository.Get<UserInfo>().AsEnumerable();
+            return _dbRepository.Get().AsEnumerable();
         }
     }
 }

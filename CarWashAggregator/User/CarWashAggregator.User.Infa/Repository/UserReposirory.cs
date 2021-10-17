@@ -1,4 +1,5 @@
 ﻿using CarWashAggregator.User.Domain.Contracts;
+using CarWashAggregator.User.Domain.Enities;
 using CarWashAggregator.User.Infa.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,9 +22,9 @@ namespace CarWashAggregator.User.Infa.Repository
             await Task.Run(() => _context.AddAsync( newEntity));
         }
 
-        public IQueryable<UserInfo> Get<UserInfo>()
+        public IQueryable<UserInfo> Get()
         {
-            return (IQueryable<UserInfo>)_context.UserInfos;
+            return _context.UserInfos;
         }
 
         public async Task Remove<UserInfo>(UserInfo entity)

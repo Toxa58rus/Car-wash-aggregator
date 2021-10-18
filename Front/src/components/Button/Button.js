@@ -35,7 +35,7 @@ Button.propTypes = {
     PropTypes.element,
   ]).isRequired,
   type: PropTypes.string,
-  size: PropTypes.oneOf(["standart", "maxWidth", "content"]),
+  size: PropTypes.oneOf(["standart", "maxWidth"]),
 };
 
 export default Button;

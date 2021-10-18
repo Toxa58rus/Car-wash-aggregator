@@ -65,7 +65,7 @@
 .containerWrap {
   box-sizing: border-box;
   width: 100%;
-  padding: 0 30px;
+  padding: 0 0 0 30px;
 
   @media (max-width: $sm - 1) {
     padding: 0;
@@ -80,6 +80,36 @@
     overflow-x: scroll;
     padding-bottom: 10px;
   }
+}
+
+.contain {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.addWash {
+  position: absolute;
+  right: 20px;
+  top: -47px;
+  height: 40px;
+  width: 200px;
+  background: $yellow;
+}
+
+.washCard {
+  box-sizing: border-box;
+  padding: 20px;
+  background: $white;
+  border-radius: 10px;
+  margin: 15px;
+
+  @media (max-width: $lg - 1) {
+    margin: 10px;
+  }
+
 }
 
 @media (max-width: $sm - 1) {

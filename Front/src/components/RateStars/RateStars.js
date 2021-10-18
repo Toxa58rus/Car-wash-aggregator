@@ -23,10 +23,11 @@ RateStars.defaultProps = {
   value: null,
   size: 25,
   edit: true,
+  onChange: null,
 };
 
 RateStars.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   value: PropTypes.number,
   size: PropTypes.number,
   edit: PropTypes.bool,

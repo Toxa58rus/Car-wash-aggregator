@@ -1,0 +1,114 @@
+@import "/src/styles/colors.scss";
+@import "/src/styles/breakpoints.scss";
+
+.Card{
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $xl - 1) {
+    width: 260px;
+  }
+
+  @media (max-width: $lg - 1) {
+    width: 240px;
+  }
+
+  @media (max-width: 900px) {
+    width: 202px;
+  }
+
+  @media (max-width: $m - 1) {
+    width: 220px;
+  }
+
+  @media (max-width: $sm - 1) {
+    width: 100%;
+  }
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.imgPlaceholder{
+  width: 100%;
+  height: 200px;
+  background-color: $bg-light;
+  margin-bottom: 20px;
+}
+
+.cardName{
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.cardDesc{
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.cardDescFull{
+  color: lightblue;
+  text-decoration-line: underline;
+}
+
+.cardAdress{
+  display: flex;
+  align-items: center;
+  margin-bottom: 13px;
+
+  img {
+    margin-right: 10px;
+  }
+}
+
+.cardAdressText{
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.ratingLabel {
+  margin-right: 15px;
+  opacity: 0.6;
+  font-size: 14px;
+  line-height: 13px; 
+}
+
+.carCategoties {
+  font-weight: bold;
+  margin-top: 15px;
+
+  span {
+    font-weight: 400;
+    opacity: 0.6;
+    margin-right: 7px;
+  }
+}
+
+.cardAvailability{
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.cardAvailabilityText{
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 9px;
+}
+
+.washCardButton{
+  margin-top: 25px;
+  font-size: 14px;
+  font-weight: 400;
+}

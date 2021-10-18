@@ -2,7 +2,7 @@
 
 namespace CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response
 {
-    public class ResponseValidationCheck : Query
+    public class ResponseTokenValidationCheck : Query
     {
         public bool TokenIsValid { get; set; }
     }

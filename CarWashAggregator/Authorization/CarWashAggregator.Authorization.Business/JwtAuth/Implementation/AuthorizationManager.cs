@@ -2,8 +2,10 @@
 using CarWashAggregator.Authorization.Business.JwtAuth.Models;
 using CarWashAggregator.Authorization.Domain.Contracts;
 using CarWashAggregator.Authorization.Domain.Entities;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -13,8 +15,6 @@ using System.Threading.Tasks;
 
 namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 {
-
-
     public class AuthorizationManager : IAuthorizationManager
     {
         private const string ClaimsRoleType = "user_role";
@@ -22,12 +22,14 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
         private readonly IAuthorizationRepository _authorizationRepository;
         private readonly JwtTokenConfig _jwtTokenConfig;
         private readonly byte[] _secret;
+        private readonly ILogger _logger;
 
-        public AuthorizationManager(JwtTokenConfig tokenConfig, IAuthorizationRepository authorizationRepository)
+        public AuthorizationManager(JwtTokenConfig tokenConfig, IAuthorizationRepository authorizationRepository, ILogger<AuthorizationManager> logger)
         {
             _authorizationRepository = authorizationRepository;
             _jwtTokenConfig = tokenConfig;
             _secret = Encoding.ASCII.GetBytes(_jwtTokenConfig.Secret);
+            _logger = logger;
         }
 
         public async Task<JwtAuthResult> RegisterAsync(string login, string password, string role)
@@ -54,6 +56,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
                 ExpireAt = DateTime.UtcNow.AddMinutes(_jwtTokenConfig.RefreshTokenExpiration)
             });
             await _authorizationRepository.SaveChangesAsync();
+            _logger.LogDebug("User {UserName} registered", login);
 
             var accessToken = await GenerateAccessToken(new[]
             {
@@ -89,6 +92,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             existUser.ExpireAt = DateTime.UtcNow.AddMinutes(_jwtTokenConfig.RefreshTokenExpiration);
             await _authorizationRepository.Update(existUser);
             await _authorizationRepository.SaveChangesAsync();
+            _logger.LogDebug("User {UserName} logged in", login);
 
             var accessToken = await GenerateAccessToken(new[]
             {
@@ -123,15 +127,16 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
                         },
                         out _);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogWarning("Failed to validate AccessToken {AccessToken} \n Message:{Message}", token, ex.Message);
                 return false;
             }
             return true;
         }
         public async Task<JwtAuthResult> RefreshTokenAsync(string accessToken, string refreshToken)
         {
-            if (!ValidateJwtToken(accessToken))
+            if (string.IsNullOrWhiteSpace(accessToken))
             {
                 return new JwtAuthResult()
                 {
@@ -154,21 +159,22 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             AuthorizationData session;
             try
             {
-                session = _authorizationRepository.Get<AuthorizationData>().Single(x => x.UserLogin == login && x.HashPassword == hashPassword);
+                session = _authorizationRepository.Get<AuthorizationData>()
+                    .Single(x => x.UserLogin == login && x.HashPassword == hashPassword && x.RefreshToken == refreshToken);
             }
             catch (Exception ex)
             {
                 return new JwtAuthResult()
                 {
-                    ErrorMessage = ex.Message
+                    ErrorMessage = "Invalid token"
                 };
             }
 
-            if (session.ExpireAt < DateTime.UtcNow || refreshToken != session.RefreshToken)
+            if (session.ExpireAt < DateTime.UtcNow)
             {
                 return new JwtAuthResult()
                 {
-                    ErrorMessage = "Invalid token"
+                    ErrorMessage = "Refresh token expired"
                 };
             }
 
@@ -198,7 +204,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             }
             return sBuilder.ToString();
         }
-        private Task<string> GenerateAccessToken(Claim[] claims)
+        private Task<string> GenerateAccessToken(IEnumerable<Claim> claims)
         {
             var now = DateTime.UtcNow;
             var tokenHandler = new JwtSecurityTokenHandler();

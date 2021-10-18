@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 {
-    public class ValidationCheckHandler : IQueryHandler<RequestValidationCheck, ResponseValidationCheck>
+    public class ValidationCheckHandler : IQueryHandler<RequestTokenValidationCheck, ResponseTokenValidationCheck>
     {
         private readonly IAuthorizationManager _authorizationManager;
 
@@ -15,9 +15,9 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
             _authorizationManager = authorizationManager;
         }
 
-        public Task<ResponseValidationCheck> Handle(RequestValidationCheck request)
+        public Task<ResponseTokenValidationCheck> Handle(RequestTokenValidationCheck request)
         {
-            var tokenIsValid = new ResponseValidationCheck()
+            var tokenIsValid = new ResponseTokenValidationCheck()
             {
                 TokenIsValid = _authorizationManager.ValidateJwtToken(request.TokenToValidate)
             };

@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarWashAggregator.Authorization.Infra.Migrations
 {
-    [DbContext(typeof(AuthorizationContext))]
+    [DbContext(typeof(AuthorizationDbContext))]
     partial class AuthorizationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -2,7 +2,7 @@
 
 namespace CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request
 {
-    public class RequestValidationCheck : Query
+    public class RequestTokenValidationCheck : Query
     {
         public string TokenToValidate { get; set; }
     }

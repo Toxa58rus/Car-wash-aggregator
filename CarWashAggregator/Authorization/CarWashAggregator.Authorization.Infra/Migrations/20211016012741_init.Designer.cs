@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarWashAggregator.Authorization.Infra.Migrations
 {
-    [DbContext(typeof(AuthorizationContext))]
+    [DbContext(typeof(AuthorizationDbContext))]
     [Migration("20211016012741_init")]
     partial class init
     {

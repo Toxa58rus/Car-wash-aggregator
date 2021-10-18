@@ -35,7 +35,7 @@ namespace CarWashAggregator.Authorization.Deamon
             services.AddSingleton(jwtTokenConfig);
             services.AddScoped<IAuthorizationManager, AuthorizationManager>();
 
-            services.AddDbContext<AuthorizationContext>(options =>
+            services.AddDbContext<AuthorizationDbContext>(options =>
             {
                 options.UseNpgsql(_configuration.GetConnectionString(Helper.DataBaseConnectionSection));
             });
@@ -44,7 +44,10 @@ namespace CarWashAggregator.Authorization.Deamon
             services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
 
             //Subscriptions
-            services.AddTransient<ValidationCheckHandler>();
+            services.AddScoped<ValidationCheckHandler>()
+                .AddScoped<LoginUserHandler>()
+                .AddScoped<RegisterNewUserHandler>()
+                .AddScoped<TokenRefreshHandler>();
 
             services.AddMvc();
             BusContainer.RegisterBusService(services, _configuration);
@@ -68,7 +71,10 @@ namespace CarWashAggregator.Authorization.Deamon
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.SubscribeToQuery<RequestValidationCheck, ResponseValidationCheck, ValidationCheckHandler>();
+            eventBus.SubscribeToQuery<RequestTokenValidationCheck, ResponseTokenValidationCheck, ValidationCheckHandler>();
+            eventBus.SubscribeToQuery<RequestLoginUser, ResponseUserAuthorization, LoginUserHandler>();
+            eventBus.SubscribeToQuery<RequestRegisterNewUser, ResponseUserAuthorization, RegisterNewUserHandler>();
+            eventBus.SubscribeToQuery<RequestTokenRefresh, ResponseUserAuthorization, TokenRefreshHandler>();
         }
     }
 }

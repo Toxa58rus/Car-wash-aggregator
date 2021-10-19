@@ -62,7 +62,7 @@ const ProfileCarWashes = () => {
           <AddCarWash />
         </Modal>
       )}
-      <Button className={styles.addWash} onClick={openReviewModal}>
+      <Button className={styles.addWashBtn} onClick={openReviewModal} increased>
         Добавить мойку
       </Button>
       {WASHES.map((item) => (

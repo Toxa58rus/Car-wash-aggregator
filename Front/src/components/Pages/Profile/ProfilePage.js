@@ -9,6 +9,7 @@ import Button from "../../Button/Button";
 import Header from "../../Header/Header";
 import ProfileOrders from "./ProfileOrders";
 import ProfileCarWashes from "./ProfileCarWashes";
+import ProfileSettings from "./ProfileSettings";
 import styles from "./ProfilePage.module.scss";
 
 const ProfilePage = ({ history }) => {
@@ -75,12 +76,16 @@ const ProfilePage = ({ history }) => {
             )}
           </div>
           <div className={styles.containerWrap}>
+            {history.location.pathname === routes.profileSettings && (
+              <ProfileSettings />
+            )}
             {history.location.pathname === routes.profileOrders && (
               <ProfileOrders />
             )}
-            {history.location.pathname === routes.profileCarWashes && (
-              <ProfileCarWashes />
-            )}
+            {role === ROLES.PARTNER &&
+              history.location.pathname === routes.profileCarWashes && (
+                <ProfileCarWashes />
+              )}
           </div>
         </div>
       </div>

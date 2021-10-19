@@ -17,9 +17,17 @@ namespace CarWashAggregator.User.Infa.Repository
         {
             _context = context;
         }
-        public async Task Add<UserInfo>(UserInfo newEntity)
+
+        public async Task<UserInfo> GetUserByIdAsync(Guid id)
         {
-            await Task.Run(() => _context.AddAsync( newEntity));
+            return await _context.UserInfos.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<Guid> Add(UserInfo newEntity)
+        {
+            await _context.AddAsync(newEntity);
+            await _context.SaveChangesAsync();
+            return newEntity.Id;
         }
 
         public IQueryable<UserInfo> Get()
@@ -27,18 +35,28 @@ namespace CarWashAggregator.User.Infa.Repository
             return _context.UserInfos;
         }
 
-        public async Task Remove<UserInfo>(UserInfo entity)
+        public async Task Remove(UserInfo entity)
         {
-            await Task.Run(() => _context.RemoveRange(entity));
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task Update<UserInfo>(UserInfo entity)
+        public async Task Update(UserInfo entity)
         {
-            await Task.Run(() => _context.UpdateRange(entity));
+            _context.Attach(entity);
+            _context.Update(entity);
+            await _context.SaveChangesAsync();
         }
+
         public async Task SaveChangesAsync()
         {
             await Task.Run(() => _context.SaveChangesAsync());
+        }
+
+        public async Task DeleteUserByIdAsync(Guid id)
+        {
+            _context.Remove(await _context.UserInfos.Where(x => x.Id == id).FirstOrDefaultAsync());
+            await _context.SaveChangesAsync();
         }
     }
 }

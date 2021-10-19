@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain.DTO\CarWashAggregator.Common.Domain.DTO.csproj" />
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
     <ProjectReference Include="..\CarWashAggregator.User.Domain\CarWashAggregator.User.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
   </ItemGroup>
 
 </Project>

@@ -15,14 +15,27 @@ using CarWashAggregator.User.Domain.Contracts;
 using CarWashAggregator.User.Infa.Repository;
 using CarWashAggregator.User.Infa.Data;
 using Microsoft.EntityFrameworkCore;
+using CarWashAggregator.Orders.Business.interfaces;
+using CarWashAggregator.Orders.Business.Services;
+using CarWashAggregator.Common.Infra;
+using CarWashAggregator.Orders.Business.QueryHandlers;
+using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
+using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
+using CarWashAggregator.Orders.Business.EventHandlers;
+using CarWashAggregator.Common.Domain.DTO.User.Events;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace CarWashAggregator.User.Deamon
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -30,9 +43,20 @@ namespace CarWashAggregator.User.Deamon
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<UserContext>(options => options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddScoped<IUserRepository, UserReposirory>();
+            services.AddTransient<IUserService, UserService>();
+
+            services.AddTransient<CreateUserQueryHandler>();
+            services.AddTransient<GetUserByIdQueryHandler>();
+            services.AddTransient<DeleteUserByIdEventHandler>();
+            services.AddTransient<UpdateUserEventHandler>();
+
+            services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic)); ;
+
+            BusContainer.RegisterBusService(services, _configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +74,21 @@ namespace CarWashAggregator.User.Deamon
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+
+            eventBus.SubscribeToQuery<RequestCreateUserQuery, ResponseCreateUserQuery, CreateUserQueryHandler>();
+            eventBus.SubscribeToQuery<RequestGetUserByIdQuery, ResponseGetUserByIdQuery, GetUserByIdQueryHandler>();
+
+            eventBus.SubscribeToEvent<DeleteUserByIdEvent, DeleteUserByIdEventHandler>();
+            eventBus.SubscribeToEvent<UpdateUserEvent, UpdateUserEventHandler>();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

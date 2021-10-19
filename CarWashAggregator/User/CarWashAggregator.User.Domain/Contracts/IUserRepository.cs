@@ -10,9 +10,11 @@ namespace CarWashAggregator.User.Domain.Contracts
     public interface IUserRepository
     {
         IQueryable<UserInfo> Get();
-        Task Add<UserInfo>(UserInfo newEntity);
-        Task Remove<UserInfo>(UserInfo entity);
-        Task Update<UserInfo>(UserInfo entity);
+        Task<UserInfo> GetUserByIdAsync(Guid id);
+        Task<Guid> Add(UserInfo newEntity);
+        Task Remove(UserInfo entity);
+        Task DeleteUserByIdAsync(Guid id);
+        Task Update(UserInfo entity);
         Task SaveChangesAsync();
     }
 }

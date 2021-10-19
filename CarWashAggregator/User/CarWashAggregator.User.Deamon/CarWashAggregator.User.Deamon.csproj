@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Infra\CarWashAggregator.Common.Infra.csproj" />
     <ProjectReference Include="..\CarWashAggregator.Orders.Business\CarWashAggregator.Orders.Business.csproj" />
     <ProjectReference Include="..\CarWashAggregator.User.Domain\CarWashAggregator.User.Domain.csproj" />
     <ProjectReference Include="..\CarWashAggregator.User.Infa\CarWashAggregator.User.Infa.csproj" />

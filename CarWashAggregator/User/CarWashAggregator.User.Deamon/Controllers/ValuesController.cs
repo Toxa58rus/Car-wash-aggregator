@@ -6,30 +6,68 @@ using Microsoft.AspNetCore.Mvc;
 using CarWashAggregator.Orders.Business.interfaces;
 using System.Collections;
 using CarWashAggregator.User.Domain.Enities;
+using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
+using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
+using CarWashAggregator.Common.Domain.DTO.User.Events;
+using AutoMapper;
 
 namespace CarWashAggregator.User.Deamon.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class ValuesController : Controller
     {
         private readonly IUserService _carUserService;
-        public ValuesController(IUserService carUserService)
+        private readonly IEventBus _eventBus;
+
+        public ValuesController(IUserService carUserService, IEventBus eventBus)
         {
             _carUserService = carUserService;
+            _eventBus = eventBus;
         }
         // GET api/values
         [HttpGet]
-        public Task<JsonResult> Get()
+        public JsonResult Get()
         {
-            return Json(await _carUserService.GetUsers());
+            return Json(_carUserService.GetUsers());
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<JsonResult> RequestGetUserQuery()
         {
-            return "value";
+            UserInfo user = await _carUserService.GetUserByIdAsync(_carUserService.GetUsers().Last().Id);
+            return Json(user);
+        }
+
+        public async Task<JsonResult> RequestCreateUserQuery()
+        {
+            RequestCreateUserQuery user = new RequestCreateUserQuery()
+            {
+                Email = "test@test.test",
+                FirstName = "Иван",
+                LastName = "Иванов",
+                NumberPhone = "123456789",
+                Role = "Партнер"
+            };
+            ResponseCreateUserQuery response = await _eventBus.RequestQuery<RequestCreateUserQuery, ResponseCreateUserQuery>(user);
+            return Json(response);
+        }
+
+        public void PublishDeleteUserByIdEvent()
+        {
+            Guid id = _carUserService.GetUsers().Last().Id;
+            _eventBus.PublishEvent(new DeleteUserByIdEvent() { Id = id });
+        }
+
+        public void PublishUpdateUserEvent()
+        {
+            var mapper = new Mapper(
+                new MapperConfiguration(cfg => cfg.CreateMap<UserInfo, UpdateUserEvent>()
+                    .ForMember("Role", opt => opt.Ignore()))
+            );
+
+            UserInfo user = _carUserService.GetUsers().Last();
+            UpdateUserEvent userEvent = mapper.Map<UpdateUserEvent>(user);
+            userEvent.FirstName = string.Concat(userEvent.FirstName, "а");
+            _eventBus.PublishEvent(userEvent);
         }
 
         // POST api/values

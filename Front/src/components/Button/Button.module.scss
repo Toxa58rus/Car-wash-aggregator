@@ -4,6 +4,10 @@
   height: 30px;
   background: $gray-dark;
   border-radius: 6px;
+
+  &:hover {
+    opacity: 0.6;
+  }
 }
 
 .standart {
@@ -13,4 +17,9 @@
 
 .maxWidth {
   width: 100%;
+}
+
+.increased {
+  height: 40px;
+  background: $yellow;
 }

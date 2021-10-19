@@ -1,0 +1,37 @@
+@import '/src/styles/colors.scss';
+
+.contain {
+    background: $white;
+    border-radius: 8px;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user {
+  display: flex;
+
+  img {
+    margin-right: 15px;
+  }
+}
+
+.userInfo {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 15px;
+
+  span {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 13px;  
+    opacity: 0.7;
+  }
+}

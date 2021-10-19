@@ -71,6 +71,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Domain", "CarWashAggregator\User\CarWashAggregator.User.Domain\CarWashAggregator.User.Domain.csproj", "{DDC6DDB7-60F8-4A22-A2F3-678D91DB7923}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Infa", "CarWashAggregator\User\CarWashAggregator.User.Infa\CarWashAggregator.User.Infa.csproj", "{4A7A2B56-BC02-4E6F-90D2-B1CC94360111}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Review", "Review", "{0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Review.BL", "CarWashAggregator\Review\CarWashAggregator.Review.BL\CarWashAggregator.Review.BL.csproj", "{44C90326-59B9-4831-A3BD-462EE145486A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Review.Domain", "CarWashAggregator\Review\CarWashAggregator.Review.Domain\CarWashAggregator.Review.Domain.csproj", "{1F86A2A8-FB74-4A59-B734-12878ABD76A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Review.Infra", "CarWashAggregator\Review\CarWashAggregator.Review.Infra\CarWashAggregator.Review.Infra.csproj", "{18B64005-2620-4DE5-BD31-00157A1B91FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.Review.Deamon", "CarWashAggregator\Review\CarWashAggregator.Review.Deamon\CarWashAggregator.Review.Deamon.csproj", "{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -170,6 +179,22 @@ Global
 		{4A7A2B56-BC02-4E6F-90D2-B1CC94360111}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A7A2B56-BC02-4E6F-90D2-B1CC94360111}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A7A2B56-BC02-4E6F-90D2-B1CC94360111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44C90326-59B9-4831-A3BD-462EE145486A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44C90326-59B9-4831-A3BD-462EE145486A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44C90326-59B9-4831-A3BD-462EE145486A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44C90326-59B9-4831-A3BD-462EE145486A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B64005-2620-4DE5-BD31-00157A1B91FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B64005-2620-4DE5-BD31-00157A1B91FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B64005-2620-4DE5-BD31-00157A1B91FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B64005-2620-4DE5-BD31-00157A1B91FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -203,6 +228,11 @@ Global
 		{DFFBB8B1-382E-416D-B161-A0352D7C7562} = {AF3C154C-6440-4A7E-A6CF-620FB1591863}
 		{DDC6DDB7-60F8-4A22-A2F3-678D91DB7923} = {AF3C154C-6440-4A7E-A6CF-620FB1591863}
 		{4A7A2B56-BC02-4E6F-90D2-B1CC94360111} = {AF3C154C-6440-4A7E-A6CF-620FB1591863}
+		{0AE016B7-7BC6-448E-A7FB-DA11C9B9991A} = {F7BF6CB8-7155-434D-90C7-42081CA88BEE}
+		{44C90326-59B9-4831-A3BD-462EE145486A} = {0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}
+		{1F86A2A8-FB74-4A59-B734-12878ABD76A4} = {0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}
+		{18B64005-2620-4DE5-BD31-00157A1B91FC} = {0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}
+		{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208} = {0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {782CB2B7-2CD4-4A6F-9700-C27257A3F9C5}

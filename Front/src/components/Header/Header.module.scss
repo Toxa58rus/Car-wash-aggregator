@@ -22,7 +22,7 @@
     padding: 0 30px;
   }
 
-  @media (max-width: $sm - 1) {
+  @media (max-width: $m - 1) {
     padding: 0 13px;
     height: 50px;
 
@@ -51,8 +51,8 @@
   width: 70%;
   height: 100%;
 
-  @media (max-width: $sm - 1) {
-    position: absolute;
+  @media (max-width: $m - 1) {
+    position: fixed;
     width: 0;
     left: 0;
     top: 0;
@@ -60,6 +60,7 @@
     overflow: hidden;
     transition: ease 0.3s;
     background: $bg-light;
+    z-index: 999;
   }
 }
 
@@ -67,7 +68,7 @@
   display: flex;
   height: 100%;
 
-  @media (max-width: $sm - 1) {
+  @media (max-width: $m - 1) {
     padding: 20px;
     min-width: 250px;
     height: calc(100% - 50px);
@@ -81,7 +82,7 @@
   margin: 0 20px;
   font-size: 18px;
 
-  @media (max-width: $sm - 1) {
+  @media (max-width: $m - 1) {
     font-weight: bold;
     height: 50px;
   }
@@ -96,7 +97,7 @@
       margin-right: 8px;
     }
 
-    @media (max-width: $sm - 1) {
+    @media (max-width: $m - 1) {
       left: 20px;
       top: calc(100% - 60px);
     }
@@ -113,22 +114,87 @@
     border-bottom: 1px solid black;
   }
 
-  @media (max-width: $sm - 1) {
+  @media (max-width: $m - 1) {
     justify-content: space-between;
   }
 }
+
+.profileBtn {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.btnInner {
+  display: none;
+
+  @media (max-width: $m - 1) {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.mobileMenuSublist {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: $bg-light;
+  
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+.sublistActive {
+  width: 100%;
+  transition: all 0.3s;
+  padding: 0 20px;
+}
+
+.closeSublistBtn {
+  background: transparent;
+  font-size: inherit;
+  font-weight: inherit;
+  margin-top: 12px;
+}
+
+.closeBtnInner {
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 7px;
+    height: 20px;
+  }
+}
+
+.sublistItem {
+  font-weight: bold;
+  height: 50px;
+  padding: 0 20px;
+
+  &:first-child {
+    padding: 0;
+  }
+}
+
 .mobile {
   display: none;
 
-  @media (max-width: $sm - 1) {
+  @media (max-width: $m - 1) {
     display: block;
   }
 }
 
-@media (max-width: $sm - 1) {
+@media (max-width: $m - 1) {
   .activeMobileMenu {
-    @media (max-width: $sm - 1) {
       width: 100%;
-    }
+      overflow: hidden;
   }
 }

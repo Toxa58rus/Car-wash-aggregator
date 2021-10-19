@@ -1,0 +1,165 @@
+@import "/src/styles/colors.scss";
+@import "/src/styles/breakpoints.scss";
+
+.washSearch{
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 60px 150px 70px 150px;
+
+    @media (max-width: $xl - 1){
+        padding: 60px 0px 70px 0px;
+    }
+}
+
+.searchUpperBlock{
+    display: flex;
+    justify-content: space-between;
+    height: 65px;
+
+    @media (max-width: $xl - 1){
+        padding-left: 150px;
+    }
+}
+
+.searchBlock{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    padding: 0 21px 0 96px;
+    height: 65px;
+    background-color: $bg-gray;
+
+    @media (max-width: $lg - 1){
+        padding-left: 21px;
+    }
+    @media (max-width: $xs - 1){
+
+    }
+        
+}
+
+.blockStr{
+    width: 30%;
+
+    @media (max-width: $sm - 1){
+        margin-right: 20px;
+    }
+    @media (max-width: $xs - 1){
+        display: none;
+    }
+}
+
+.searchBlockInput{
+    width: 45%;
+    height: 24px;
+    border-radius: 6px;
+    border-style: none;
+
+    @media (max-width: $xs - 1){
+        width: 63%;
+    }
+}
+
+.innerBlock{
+    width: 45.4%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: $xs - 1){
+        width: 50%;
+    }
+}
+
+.innerBlockDate{
+    display: flex;
+    align-items: center;
+}
+
+.innerBlockDateInput{
+    border-style: none;
+    height: 30px;
+    width: 100px;
+    margin-left: 10px;
+    border-radius: 6px;
+
+    @media (max-width: $lg - 1){
+        margin-left: 0px;
+    }
+    @media (max-width: $xs - 1){
+        margin-left: 5px;
+        margin-right: 15px;
+    }
+}
+
+.innerBlockButton{
+    font-size: 14px;
+    padding: 7px 22px;
+
+    @media (max-width: $lg - 1){
+        padding: 7px 11px;
+    }
+    @media (max-width: $sm - 1){
+        margin-left: 10px;
+        padding: 7px 5px;
+        height: 45px;
+    }
+}
+
+.citySelect{
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 25px;
+    padding-right: 54px;
+}
+
+.cityName{
+    margin: 0 6px 0 14px;
+    &:hover{
+        text-decoration-line: underline;
+    }
+}
+
+.cityWashes{
+    padding-left: 150px;
+}
+
+.washList{
+    padding: 50px 345px 0px 345px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    @media (max-width: $xl - 1){
+        padding: 50px 170px 0px 170px;
+    }
+    @media (max-width: $lg - 1){
+        padding: 50px 85px 0px 85px;
+    }
+    @media (max-width: $sm - 1){
+        justify-content: center;
+    }
+}
+
+.nearestWash{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 21px;
+
+    @media (max-width: $sm - 1){
+        bottom: -50px;
+    }
+    @media (max-width: $xs - 1){
+        bottom: auto;
+    }
+}
+
+.nearestWashLink{
+    margin-left: 14px;
+    &:hover{
+        text-decoration-line: underline;
+    }
+
+}

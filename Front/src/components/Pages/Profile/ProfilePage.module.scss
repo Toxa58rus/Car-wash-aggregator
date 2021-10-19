@@ -90,13 +90,11 @@
   justify-content: center;
 }
 
-.addWash {
+.addWashBtn {
   position: absolute;
   right: 20px;
   top: -47px;
-  height: 40px;
   width: 200px;
-  background: $yellow;
 }
 
 .washCard {
@@ -110,6 +108,49 @@
     margin: 10px;
   }
 
+}
+
+.form {
+  background: $white;
+  width: 100%;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px;
+  margin-top: 13px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.inputs{
+  display: flex;
+  margin-bottom: 15px;
+
+  @media (max-width: $m - 1) {
+    flex-direction: column;
+  }
+}
+
+.inputsWrap {
+  width: 50%;
+  margin-right: 15px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @media (max-width: $m - 1) {
+    width: 100%;
+
+    &:first-child {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.input {
+  border: 1px solid $gray-dark;
 }
 
 @media (max-width: $sm - 1) {

@@ -19,27 +19,29 @@ const WashCard = ({ id, item }) => {
     <div className={styles.Card}>
       <a href={routes.carWash(id)} className={styles.wrap}>
         <img className={styles.imgPlaceholder} src={pic} alt="Мойка" />
-
-        <span className={styles.cardName}> {name} </span>
-        <div className={styles.cardDesc}>
-          <span> {description} </span>
-          <a href={routes.carWash(id)} className={styles.cardDescFull}>
-            Подробнее
-          </a>
-        </div>
-        <div className={styles.cardAdress}>
-          <img src={vector} alt="location" />
-          <span className={styles.cardAdressText}> {adress}</span>
-        </div>
-        <div className={styles.rating}>
-          <span className={styles.ratingLabel}>Рэйтинг:</span>{" "}
-          <RateStars edit={false} />
-        </div>
-        <div className={styles.carCategoties}>
-          <span>Категории автомобилей:</span>
-          {category.map((i) => ` ${i} `)}
-        </div>
       </a>
+      <a href={routes.carWash(id)} className={styles.wrap}>
+        <span className={styles.cardName}> {name} </span>
+      </a>
+      <div className={styles.cardDesc}>
+        <span> {description} </span>
+        <a href={routes.carWash(id)} className={styles.cardDescFull}>
+          Подробнее
+        </a>
+      </div>
+      <div className={styles.cardAdress}>
+        <img src={vector} alt="location" />
+        <span className={styles.cardAdressText}> {adress}</span>
+      </div>
+      <div className={styles.rating}>
+        <span className={styles.ratingLabel}>Рэйтинг:</span>{" "}
+        <RateStars edit={false} />
+      </div>
+      <div className={styles.carCategoties}>
+        <span>Категории автомобилей:</span>
+        {category.map((i) => ` ${i} `)}
+      </div>
+
       {session && session.role === ROLES.CLIENT && (
         <>
           <div className={styles.cardAvailability}>

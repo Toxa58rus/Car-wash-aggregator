@@ -59,11 +59,6 @@ const IndexPage = () => {
     console.log(date);
   }
 
-  /*useEffect(() => {
-    getData(urlAll)
-  },[] );*/
-
-  //const {washes} = this.state
     const initialValues = { date: getDate(new Date()) };
     return (    
       <div>
@@ -82,7 +77,6 @@ const IndexPage = () => {
             initialValues={initialValues}
             render={({ handleSubmit, form, values }) => {
               currentForm = form;
-              console.log(values)
               return (
                 <form>  
                   <div className={styles.searchBlock} onClick={handleCloseCalendar}>

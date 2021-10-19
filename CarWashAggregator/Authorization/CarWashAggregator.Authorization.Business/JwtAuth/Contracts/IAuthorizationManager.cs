@@ -7,7 +7,11 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Contracts
     {
         Task<JwtAuthResult> RegisterAsync(string login, string password, string role);
         Task<JwtAuthResult> LoginAsync(string login, string password, string role);
-        Task<JwtAuthResult> RefreshTokenAsync(string accessToken, string refreshToken);
-        bool ValidateJwtToken(string token);
+        Task<JwtAuthResult> RefreshAccessTokenAsync(string refreshToken);
+
+        Task<JwtValidationResult> ValidateJwtToken(string token,
+            bool validateLifetime = true,
+            bool validateIssuer = true,
+            bool validateAudience = true);
     }
 }

@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using ValidationFailure = CarWashAggregator.Authorization.Business.JwtAuth.Models.ValidationFailure;
 
 namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 {
@@ -41,29 +42,27 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             {
                 return new JwtAuthResult()
                 {
-                    ErrorMessage = "User already exist"
+                    AuthFailure = AuthFailure.UserAlreadyExist
                 };
             }
 
-            //TODO UserCreatedEvent -> UserService
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, login),
+                new Claim(ClaimsRoleType, role),
+                new Claim(ClaimsPasswordType, hashPassword)
+            };
 
-            var refreshToken = GenerateRefreshToken();
+            var refreshToken = await GenerateToken(claims, _jwtTokenConfig.RefreshTokenExpiration);
+            var accessToken = await GenerateToken(claims, _jwtTokenConfig.AccessTokenExpiration);
             await _authorizationRepository.Add(new AuthorizationData()
             {
                 UserLogin = login,
                 HashPassword = hashPassword,
                 RefreshToken = refreshToken,
-                ExpireAt = DateTime.UtcNow.AddMinutes(_jwtTokenConfig.RefreshTokenExpiration)
             });
             await _authorizationRepository.SaveChangesAsync();
-            _logger.LogDebug("User {UserName} registered", login);
-
-            var accessToken = await GenerateAccessToken(new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, login),
-                new Claim(ClaimsRoleType, role),
-                new Claim(ClaimsPasswordType, hashPassword)
-            });
+            _logger.LogDebug("User {UserEmail} registered", login);
 
             return new JwtAuthResult()
             {
@@ -83,23 +82,24 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             {
                 return new JwtAuthResult()
                 {
-                    ErrorMessage = "Login/Password is not valid"
+                    AuthFailure = AuthFailure.UserDoesNotExist
                 };
             }
 
-            var refreshToken = GenerateRefreshToken();
-            existUser.RefreshToken = refreshToken;
-            existUser.ExpireAt = DateTime.UtcNow.AddMinutes(_jwtTokenConfig.RefreshTokenExpiration);
-            await _authorizationRepository.Update(existUser);
-            await _authorizationRepository.SaveChangesAsync();
-            _logger.LogDebug("User {UserName} logged in", login);
-
-            var accessToken = await GenerateAccessToken(new[]
+            var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, login),
                 new Claim(ClaimsRoleType, role),
                 new Claim(ClaimsPasswordType, hashPassword)
-            });
+            };
+
+            var refreshToken = await GenerateToken(claims, _jwtTokenConfig.RefreshTokenExpiration);
+            var accessToken = await GenerateToken(claims, _jwtTokenConfig.AccessTokenExpiration);
+
+            existUser.RefreshToken = refreshToken;
+            await _authorizationRepository.Update(existUser);
+            await _authorizationRepository.SaveChangesAsync();
+            _logger.LogDebug("User {UserEmail} logged in", login);
 
             return new JwtAuthResult()
             {
@@ -108,91 +108,101 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
                 RefreshToken = refreshToken
             };
         }
-        public bool ValidateJwtToken(string token)
+
+        public async Task<JwtAuthResult> RefreshAccessTokenAsync(string refreshToken)
         {
+            var validationResult = await ValidateJwtToken(refreshToken, false, false, false);
+            if (!validationResult.TokenIsValid)
+            {
+                return new JwtAuthResult()
+                {
+                    AuthFailure = AuthFailure.TokenNotValid
+                };
+            }
+            var jwtToken = validationResult.ValidatedToken;
+
+            var login = GetClaim(jwtToken, JwtRegisteredClaimNames.Sub);
+            var hashPassword = GetClaim(jwtToken, ClaimsPasswordType);
+            var role = GetClaim(jwtToken, ClaimsRoleType);
+
+            AuthorizationData existUser;
+            try
+            {
+                existUser = _authorizationRepository.Get<AuthorizationData>()
+                    .Single(x => x.UserLogin == login && x.HashPassword == hashPassword && x.RefreshToken == refreshToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Check {UserEmail} in DataBase \n Exception Message: {Message}", login, ex.Message);
+                return new JwtAuthResult()
+                {
+                    AuthFailure = AuthFailure.ServerError
+                };
+            }
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, login),
+                new Claim(ClaimsRoleType, role),
+                new Claim(ClaimsPasswordType, hashPassword)
+            };
+
+            var newRefreshToken = await GenerateToken(claims, _jwtTokenConfig.RefreshTokenExpiration);
+            var newAccessToken = await GenerateToken(claims, _jwtTokenConfig.AccessTokenExpiration);
+
+            existUser.RefreshToken = refreshToken;
+            await _authorizationRepository.Update(existUser);
+            await _authorizationRepository.SaveChangesAsync();
+
+            return new JwtAuthResult()
+            {
+                Success = true,
+                AccessToken = newAccessToken,
+                RefreshToken = newRefreshToken
+            };
+        }
+        public Task<JwtValidationResult> ValidateJwtToken(string token,
+            bool validateLifetime = true,
+            bool validateIssuer = true,
+            bool validateAudience = true)
+        {
+            var result = new JwtValidationResult();
             try
             {
                 new JwtSecurityTokenHandler()
                     .ValidateToken(token,
                         new TokenValidationParameters
                         {
-                            ValidateIssuer = true,
+                            ValidateIssuer = validateIssuer,
                             ValidIssuer = _jwtTokenConfig.Issuer,
                             ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(_secret),
                             ValidAudience = _jwtTokenConfig.Audience,
-                            ValidateAudience = true,
-                            ValidateLifetime = true,
-                            ClockSkew = TimeSpan.FromMinutes(1)
+                            ValidateAudience = validateAudience,
+                            ValidateLifetime = validateLifetime,
                         },
-                        out _);
+                        out var validatedToken);
+                result.ValidatedToken = validatedToken as JwtSecurityToken;
             }
             catch (Exception ex)
             {
-                _logger.LogWarning("Failed to validate AccessToken {AccessToken} \n Message:{Message}", token, ex.Message);
-                return false;
+                _logger.LogWarning("Failed to validate AccessToken {AccessToken} \n Message:{Message}", token,
+                    ex.Message);
+                if (ex is SecurityTokenExpiredException)
+                {
+                    result.ValidationFailure = ValidationFailure.InvalidLifetime;
+                    return Task.FromResult(result);
+                }
+                else
+                {
+                    result.ValidationFailure = ValidationFailure.InvalidToken;
+                    return Task.FromResult(result);
+                }
             }
-            return true;
+            result.TokenIsValid = true;
+            return Task.FromResult(result);
         }
-        public async Task<JwtAuthResult> RefreshTokenAsync(string accessToken, string refreshToken)
-        {
-            if (string.IsNullOrWhiteSpace(accessToken))
-            {
-                return new JwtAuthResult()
-                {
-                    ErrorMessage = "Invalid token"
-                };
-            }
-            var jwtToken = DecodeJwtToken(accessToken);
 
-            if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256))
-            {
-                return new JwtAuthResult()
-                {
-                    ErrorMessage = "Invalid token"
-                };
-            }
-
-            var login = GetClaim(jwtToken, JwtRegisteredClaimNames.Sub);
-            var hashPassword = GetClaim(jwtToken, ClaimsPasswordType);
-
-            AuthorizationData session;
-            try
-            {
-                session = _authorizationRepository.Get<AuthorizationData>()
-                    .Single(x => x.UserLogin == login && x.HashPassword == hashPassword && x.RefreshToken == refreshToken);
-            }
-            catch (Exception ex)
-            {
-                return new JwtAuthResult()
-                {
-                    ErrorMessage = "Invalid token"
-                };
-            }
-
-            if (session.ExpireAt < DateTime.UtcNow)
-            {
-                return new JwtAuthResult()
-                {
-                    ErrorMessage = "Refresh token expired"
-                };
-            }
-
-            refreshToken = GenerateRefreshToken();
-            session.RefreshToken = refreshToken;
-            session.ExpireAt = DateTime.UtcNow.AddMinutes(_jwtTokenConfig.RefreshTokenExpiration);
-            await _authorizationRepository.Update(session);
-            await _authorizationRepository.SaveChangesAsync();
-
-            var newAccessToken = await GenerateAccessToken(jwtToken.Claims.ToArray());
-
-            return new JwtAuthResult()
-            {
-                Success = true,
-                AccessToken = newAccessToken,
-                RefreshToken = refreshToken
-            };
-        }
         private static string GetHashPassword(string password)
         {
             var bytePas = Encoding.UTF8.GetBytes(password);
@@ -204,14 +214,14 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             }
             return sBuilder.ToString();
         }
-        private Task<string> GenerateAccessToken(IEnumerable<Claim> claims)
+        private Task<string> GenerateToken(IEnumerable<Claim> claims, int minutesTilExpire)
         {
             var now = DateTime.UtcNow;
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Audience = _jwtTokenConfig.Audience,
-                Expires = now.AddMinutes(_jwtTokenConfig.AccessTokenExpiration),
+                Expires = now.AddMinutes(minutesTilExpire),
                 Subject = new ClaimsIdentity(claims),
                 SigningCredentials =
                     new SigningCredentials(new SymmetricSecurityKey(_secret), SecurityAlgorithms.HmacSha256Signature),
@@ -223,23 +233,9 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return Task.FromResult(tokenHandler.WriteToken(token));
         }
-        private static string GenerateRefreshToken()
-        {
-            var randomNumber = new byte[32];
-            using var randomNumberGenerator = RandomNumberGenerator.Create();
-            randomNumberGenerator.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
-        }
-        private static JwtSecurityToken DecodeJwtToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-            return securityToken;
-        }
         private static string GetClaim(JwtSecurityToken securityToken, string claimType)
         {
             return securityToken.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
         }
-
     }
 }

@@ -3,15 +3,17 @@ using System;
 using CarWashAggregator.Authorization.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarWashAggregator.Authorization.Infra.Migrations
 {
     [DbContext(typeof(AuthorizationDbContext))]
-    partial class AuthorizationContextModelSnapshot : ModelSnapshot
+    [Migration("20211019194815_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +31,6 @@ namespace CarWashAggregator.Authorization.Infra.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
-
-                    b.Property<DateTime>("ExpireAt")
-                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("HashPassword")
                         .IsRequired()

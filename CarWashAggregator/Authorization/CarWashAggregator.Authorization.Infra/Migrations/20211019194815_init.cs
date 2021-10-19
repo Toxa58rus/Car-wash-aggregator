@@ -15,7 +15,6 @@ namespace CarWashAggregator.Authorization.Infra.Migrations
                     user_login = table.Column<string>(type: "text", nullable: false),
                     hash_password = table.Column<string>(type: "text", nullable: false),
                     refresh_token = table.Column<string>(type: "text", nullable: false),
-                    ExpireAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>

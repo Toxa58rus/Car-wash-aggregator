@@ -4,7 +4,6 @@ namespace CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request
 {
     public class RequestTokenRefresh : Query
     {
-        public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
     }
 }

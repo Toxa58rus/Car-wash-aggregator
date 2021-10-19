@@ -1,5 +1,6 @@
 ﻿using CarWashAggregator.Authorization.Business.JwtAuth.Contracts;
 using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Domain.DTO.Authorization.Querys;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response;
 using System.Threading.Tasks;
@@ -15,13 +16,16 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
             _authorizationManager = authorizationManager;
         }
 
-        public Task<ResponseTokenValidationCheck> Handle(RequestTokenValidationCheck request)
+        public async Task<ResponseTokenValidationCheck> Handle(RequestTokenValidationCheck request)
         {
-            var tokenIsValid = new ResponseTokenValidationCheck()
+            var validationResult = await _authorizationManager.ValidateJwtToken(request.TokenToValidate);
+
+            return new ResponseTokenValidationCheck()
             {
-                TokenIsValid = _authorizationManager.ValidateJwtToken(request.TokenToValidate)
+                ValidatedToken = validationResult.ValidatedToken,
+                TokenIsValid = validationResult.TokenIsValid,
+                ValidationFailure = (ValidationFailure)validationResult.ValidationFailure
             };
-            return Task.FromResult(tokenIsValid);
         }
     }
 }

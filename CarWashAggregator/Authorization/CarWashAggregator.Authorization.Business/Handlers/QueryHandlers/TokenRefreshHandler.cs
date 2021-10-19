@@ -1,5 +1,6 @@
 ﻿using CarWashAggregator.Authorization.Business.JwtAuth.Contracts;
 using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Domain.DTO.Authorization.Querys;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response;
 using System.Threading.Tasks;
@@ -17,17 +18,16 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 
         public async Task<ResponseUserAuthorization> Handle(RequestTokenRefresh request)
         {
-            var accessToken = request.AccessToken;
             var refreshToken = request.RefreshToken;
 
-            var jwAuthResult = await _authorizationManager.RefreshTokenAsync(accessToken, refreshToken);
+            var jwAuthResult = await _authorizationManager.RefreshAccessTokenAsync(refreshToken);
 
             return new ResponseUserAuthorization()
             {
                 Success = jwAuthResult.Success,
-                ErrorMessage = jwAuthResult.ErrorMessage,
                 AccessToken = jwAuthResult.AccessToken,
-                RefreshToken = jwAuthResult.RefreshToken
+                RefreshToken = jwAuthResult.RefreshToken,
+                AuthFailure = (AuthFailure)jwAuthResult.AuthFailure
             };
         }
     }

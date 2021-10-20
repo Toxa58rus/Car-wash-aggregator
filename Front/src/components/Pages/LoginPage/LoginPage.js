@@ -169,6 +169,40 @@ const LoginPage = (props) => {
                       )}
                     </Field>
                   </div>
+                  <div className={styles.inputs}>
+                    <div className={cn(styles.inner, styles.mobileInner)}>
+                      <Field
+                        name="firstName"
+                        type="firstName"
+                        validate={composeValidators(required, validEmail)}
+                      >
+                        {({ input, meta }) => (
+                          <Input
+                            className={styles.input}
+                            placeholder="Имя"
+                            meta={meta}
+                            {...input}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                    <div className={cn(styles.inner, styles.mobileInner)}>
+                      <Field
+                        name="lastName"
+                        type="lastName"
+                        validate={composeValidators(required, validEmail)}
+                      >
+                        {({ input, meta }) => (
+                          <Input
+                            className={styles.input}
+                            placeholder="Фамилия"
+                            meta={meta}
+                            {...input}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                  </div>
                   <div className={styles.field}>
                     <Field
                       name="password"

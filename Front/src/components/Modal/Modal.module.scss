@@ -56,10 +56,12 @@
     position: absolute;
     align-items: center;
     min-width: 200px;
-    background: transparent;
-    top: 7px;
+    background: $white;
+    top: 0;
     left: 15px;
     z-index: 999;
+    height: 50px;
+    font-weight: 600;
 
     img {
       margin-right: 10px;

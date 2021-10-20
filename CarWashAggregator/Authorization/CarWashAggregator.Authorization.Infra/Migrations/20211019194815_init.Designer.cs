@@ -3,15 +3,17 @@ using System;
 using CarWashAggregator.Authorization.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarWashAggregator.Authorization.Infra.Migrations
 {
-    [DbContext(typeof(AuthorizationContext))]
-    partial class AuthorizationContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AuthorizationDbContext))]
+    [Migration("20211019194815_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

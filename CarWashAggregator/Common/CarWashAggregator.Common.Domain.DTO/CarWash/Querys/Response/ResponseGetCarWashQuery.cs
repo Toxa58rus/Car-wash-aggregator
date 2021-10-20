@@ -1,8 +1,5 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.CarWashes.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Response
 {

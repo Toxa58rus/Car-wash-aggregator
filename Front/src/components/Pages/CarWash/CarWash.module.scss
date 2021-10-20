@@ -3,6 +3,7 @@
 
 .page {
   width: 100%;
+  background: $bg-layout;
   padding-bottom: 300px;
 
   @media (max-width: $xl - 1) {
@@ -111,4 +112,8 @@
   @media (max-width: $m - 1) {
     margin-top: 10px;
   }
+}
+
+.section {
+  margin-top: 50px;
 }

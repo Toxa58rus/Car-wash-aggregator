@@ -11,52 +11,59 @@ namespace CarWashAggregator.Authorization.Infra.Repository
 {
     public class AuthorizationRepository : IAuthorizationRepository
     {
-        private readonly AuthorizationContext _context;
+        private readonly AuthorizationDbContext _dbContext;
 
-        public AuthorizationRepository(AuthorizationContext context)
+        public AuthorizationRepository(AuthorizationDbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
         public IQueryable<T> Get<T>() where T : class, IEntity
         {
-            return _context.Query<T>().AsQueryable();
+            return _dbContext.Set<T>().AsQueryable();
         }
 
         public async Task<Guid> Add<T>(T newEntity) where T : class, IEntity
         {
-            var entity = await _context.DbSet<T>().AddAsync(newEntity);
+            var entity = await _dbContext.Set<T>().AddAsync(newEntity);
             return entity.Entity.Id;
         }
 
         public async Task AddRange<T>(IEnumerable<T> newEntities) where T : class, IEntity
         {
-            await _context.DbSet<T>().AddRangeAsync(newEntities);
+            await _dbContext.Set<T>().AddRangeAsync(newEntities);
         }
 
-        public async Task Remove<T>(T entity) where T : class, IEntity
+        public Task Remove<T>(T entity) where T : class, IEntity
         {
-            await Task.Run(() => _context.DbSet<T>().Remove(entity));
+            _dbContext.Set<T>().Remove(entity);
+            return Task.CompletedTask;
         }
 
-        public async Task RemoveRange<T>(IEnumerable<T> entities) where T : class, IEntity
+        public Task RemoveRange<T>(IEnumerable<T> entities) where T : class, IEntity
         {
-            await Task.Run(() => _context.DbSet<T>().RemoveRange(entities));
+            _dbContext.Set<T>().RemoveRange(entities);
+            return Task.CompletedTask;
+
         }
 
-        public async Task Update<T>(T entity) where T : class, IEntity
+        public Task Update<T>(T entity) where T : class, IEntity
         {
-            await Task.Run(() => _context.DbSet<T>().Update(entity));
+            _dbContext.Set<T>().Update(entity);
+            return Task.CompletedTask;
+
         }
 
-        public async Task UpdateRange<T>(IEnumerable<T> entities) where T : class, IEntity
+        public Task UpdateRange<T>(IEnumerable<T> entities) where T : class, IEntity
         {
-            await Task.Run(() => _context.DbSet<T>().UpdateRange(entities));
+            _dbContext.Set<T>().UpdateRange(entities);
+            return Task.CompletedTask;
+
         }
 
         public async Task<int> SaveChangesAsync()
         {
-            return await _context.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }

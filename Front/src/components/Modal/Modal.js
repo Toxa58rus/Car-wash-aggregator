@@ -43,9 +43,11 @@ const Modal = (props) => {
           <Button size="icon" className={styles.cancelBtn} onClick={onClose}>
             <img src={closeIcon} alt="close modal" />
           </Button>
-          <Button className={styles.backBtn} onClick={onClose}>
-            <img src={backIcon} alt="close modal" />
-            {label}
+          <Button className={styles.backBtn} onClick={onClose} size="maxWidth">
+            <div>
+              <img src={backIcon} alt="close modal" />
+              {label}
+            </div>
           </Button>
           {children}
         </div>

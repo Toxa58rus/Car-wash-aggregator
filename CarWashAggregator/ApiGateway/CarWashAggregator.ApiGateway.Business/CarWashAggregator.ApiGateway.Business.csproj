@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\EventHandlers\" />
+    <Folder Include="Handlers\QueryHandlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.ApiGateway.Domain\CarWashAggregator.ApiGateway.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

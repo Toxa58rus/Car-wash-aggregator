@@ -14,6 +14,7 @@ import { ROLES } from "../../constants/ROLES";
 const WashCard = ({ id, item }) => {
   const { name, description, adress, pic, availability, category } = item;
   const session = useSelector(selectSession);
+  const role = !session ? null : session.role;
 
   return (
     <div className={styles.Card}>
@@ -42,7 +43,7 @@ const WashCard = ({ id, item }) => {
         {category.map((i) => ` ${i} `)}
       </div>
 
-      {session && session.role === ROLES.CLIENT && (
+      {role !== ROLES.PARTNER && (
         <>
           <div className={styles.cardAvailability}>
             <img src={car} alt="car" />

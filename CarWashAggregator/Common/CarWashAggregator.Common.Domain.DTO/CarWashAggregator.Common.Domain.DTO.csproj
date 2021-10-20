@@ -13,9 +13,6 @@
     <Folder Include="ApiGateway\Events\" />
     <Folder Include="ApiGateway\Querys\Request\" />
     <Folder Include="ApiGateway\Querys\Response\" />
-    <Folder Include="Authorization\Events\" />
-    <Folder Include="Authorization\Querys\Request\" />
-    <Folder Include="Authorization\Querys\Response\" />
     <Folder Include="Order\Events\" />
     <Folder Include="Reviews\Events\" />
     <Folder Include="Reviews\Querys\Request\" />
@@ -23,6 +20,10 @@
     <Folder Include="User\Events\" />
     <Folder Include="User\Querys\Request\" />
     <Folder Include="User\Querys\Response\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.13.1" />
   </ItemGroup>
 
 </Project>

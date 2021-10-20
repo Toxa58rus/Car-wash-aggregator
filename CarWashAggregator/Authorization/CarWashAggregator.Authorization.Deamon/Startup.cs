@@ -1,8 +1,14 @@
+using CarWashAggregator.Authorization.Business.Handlers.QueryHandlers;
+using CarWashAggregator.Authorization.Business.JwtAuth.Contracts;
+using CarWashAggregator.Authorization.Business.JwtAuth.Implementation;
+using CarWashAggregator.Authorization.Business.JwtAuth.Models;
 using CarWashAggregator.Authorization.Domain.Contracts;
 using CarWashAggregator.Authorization.Infra.Data;
 using CarWashAggregator.Authorization.Infra.Repository;
 using CarWashAggregator.Common.Domain;
 using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request;
+using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response;
 using CarWashAggregator.Common.Infra;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +31,11 @@ namespace CarWashAggregator.Authorization.Deamon
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AuthorizationContext>(options =>
+            var jwtTokenConfig = _configuration.GetSection(Helper.JwtSection).Get<JwtTokenConfig>();
+            services.AddSingleton(jwtTokenConfig);
+            services.AddScoped<IAuthorizationManager, AuthorizationManager>();
+
+            services.AddDbContext<AuthorizationDbContext>(options =>
             {
                 options.UseNpgsql(_configuration.GetConnectionString(Helper.DataBaseConnectionSection));
             });
@@ -34,7 +44,10 @@ namespace CarWashAggregator.Authorization.Deamon
             services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
 
             //Subscriptions
-
+            services.AddScoped<ValidationCheckHandler>()
+                .AddScoped<LoginUserHandler>()
+                .AddScoped<RegisterNewUserHandler>()
+                .AddScoped<TokenRefreshHandler>();
 
             services.AddMvc();
             BusContainer.RegisterBusService(services, _configuration);
@@ -58,6 +71,10 @@ namespace CarWashAggregator.Authorization.Deamon
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.SubscribeToQuery<RequestTokenValidationCheck, ResponseTokenValidationCheck, ValidationCheckHandler>();
+            eventBus.SubscribeToQuery<RequestLoginUser, ResponseUserAuthorization, LoginUserHandler>();
+            eventBus.SubscribeToQuery<RequestRegisterNewUser, ResponseUserAuthorization, RegisterNewUserHandler>();
+            eventBus.SubscribeToQuery<RequestTokenRefresh, ResponseUserAuthorization, TokenRefreshHandler>();
         }
     }
 }

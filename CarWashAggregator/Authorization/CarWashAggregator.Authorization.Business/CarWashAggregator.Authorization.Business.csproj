@@ -6,7 +6,18 @@
 
   <ItemGroup>
     <Folder Include="Handlers\EventHandlers\" />
-    <Folder Include="Handlers\QueryHandlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.13.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain.DTO\CarWashAggregator.Common.Domain.DTO.csproj" />
+	  <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.Authorization.Domain\CarWashAggregator.Authorization.Domain.csproj" />
   </ItemGroup>
 
 </Project>

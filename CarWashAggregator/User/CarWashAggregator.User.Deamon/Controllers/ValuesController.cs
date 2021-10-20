@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using CarWashAggregator.Orders.Business.interfaces;
 using System.Collections;
 using CarWashAggregator.User.Domain.Enities;
 using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
@@ -11,6 +10,7 @@ using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
 using CarWashAggregator.Common.Domain.DTO.User.Events;
 using AutoMapper;
+using CarWashAggregator.User.Domain.interfaces;
 
 namespace CarWashAggregator.User.Deamon.Controllers
 {

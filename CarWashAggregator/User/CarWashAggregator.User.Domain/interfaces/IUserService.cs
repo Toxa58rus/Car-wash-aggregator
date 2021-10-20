@@ -1,10 +1,9 @@
-﻿using CarWashAggregator.User.Domain.Enities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using CarWashAggregator.User.Domain.Enities;
 
-namespace CarWashAggregator.Orders.Business.interfaces
+namespace CarWashAggregator.User.Domain.interfaces
 {
     public interface IUserService
     {

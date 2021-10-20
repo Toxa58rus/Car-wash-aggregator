@@ -1,15 +1,16 @@
 import React from "react";
 import routes from "../../../helpers/routes";
 import cn from "classnames";
-
+import { ROLES } from "../../../constants/ROLES";
 import { selectSession } from "../../../state/session";
 import { useSelector } from "react-redux";
 
 import Button from "../../Button/Button";
 import Header from "../../Header/Header";
 import ProfileOrders from "./ProfileOrders";
+import ProfileCarWashes from "./ProfileCarWashes";
+import ProfileSettings from "./ProfileSettings";
 import styles from "./ProfilePage.module.scss";
-import { ROLES } from "../../../constants/ROLES";
 
 const ProfilePage = ({ history }) => {
   const session = useSelector(selectSession);
@@ -75,9 +76,16 @@ const ProfilePage = ({ history }) => {
             )}
           </div>
           <div className={styles.containerWrap}>
+            {history.location.pathname === routes.profileSettings && (
+              <ProfileSettings />
+            )}
             {history.location.pathname === routes.profileOrders && (
               <ProfileOrders />
             )}
+            {role === ROLES.PARTNER &&
+              history.location.pathname === routes.profileCarWashes && (
+                <ProfileCarWashes />
+              )}
           </div>
         </div>
       </div>

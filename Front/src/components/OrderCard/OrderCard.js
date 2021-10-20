@@ -56,7 +56,7 @@ const OrderCard = ({ status }) => {
                 <span>Статус:</span>
                 {ORDERS_STATUS_NAMES[status]}
               </div>
-              <Button size="maxWidth" className={styles.cancelBtn}>
+              <Button size="maxWidth" className={styles.cancelBtn} increased>
                 Отменить
               </Button>
             </>
@@ -68,11 +68,7 @@ const OrderCard = ({ status }) => {
                 <span>Статус:</span>
                 {ORDERS_STATUS_NAMES[status]}
               </div>
-              <Button
-                size="maxWidth"
-                className={styles.reviewBtn}
-                onClick={openReviewModal}
-              >
+              <Button size="maxWidth" increased onClick={openReviewModal}>
                 Оставить отзыв
               </Button>
             </>

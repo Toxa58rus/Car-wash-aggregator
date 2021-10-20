@@ -1,165 +1,245 @@
 @import "/src/styles/colors.scss";
 @import "/src/styles/breakpoints.scss";
 
-.washSearch{
-    display: flex;
-    flex-flow: column nowrap;
-    padding: 60px 150px 70px 150px;
+.page {
+  padding-bottom: 100px;
+  background: $bg-layout;
+}
 
-    @media (max-width: $xl - 1){
-        padding: 60px 0px 70px 0px;
-    }
+.washSearch{
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 60px 150px 70px 150px;
+
+  @media (max-width: $xl - 1){
+    padding: 60px 0 70px 0;
+  }
+
+  @media (max-width: $xl - 1){
+    padding: 15px 0 70px 0;
+  }
 }
 
 .searchUpperBlock{
-    display: flex;
-    justify-content: space-between;
-    height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 65px;
 
-    @media (max-width: $xl - 1){
-        padding-left: 150px;
-    }
+  @media (max-width: $lg - 1) {
+    padding: 0 30px;
+  }
+
+  @media (max-width: $xs - 1) {
+    position: relative;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    height: 100px;
+    margin-bottom: 15px;
+    padding: 0 15px;
+  }
 }
 
 .searchBlock{
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-top: 12px;
-    padding: 0 21px 0 96px;
-    height: 65px;
-    background-color: $bg-gray;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  padding: 0 230px 0 30px;
+  height: 65px;
+  background-color: $bg-gray;
+  box-sizing: border-box;
 
-    @media (max-width: $lg - 1){
-        padding-left: 21px;
-    }
-    @media (max-width: $xs - 1){
+  @media (max-width: $lg - 1){
+    padding-left: 21px;
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    margin: 0;
 
+    &:first-child {
+      padding-bottom: 0;
     }
-        
+
+    &:last-child .blockStr {
+      display: none;
+    }
+  }
 }
 
 .blockStr{
-    width: 30%;
+  width: 400px;
 
-    @media (max-width: $sm - 1){
-        margin-right: 20px;
-    }
-    @media (max-width: $xs - 1){
-        display: none;
-    }
-}
-
-.searchBlockInput{
-    width: 45%;
-    height: 24px;
-    border-radius: 6px;
-    border-style: none;
-
-    @media (max-width: $xs - 1){
-        width: 63%;
-    }
+  @media (max-width: $lg - 1) {
+    width: auto;
+    margin-bottom: 15px;
+  }
 }
 
 .innerBlock{
-    width: 45.4%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    @media (max-width: $xs - 1){
-        width: 50%;
-    }
+  @media (max-width: $lg - 1){
+    flex-direction: column;
+  }
 }
 
-.innerBlockDate{
-    display: flex;
-    align-items: center;
+.field{
+  display: flex;
+  align-items: center;
+  width: 30%;
+
+  img {
+    margin-right: 10px;
+  }
+
+  @media (max-width: $lg - 1){
+    width: 100%;
+    margin-bottom: 15px;
+  }
 }
 
 .innerBlockDateInput{
-    border-style: none;
-    height: 30px;
-    width: 100px;
-    margin-left: 10px;
-    border-radius: 6px;
+  border-style: none;
+  height: 30px;
+  width: 100px;
+  margin-left: 10px;
+  border-radius: 6px;
 
-    @media (max-width: $lg - 1){
-        margin-left: 0px;
-    }
-    @media (max-width: $xs - 1){
-        margin-left: 5px;
-        margin-right: 15px;
-    }
+  @media (max-width: $lg - 1){
+    margin-left: 0px;
+  }
+
+  @media (max-width: $xs - 1){
+    margin-left: 5px;
+    margin-right: 15px;
+  }
 }
 
 .innerBlockButton{
-    font-size: 14px;
-    padding: 7px 22px;
+  font-size: 14px;
+  padding: 7px 22px;
 
-    @media (max-width: $lg - 1){
-        padding: 7px 11px;
-    }
-    @media (max-width: $sm - 1){
-        margin-left: 10px;
-        padding: 7px 5px;
-        height: 45px;
-    }
+  @media (max-width: $lg - 1){
+    padding: 7px 11px;
+  }
+
+  @media (max-width: $sm - 1){
+    margin-left: 10px;
+    padding: 7px 5px;
+    height: 45px;
+  }
+}
+
+.inner {
+  width: 160px;
+
+  @media (max-width: $xs - 1) {
+    position: absolute;
+    right: 15px;
+    top: 0;
+  }
 }
 
 .citySelect{
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 25px;
-    padding-right: 54px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 15px;
+  }
+
+  @media (min-width: $lg) {
+    
+  }
 }
 
-.cityName{
-    margin: 0 6px 0 14px;
-    &:hover{
-        text-decoration-line: underline;
-    }
+.section {
+  padding: 0 150px;
+
+  @media (max-width: $lg - 1) {
+    padding: 0 30px;
+  }
+
+  @media (max-width: $xs - 1) {
+    padding: 0 15px;
+  }
 }
 
 .cityWashes{
-    padding-left: 150px;
+  width: 100%;
 }
 
 .washList{
-    padding: 50px 345px 0px 345px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-    @media (max-width: $xl - 1){
-        padding: 50px 170px 0px 170px;
-    }
-    @media (max-width: $lg - 1){
-        padding: 50px 85px 0px 85px;
-    }
-    @media (max-width: $sm - 1){
-        justify-content: center;
-    }
+.card {
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 10px;
+  background: $white;
+  margin: 15px;
 }
 
 .nearestWash{
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 21px;
+  display: flex;
+  width: 180px;
+  align-items: center;
+  position: absolute;
+  right: 21px;
 
-    @media (max-width: $sm - 1){
-        bottom: -50px;
+  @media (min-width: $lg ) {
+    :global {
+      .select {
+        &__control {
+          height: 30px;
+          border-radius: 0;
+          border: none;
+          background: transparent;
+        }
+  
+        &__indicator-separator {
+          display: none;
+        }
+        
+        &__dropdown-indicator {
+          padding-top: 10px;
+  
+          svg {
+            fill: $black;
+          }
+        }
+      }
     }
-    @media (max-width: $xs - 1){
-        bottom: auto;
-    }
+  }
+
+  @media (max-width: $lg - 1) {
+    position: static;
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  @media (max-width: $sm - 1){
+    bottom: -50px;
+  }
+
+  @media (max-width: $xs - 1){
+    bottom: auto;
+  }
 }
 
 .nearestWashLink{
-    margin-left: 14px;
-    &:hover{
-        text-decoration-line: underline;
-    }
+  margin-left: 14px;
+ 
+  &:hover{
+    text-decoration-line: underline;
+  }
 
 }

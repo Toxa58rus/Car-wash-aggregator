@@ -1,48 +1,10 @@
 import React, { useState } from "react";
+import WASHES from "../../../constants/WASHES";
 import Button from "../../Button/Button";
 import WashCard from "../../WashCard/WashCard";
 import Modal from "../../Modal/Modal";
 import AddCarWash from "../../AddCarWash/AddCarWash";
 import styles from "./ProfilePage.module.scss";
-
-const WASHES = [
-  {
-    id: 1,
-    name: "Aplle",
-    description:
-      "Автомойка Апельсин предоставляет широкий спектор услуг по уборке вашего автомобиля",
-    adress: "ADdress",
-    availability: 4,
-    category: ["B", "C"],
-  },
-  {
-    id: 2,
-    name: "Aplle",
-    description:
-      "Автомойка Апельсин предоставляет широкий спектор услуг по уборке вашего автомобиля",
-    adress: "ADdress",
-    availability: 4,
-    category: ["B", "C"],
-  },
-  {
-    id: 3,
-    name: "Aplle",
-    description:
-      "Автомойка Апельсин предоставляет широкий спектор услуг по уборке вашего автомобиля",
-    adress: "ADdress",
-    availability: 4,
-    category: ["B", "C"],
-  },
-  {
-    id: 4,
-    name: "Aplle",
-    description:
-      "Автомойка Апельсин предоставляет широкий спектор услуг по уборке вашего автомобиля",
-    adress: "ADdress",
-    availability: 4,
-    category: ["B", "C"],
-  },
-];
 
 const ProfileCarWashes = () => {
   const [modalIsOpen, toggleModal] = useState(false);

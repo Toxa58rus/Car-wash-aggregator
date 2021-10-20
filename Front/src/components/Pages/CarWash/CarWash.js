@@ -101,7 +101,7 @@ const CarWash = () => {
             <img src={locationIcon} alt="address" />
             Димитровград, Октябрьская улица, 21Б
           </div>
-          {role === ROLES.CLIENT && (
+          {role !== ROLES.PARTNER && (
             <Form
               onSubmit={createOrder}
               initialValues={initialValues}

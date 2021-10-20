@@ -5,9 +5,17 @@ import ReactSelect from "react-select";
 import SelectOtion from "./SelectOption";
 import styles from "./Select.module.scss";
 
-const Select = ({ options, defaultValue, placeholder, meta, ...rest }) => {
+const Select = ({
+  options,
+  defaultValue,
+  placeholder,
+  meta,
+  transparent,
+  ...rest
+}) => {
   const containerCn = cn(styles.contain, {
     [styles.error]: meta && (meta.error || meta.submitError) && meta.touched,
+    [styles.transparent]: Boolean(transparent),
   });
 
   return (
@@ -35,6 +43,7 @@ const Select = ({ options, defaultValue, placeholder, meta, ...rest }) => {
 Select.defaultProps = {
   defaultValue: null,
   meta: null,
+  transparent: null,
 };
 
 Select.propTypes = {
@@ -42,6 +51,7 @@ Select.propTypes = {
   defaultValue: PropTypes.shape(),
   placeholder: PropTypes.string.isRequired,
   meta: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  transparent: PropTypes.bool,
 };
 
 export default Select;

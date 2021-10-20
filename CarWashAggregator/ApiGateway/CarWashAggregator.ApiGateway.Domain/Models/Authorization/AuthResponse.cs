@@ -1,6 +1,6 @@
-﻿namespace CarWashAggregator.Authorization.Business.JwtAuth.Models
+﻿namespace CarWashAggregator.ApiGateway.Domain.Models.Authorization
 {
-    public class JwtAuthResult
+    public class AuthResponse
     {
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }

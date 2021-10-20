@@ -22,9 +22,9 @@ namespace CarWashAggregator.Authorization.Deamon.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            var register = await _authorizationManager.RegisterAsync("TestLogin", "TestPassword", "test");
-            var token = await _authorizationManager.LoginAsync("TestLogin", "TestPassword", "test");
-            var newToken = await _authorizationManager.RefreshAccessTokenAsync(token.RefreshToken);
+            //var register = await _authorizationManager.RegisterAsync("TestLogin", "TestPassword", "test");
+            //var token = await _authorizationManager.LoginAsync("TestLogin", "TestPassword", "test");
+            //var newToken = await _authorizationManager.RefreshAccessTokenAsync(token.RefreshToken);
             return Ok("Started");
         }
     }

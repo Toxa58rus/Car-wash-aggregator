@@ -10,6 +10,9 @@ namespace CarWashAggregator.Authorization.Infra.Data.EntityConfigurations
         {
             builder.ToTable("AuthorizationData");
 
+            builder.HasIndex(x => x.UserLogin)
+                .IsUnique();
+
             builder.Property(e => e.Id)
                 .HasColumnName("id")
                 .IsRequired();

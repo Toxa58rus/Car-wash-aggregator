@@ -10,6 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain.DTO\CarWashAggregator.Common.Domain.DTO.csproj" />
     <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
     <ProjectReference Include="..\CarWashAggregator.ApiGateway.Domain\CarWashAggregator.ApiGateway.Domain.csproj" />
   </ItemGroup>

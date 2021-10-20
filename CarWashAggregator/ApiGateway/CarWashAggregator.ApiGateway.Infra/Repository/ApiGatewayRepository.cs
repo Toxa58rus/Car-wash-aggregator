@@ -1,10 +1,10 @@
-﻿using System;
+﻿using CarWashAggregator.ApiGateway.Domain.Contracts;
+using CarWashAggregator.ApiGateway.Domain.Entities;
+using CarWashAggregator.ApiGateway.Infra.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Domain.Contracts;
-using CarWashAggregator.ApiGateway.Domain.Entities;
-using CarWashAggregator.ApiGateway.Infra.Data;
 
 namespace CarWashAggregator.ApiGateway.Infra.Repository
 {

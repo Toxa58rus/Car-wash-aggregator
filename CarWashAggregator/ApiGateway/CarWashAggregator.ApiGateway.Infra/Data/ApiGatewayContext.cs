@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Domain.Entities;
+﻿using CarWashAggregator.ApiGateway.Domain.Entities;
 using CarWashAggregator.ApiGateway.Infra.Data.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CarWashAggregator.ApiGateway.Infra.Data
 {

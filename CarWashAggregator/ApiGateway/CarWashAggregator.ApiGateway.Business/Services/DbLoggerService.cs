@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Business.Interfaces;
+﻿using CarWashAggregator.ApiGateway.Business.Interfaces;
 using CarWashAggregator.ApiGateway.Domain.Contracts;
 using CarWashAggregator.ApiGateway.Domain.Entities;
-using CarWashAggregator.Common.Domain.Contracts;
+using System;
+using System.Threading.Tasks;
 
 namespace CarWashAggregator.ApiGateway.Business.Services
 {

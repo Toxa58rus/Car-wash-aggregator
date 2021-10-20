@@ -1,8 +1,8 @@
-﻿using System;
+﻿using CarWashAggregator.ApiGateway.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Domain.Entities;
 
 namespace CarWashAggregator.ApiGateway.Domain.Contracts
 {

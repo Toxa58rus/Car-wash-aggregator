@@ -31,7 +31,7 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 
             var jwtAuthResult = await _authorizationManager.RegisterAsync(login, password, role);
 
-            if (jwtAuthResult.Success)
+            if (jwtAuthResult.AuthFailure == JwtAuth.Models.AuthFailure.None)
             {
                 _bus.PublishEvent(new UserRegisteredEvent()
                 {
@@ -46,7 +46,6 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 
             return new ResponseUserAuthorization()
             {
-                Success = jwtAuthResult.Success,
                 AccessToken = jwtAuthResult.AccessToken,
                 RefreshToken = jwtAuthResult.RefreshToken,
                 AuthFailure = (AuthFailure)jwtAuthResult.AuthFailure

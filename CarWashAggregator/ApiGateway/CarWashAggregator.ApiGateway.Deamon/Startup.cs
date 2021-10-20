@@ -1,22 +1,17 @@
+using CarWashAggregator.ApiGateway.Business.Interfaces;
+using CarWashAggregator.ApiGateway.Business.Services;
+using CarWashAggregator.ApiGateway.Domain.Contracts;
+using CarWashAggregator.ApiGateway.Infra.Data;
+using CarWashAggregator.ApiGateway.Infra.Repository;
+using CarWashAggregator.Common.Domain;
+using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Infra;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Domain.Contracts;
-using CarWashAggregator.Common.Domain;
-using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.ApiGateway.Infra.Data;
-using CarWashAggregator.ApiGateway.Infra.Repository;
-using CarWashAggregator.Common.Infra;
-using Microsoft.EntityFrameworkCore;
 
 namespace CarWashAggregator.ApiGateway.Deamon
 {
@@ -38,7 +33,8 @@ namespace CarWashAggregator.ApiGateway.Deamon
             });
 
             //Services
-            //services.AddTransient<, >();
+            services.AddTransient<IAuthService, AuthService>()
+                .AddTransient<IDbLoggerService, DbLoggerService>();
 
             //Data
             services.AddScoped<IApiGatewayRepository, ApiGatewayRepository>();
@@ -47,6 +43,7 @@ namespace CarWashAggregator.ApiGateway.Deamon
             //services.AddTransient<>();
 
             services.AddMvc();
+            services.AddAutoMapper(typeof(Startup));
             BusContainer.RegisterBusService(services, _configuration);
 
         }

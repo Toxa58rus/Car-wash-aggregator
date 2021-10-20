@@ -66,7 +66,6 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 
             return new JwtAuthResult()
             {
-                Success = true,
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
             };
@@ -103,7 +102,6 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 
             return new JwtAuthResult()
             {
-                Success = true,
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
             };
@@ -111,15 +109,14 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 
         public async Task<JwtAuthResult> RefreshAccessTokenAsync(string refreshToken)
         {
-            var validationResult = await ValidateJwtToken(refreshToken, false, false, false);
-            if (!validationResult.TokenIsValid)
+            var (jwtToken, validationFailure) = ValidateJwt(refreshToken, false, false, false);
+            if (validationFailure != ValidationFailure.None)
             {
                 return new JwtAuthResult()
                 {
                     AuthFailure = AuthFailure.TokenNotValid
                 };
             }
-            var jwtToken = validationResult.ValidatedToken;
 
             var login = GetClaim(jwtToken, JwtRegisteredClaimNames.Sub);
             var hashPassword = GetClaim(jwtToken, ClaimsPasswordType);
@@ -129,7 +126,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             try
             {
                 existUser = _authorizationRepository.Get<AuthorizationData>()
-                    .Single(x => x.UserLogin == login && x.HashPassword == hashPassword && x.RefreshToken == refreshToken);
+                    .Single(x => x.UserLogin == login);
             }
             catch (Exception ex)
             {
@@ -137,6 +134,14 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
                 return new JwtAuthResult()
                 {
                     AuthFailure = AuthFailure.ServerError
+                };
+            }
+
+            if (existUser.HashPassword != hashPassword || existUser.RefreshToken != refreshToken)
+            {
+                return new JwtAuthResult()
+                {
+                    AuthFailure = AuthFailure.TokenNotValid
                 };
             }
 
@@ -156,17 +161,32 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 
             return new JwtAuthResult()
             {
-                Success = true,
                 AccessToken = newAccessToken,
                 RefreshToken = newRefreshToken
             };
         }
-        public Task<JwtValidationResult> ValidateJwtToken(string token,
+
+        public Task<JwtValidationResult> ValidateAccessToken(string token)
+        {
+            var (jwtToken, validationFailure) = ValidateJwt(token);
+            var login = GetClaim(jwtToken, JwtRegisteredClaimNames.Sub);
+            var role = GetClaim(jwtToken, ClaimsRoleType);
+
+            var result = new JwtValidationResult
+            {
+                UserEmail = login,
+                UserRole = role,
+                ValidationFailure = validationFailure
+            };
+            return Task.FromResult(result);
+        }
+
+        private (JwtSecurityToken, ValidationFailure) ValidateJwt(string token,
             bool validateLifetime = true,
             bool validateIssuer = true,
             bool validateAudience = true)
         {
-            var result = new JwtValidationResult();
+            JwtSecurityToken result;
             try
             {
                 new JwtSecurityTokenHandler()
@@ -182,7 +202,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
                             ValidateLifetime = validateLifetime,
                         },
                         out var validatedToken);
-                result.ValidatedToken = validatedToken as JwtSecurityToken;
+                result = validatedToken as JwtSecurityToken;
             }
             catch (Exception ex)
             {
@@ -190,17 +210,14 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
                     ex.Message);
                 if (ex is SecurityTokenExpiredException)
                 {
-                    result.ValidationFailure = ValidationFailure.InvalidLifetime;
-                    return Task.FromResult(result);
+                    return (null, ValidationFailure.InvalidLifetime);
                 }
                 else
                 {
-                    result.ValidationFailure = ValidationFailure.InvalidToken;
-                    return Task.FromResult(result);
+                    return (null, ValidationFailure.InvalidToken);
                 }
             }
-            result.TokenIsValid = true;
-            return Task.FromResult(result);
+            return (result, ValidationFailure.None);
         }
 
         private static string GetHashPassword(string password)

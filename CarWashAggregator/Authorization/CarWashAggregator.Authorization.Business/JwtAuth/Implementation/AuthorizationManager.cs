@@ -33,7 +33,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             _logger = logger;
         }
 
-        public async Task<JwtAuthResult> RegisterAsync(string login, string password, string role)
+        public async Task<JwtAuthResult> RegisterAsync(string login, string password, int role)
         {
             var hashPassword = GetHashPassword(password);
             var existUser = _authorizationRepository.Get<AuthorizationData>()
@@ -49,7 +49,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, login),
-                new Claim(ClaimsRoleType, role),
+                new Claim(ClaimsRoleType, role.ToString()),
                 new Claim(ClaimsPasswordType, hashPassword)
             };
 
@@ -71,7 +71,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             };
         }
 
-        public async Task<JwtAuthResult> LoginAsync(string login, string password, string role)
+        public async Task<JwtAuthResult> LoginAsync(string login, string password, int role)
         {
             var hashPassword = GetHashPassword(password);
             var existUser = _authorizationRepository.Get<AuthorizationData>()
@@ -88,7 +88,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, login),
-                new Claim(ClaimsRoleType, role),
+                new Claim(ClaimsRoleType, role.ToString()),
                 new Claim(ClaimsPasswordType, hashPassword)
             };
 
@@ -169,15 +169,16 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
         public Task<JwtValidationResult> ValidateAccessToken(string token)
         {
             var (jwtToken, validationFailure) = ValidateJwt(token);
-            var login = GetClaim(jwtToken, JwtRegisteredClaimNames.Sub);
-            var role = GetClaim(jwtToken, ClaimsRoleType);
-
             var result = new JwtValidationResult
             {
-                UserEmail = login,
-                UserRole = role,
                 ValidationFailure = validationFailure
             };
+            if (validationFailure == ValidationFailure.None)
+            {
+                var login = GetClaim(jwtToken, JwtRegisteredClaimNames.Sub);
+                result.UserId = _authorizationRepository.Get<AuthorizationData>()
+                    .SingleOrDefault(x => x.UserLogin == login)?.Id;
+            }
             return Task.FromResult(result);
         }
 

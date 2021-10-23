@@ -22,8 +22,7 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 
             return new ResponseTokenValidationCheck()
             {
-                UserRole = validationResult.UserRole,
-                UserEmail = validationResult.UserEmail,
+               UserId = validationResult.UserId,
                 ValidationFailure = (ValidationFailure)validationResult.ValidationFailure
             };
         }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CarWashAggregator.Authorization.Infra.Data.EntityConfigurations
 {
-    public class AuthorizationConfiguration : IEntityTypeConfiguration<AuthorizationData>
+    public class AuthorizationDataConfiguration : IEntityTypeConfiguration<AuthorizationData>
     {
         public void Configure(EntityTypeBuilder<AuthorizationData> builder)
         {

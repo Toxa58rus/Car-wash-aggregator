@@ -39,7 +39,7 @@ namespace CarWashAggregator.User.Deamon.Controllers
 
         public async Task<JsonResult> RequestCreateUserQuery()
         {
-            RequestCreateUserQuery user = new RequestCreateUserQuery()
+            RequestRoleIdByUserIdQuery user = new RequestRoleIdByUserIdQuery()
             {
                 Email = "test@test.test",
                 FirstName = "Иван",
@@ -47,7 +47,7 @@ namespace CarWashAggregator.User.Deamon.Controllers
                 NumberPhone = "123456789",
                 Role = "Партнер"
             };
-            ResponseCreateUserQuery response = await _eventBus.RequestQuery<RequestCreateUserQuery, ResponseCreateUserQuery>(user);
+            ResponseCreateUserQuery response = await _eventBus.RequestQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery>(user);
             return Json(response);
         }
 

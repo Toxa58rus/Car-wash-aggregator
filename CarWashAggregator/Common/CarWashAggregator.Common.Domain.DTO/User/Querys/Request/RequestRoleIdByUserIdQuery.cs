@@ -2,7 +2,7 @@
 
 namespace CarWashAggregator.Common.Domain.DTO.User.Querys.Request
 {
-    public class RequestCreateUserQuery : Query
+    public class RequestRoleIdByUserIdQuery : Query
     {
         public string Email { get; set; }
         public string FirstName { get; set; }

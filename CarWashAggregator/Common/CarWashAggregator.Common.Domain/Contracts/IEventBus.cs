@@ -1,16 +1,21 @@
-﻿namespace CarWashAggregator.Common.Domain.Contracts
+﻿using System.Threading.Tasks;
+
+namespace CarWashAggregator.Common.Domain.Contracts
 {
     public interface IEventBus
     {
-        void RequestQuery<T>(T query) where T : Query;
-        void ReplyToQuery<T>(T reply, string replyingQueue, string correlationId, ulong deliveryTag) where T : Query;
+        public Task<TResponse> RequestQuery<TRequest, TResponse>(TRequest request)
+            where TRequest : Query where TResponse : Query;
+
+        void PublishEvent<T>(T @event) where T : Event;
 
         void SubscribeToEvent<T, TH>()
             where T : Event
             where TH : IEventHandler<T>;
-        void SubscribeToQuery<T, TH>()
-            where T : Query
-            where TH : IRequestedQueryHandler<T>;
+
+        public void SubscribeToQuery<TRequest, TResponse, TH>()
+            where TRequest : Query
+            where TResponse : Query
+            where TH : IQueryHandler<TRequest, TResponse>;
     }
 }
-

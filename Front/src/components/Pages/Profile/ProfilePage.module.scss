@@ -1,0 +1,165 @@
+@import 'src/styles/colors';
+@import 'src/styles/breakpoints.scss';
+
+.page {
+  background: $bg-layout;
+  min-height: 100vh;
+}
+
+.wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding-top: 50px;
+
+  @media (max-width: $xl - 1) {
+    padding: 0 30px;
+  }
+
+  @media (max-width: $sm - 1) {
+    padding: 0 15px;
+  }
+}
+
+.container {
+  position: relative;
+  margin-top: 10px;
+  display: flex;
+  padding-left: 25%;
+
+  @media (max-width: $m - 1) {
+    padding-left: 0;
+    font-size: 14px;
+  }
+}
+
+.profileMenu {
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 25%;
+  background: $gray;
+  border-radius: 10px;
+  border: 1px solid $gray-dark;
+  overflow: hidden;
+
+  @media (max-width: $m - 1) {
+    display: none;
+  }
+}
+
+.menuBtn {
+  background: transparent;
+  height: 50px;
+  border-radius: 0;
+  border-bottom: 1px solid $gray-dark;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.activeMenuBtn {
+  background: $gray-dark;
+}
+
+.containerWrap {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 0 0 30px;
+
+  @media (max-width: $sm - 1) {
+    padding: 0;
+  }
+}
+
+.tabWrap {
+  margin-bottom: 10px;
+
+  @media (max-width: $sm - 1) {
+    overflow: hidden;
+    overflow-x: scroll;
+    padding-bottom: 10px;
+  }
+}
+
+.contain {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.addWashBtn {
+  position: absolute;
+  right: 20px;
+  top: -47px;
+  width: 200px;
+}
+
+.washCard {
+  box-sizing: border-box;
+  padding: 20px;
+  background: $white;
+  border-radius: 10px;
+  margin: 15px;
+
+  @media (max-width: $lg - 1) {
+    margin: 10px;
+  }
+
+}
+
+.form {
+  background: $white;
+  width: 100%;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px;
+  margin-top: 13px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.inputs{
+  display: flex;
+  margin-bottom: 15px;
+
+  @media (max-width: $m - 1) {
+    flex-direction: column;
+  }
+}
+
+.inputsWrap {
+  width: 50%;
+  margin-right: 15px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @media (max-width: $m - 1) {
+    width: 100%;
+
+    &:first-child {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.input {
+  border: 1px solid $gray-dark;
+}
+
+@media (max-width: $sm - 1) {
+  .inner {
+    min-width: 405px;
+  }
+
+  .title {
+    font-size: 26px;
+    margin-top: 15px;
+  }
+}

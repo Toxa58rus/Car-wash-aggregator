@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\..\CarWash\CarWashAggregator.CarWashes.Domain\CarWashAggregator.CarWashes.Domain.csproj" />
+	  <ProjectReference Include="..\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApiGateway\Events\" />
+    <Folder Include="ApiGateway\Querys\Request\" />
+    <Folder Include="ApiGateway\Querys\Response\" />
+    <Folder Include="Order\Events\" />
+    <Folder Include="Reviews\Events\" />
+    <Folder Include="Reviews\Querys\Request\" />
+    <Folder Include="Reviews\Querys\Response\" />
+    <Folder Include="User\Events\" />
+    <Folder Include="User\Querys\Response\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.13.1" />
+  </ItemGroup>
+
+</Project>

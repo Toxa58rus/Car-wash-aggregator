@@ -48,3 +48,29 @@
 .error {
   border: 2px solid $red;
 }
+
+
+.transparent {
+  :global {
+    .select {
+      &__control {
+        height: 30px;
+        border-radius: 0;
+        border: none;
+        background: transparent;
+      }
+
+      &__indicator-separator {
+        display: none;
+      }
+      
+      &__dropdown-indicator {
+        padding-top: 10px;
+
+        svg {
+          fill: $black;
+        }
+      }
+    }
+  }
+}

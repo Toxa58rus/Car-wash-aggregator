@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain.DTO\CarWashAggregator.Common.Domain.DTO.csproj" />
     <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
-    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Infra.Bus\CarWashAggregator.Common.Infra.Bus.csproj" />
     <ProjectReference Include="..\CarWashAggregator.Orders.Domain\CarWashAggregator.Orders.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\EventHandlers\" />
   </ItemGroup>
 
 </Project>

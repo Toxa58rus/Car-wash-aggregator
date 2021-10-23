@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Infra\CarWashAggregator.Common.Infra.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.CarWashes.BL\CarWashAggregator.CarWashes.BL.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.CarWashes.Infra\CarWashAggregator.CarWashes.Infra.csproj" />
+  </ItemGroup>
+
+</Project>

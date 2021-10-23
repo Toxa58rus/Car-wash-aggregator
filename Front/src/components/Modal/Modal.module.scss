@@ -1,0 +1,90 @@
+@import 'src/styles/colors';
+@import 'src/styles/breakpoints';
+
+.modalOverlay {
+  position: fixed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 50px;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 9999999;
+  background: rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+
+  @media (max-width: $lg - 1) {
+    padding: 0 15px;
+  }
+}
+
+.modal {
+  position: relative;
+  text-align: center;
+  height: 75%;
+
+  @media (max-width: $lg - 1) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+.cancelBtn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  top: 0;
+  right: 0;
+  z-index: 6;
+
+  @media (max-width: $lg - 1) {
+    display: none;
+  }
+}
+
+.backBtn {
+  display: none;
+
+  @media (max-width: $lg - 1) {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    min-width: 200px;
+    background: $white;
+    top: 0;
+    left: 15px;
+    z-index: 999;
+    height: 50px;
+    font-weight: 600;
+
+    img {
+      margin-right: 10px;
+      width: 14px;
+    }
+  }
+}
+
+.sm {
+  width: 60%;
+
+  @media (max-width: $lg - 1) {
+    width: 100%;
+    height: auto;
+    max-height: 90%;
+  }
+}
+
+.xs {
+  display: inline-block;
+}
+
+.small {
+  width: 100%;
+  max-width: 500px;
+}

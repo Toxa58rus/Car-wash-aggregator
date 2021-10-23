@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain.DTO\CarWashAggregator.Common.Domain.DTO.csproj" />
+    <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Domain\CarWashAggregator.Common.Domain.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.CarWashes.Domain\CarWashAggregator.CarWashes.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

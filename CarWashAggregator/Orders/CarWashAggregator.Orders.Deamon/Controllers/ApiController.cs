@@ -1,7 +1,13 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Orders.Business.Bus.Querys;
+using CarWashAggregator.Common.Domain.DTO.Order.Querys.Request;
+using CarWashAggregator.Common.Domain.DTO.Order.Querys.Response;
 using CarWashAggregator.Orders.Business.Interfaces;
+using CarWashAggregator.Orders.Domain.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CarWashAggregator.Orders.Deamon.Controllers
 {
@@ -11,26 +17,38 @@ namespace CarWashAggregator.Orders.Deamon.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IEventBus _bus;
+        private readonly IOrderRepository _dbRepository;
 
-        public ApiController(IOrderService orderService, IEventBus bus)
+
+        public ApiController(IOrderService orderService, IEventBus bus, IOrderRepository dbRepository)
         {
             _orderService = orderService;
+            _dbRepository = dbRepository;
             _bus = bus;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            try
+
+            //var ordersCount = _orderService.GetOrders().ToList().Count;
+            //_bus.PublishEvent(new OrderCreatedEvent());
+            var ordersQuerys = new List<ResponseOneOrder>();
+            for (int i = 0; i < 10; i++)
             {
-                //var ordersCount = _orderService.GetOrders().ToList().Count;
-                _bus.RequestQuery(new OrdersQuery());
-                return Ok("Started, ");
+                var order = await _bus.RequestQuery<RequestOrderById, ResponseOneOrder>(new RequestOrderById() { Id = new Guid("598e5bad-b077-48b0-8ecc-a75fe034742d") });
+                ordersQuerys.Add(order);
             }
-            catch
+
+            var stringBuilder = new StringBuilder();
+            foreach (var order in ordersQuerys)
             {
-                return Ok("Started, no database");
+                stringBuilder.Append(order.Price + "---");
             }
+
+            return Ok("Started, " + stringBuilder);
+
+
         }
     }
 }

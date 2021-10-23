@@ -47,7 +47,37 @@ namespace CarWashAggregator.Authorization.Infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserLogin")
+                        .IsUnique();
+
                     b.ToTable("AuthorizationData");
+                });
+
+            modelBuilder.Entity("CarWashAggregator.Authorization.Domain.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("IndexId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("role_name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IndexId")
+                        .IsUnique();
+
+                    b.ToTable("Roles");
                 });
 #pragma warning restore 612, 618
         }

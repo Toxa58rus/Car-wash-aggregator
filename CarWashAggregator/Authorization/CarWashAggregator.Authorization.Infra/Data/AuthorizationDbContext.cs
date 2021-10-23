@@ -7,6 +7,8 @@ namespace CarWashAggregator.Authorization.Infra.Data
     public class AuthorizationDbContext : DbContext
     {
         public DbSet<AuthorizationData> AuthorizationDataDbSet { get; set; }
+        public DbSet<Role> RoleDbSet { get; set; }
+
 
         public AuthorizationDbContext(DbContextOptions<AuthorizationDbContext> options) : base(options)
         {
@@ -14,7 +16,8 @@ namespace CarWashAggregator.Authorization.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AuthorizationConfiguration());
+            modelBuilder.ApplyConfiguration(new AuthorizationDataConfiguration())
+                .ApplyConfiguration(new RoleConfiguration());
         }
 
     }

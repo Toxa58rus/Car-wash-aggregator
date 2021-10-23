@@ -18,7 +18,6 @@
     <Folder Include="Reviews\Querys\Request\" />
     <Folder Include="Reviews\Querys\Response\" />
     <Folder Include="User\Events\" />
-    <Folder Include="User\Querys\Request\" />
     <Folder Include="User\Querys\Response\" />
   </ItemGroup>
 

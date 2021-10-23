@@ -1,12 +1,11 @@
-﻿using CarWashAggregator.Common.Domain.Contracts;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using CarWashAggregator.Common.Domain.Contracts;
 
 namespace CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response
 {
     public class ResponseTokenValidationCheck : Query
     {
-        public bool TokenIsValid { get; set; }
+        public Guid? UserId { get; set; }
         public ValidationFailure ValidationFailure { get; set; }
-        public JwtSecurityToken ValidatedToken { get; set; }
     }
 }

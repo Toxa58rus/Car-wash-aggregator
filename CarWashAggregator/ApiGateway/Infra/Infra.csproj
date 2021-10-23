@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
-        <AssemblyName>CarWashAggregator.ApiGateway.Infra</AssemblyName>
-        <RootNamespace>CarWashAggregator.ApiGateway.Infra</RootNamespace>
-    </PropertyGroup>
-
-</Project>

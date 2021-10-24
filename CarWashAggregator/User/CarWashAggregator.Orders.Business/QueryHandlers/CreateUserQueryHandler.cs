@@ -11,7 +11,7 @@ using CarWashAggregator.User.Domain.interfaces;
 
 namespace CarWashAggregator.Orders.Business.QueryHandlers
 {
-    public class CreateUserQueryHandler : IQueryHandler<RequestCreateUserQuery, ResponseCreateUserQuery>
+    public class CreateUserQueryHandler : IQueryHandler<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery>
     {
         private readonly IUserService _userService;
 
@@ -20,10 +20,10 @@ namespace CarWashAggregator.Orders.Business.QueryHandlers
             _userService = userService;
         }
 
-        public async Task<ResponseCreateUserQuery> Handle(RequestCreateUserQuery request)
+        public async Task<ResponseCreateUserQuery> Handle(RequestRoleIdByUserIdQuery request)
         {
             var mapper = new Mapper(
-                new MapperConfiguration(cfg => cfg.CreateMap<RequestCreateUserQuery, UserInfo>()
+                new MapperConfiguration(cfg => cfg.CreateMap<RequestRoleIdByUserIdQuery, UserInfo>()
                     .ForMember("Role", opt => opt.Ignore())
             ));
             UserInfo user = mapper.Map<UserInfo>(request);

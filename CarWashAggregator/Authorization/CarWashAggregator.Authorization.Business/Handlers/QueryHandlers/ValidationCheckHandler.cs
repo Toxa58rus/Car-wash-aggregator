@@ -18,12 +18,11 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 
         public async Task<ResponseTokenValidationCheck> Handle(RequestTokenValidationCheck request)
         {
-            var validationResult = await _authorizationManager.ValidateJwtToken(request.TokenToValidate);
+            var validationResult = await _authorizationManager.ValidateAccessToken(request.TokenToValidate);
 
             return new ResponseTokenValidationCheck()
             {
-                ValidatedToken = validationResult.ValidatedToken,
-                TokenIsValid = validationResult.TokenIsValid,
+               UserId = validationResult.UserId,
                 ValidationFailure = (ValidationFailure)validationResult.ValidationFailure
             };
         }

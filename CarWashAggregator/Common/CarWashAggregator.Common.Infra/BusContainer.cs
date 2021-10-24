@@ -9,7 +9,7 @@ namespace CarWashAggregator.Common.Infra
     {
         public static void RegisterBusService(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IEventBus, RabbitMQBus>(sp =>
+            services.AddSingleton<IEventBus, RabbitMQBus>(sp =>
             {
                 var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
                 return new RabbitMQBus(scopeFactory, configuration);

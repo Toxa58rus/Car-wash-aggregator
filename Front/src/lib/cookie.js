@@ -10,7 +10,7 @@ export const getRefreshUserFromCookie = () => {
 };
 
 export const setUserCookie = (refreshUser) => {
-  cookies.set("refresh", refreshUser, { expires: 1 / 24 });
+  cookies.set("refresh", refreshUser, { expires: 365 });
 };
 
 export const removeUserCookie = () => {

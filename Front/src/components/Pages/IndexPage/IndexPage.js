@@ -15,16 +15,10 @@ import DateForm from "../../DateForm/DateForm";
 import Header from "../../Header/Header";
 import Select from "../../Select/Select";
 import styles from "./IndexPage.module.scss";
-import { getRefreshUserFromCookie } from "../../../lib/cookie";
 
 const IndexPage = () => {
   const [calendarIsOpen, setCalendar] = useState(false);
   const [state, setState] = useState({ washes: [] });
-
-  const ref = getRefreshUserFromCookie();
-  console.log(ref);
-  const sess = JSON.parse(window.sessionStorage.getItem("redux"));
-  console.log(sess);
 
   const getData = async (data) => {
     api

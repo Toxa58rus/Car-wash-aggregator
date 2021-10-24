@@ -1,24 +1,39 @@
+import { useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "normalize.css";
 import "../styles/global.scss";
+import api from "../lib/api";
+import sources from "../helpers/sources";
+import { useDispatch, useSelector } from "react-redux";
+import { selectConstants, setConstants } from "../state/constants";
+import { selectSession } from "../state/session";
 
 import IndexPage from "../components/Pages/IndexPage/IndexPage";
 import CarWash from "../components/Pages/CarWash/CarWash";
 import LoginPage from "../components/Pages/LoginPage/LoginPage";
 import ProfilePage from "../components/Pages/Profile/ProfilePage";
-import { useEffect } from "react";
-import api from "../lib/api";
-import sources from "../helpers/sources";
+import { getRefreshUserFromCookie } from "../lib/cookie";
 
 function App() {
-  useEffect(() => {
-    const getConstants = () => {
-      api.get(sources.constants).then((respose) => {
-        console.log(respose);
-      });
-    };
+  const dispatch = useDispatch();
+  const constantsCONS = useSelector(selectConstants);
+  const session = useSelector(selectSession);
+  const storage = JSON.parse(window.sessionStorage.getItem("redux"));
+  // console.log(getRefreshUserFromCookie());
+  // console.log(constantsCONS);
+  // console.log(session);
+  // console.log(storage);
 
-    getConstants();
+  const getConstants = () => {
+    api.get(sources.constants).then((respose) => {
+      dispatch(setConstants(respose.data));
+    });
+  };
+
+  useEffect(() => {
+    if (!storage || !storage.constants) {
+      getConstants();
+    }
   });
 
   return (

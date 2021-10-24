@@ -1,9 +1,13 @@
 const sources = {
-  register: "/Register",
-  login: "/Login",
+  register: "/register",
+  login: "/login",
 
-  constants: "/Constants",
-  search: "/Search",
+  constants: "/constants",
+  search: "/search",
+
+  profileSettings: "/profile/settings",
+  profileOrders: "/profile/orders",
+  profileCarWashes: "/profile/car-washes",
 };
 
 export default sources;

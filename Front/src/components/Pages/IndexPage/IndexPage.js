@@ -3,6 +3,7 @@ import { Form, Field } from "react-final-form";
 import { getDate } from "../../../helpers/dateFormatter";
 import { TIME_FIELDS } from "../../../constants/TIME-FIELDS";
 import WASHES from "../../../constants/WASHES";
+import api from "../../../lib/api";
 
 import MapMark from "../../../icons/Vector.svg";
 import Clock from "../../../icons/Clock.svg";
@@ -17,9 +18,14 @@ import styles from "./IndexPage.module.scss";
 
 const IndexPage = () => {
   const [calendarIsOpen, setCalendar] = useState(false);
+  const [state, setState] = useState({ washes: [] });
 
   const getData = async (data) => {
-    // api.get(sources.search, { params: {...data}}).then((response) => setState({washes: response.data}))
+    api
+      .get("/v2/matches", {
+        params: { ...data, time: data && data.time ? data.time.name : null },
+      })
+      .then((response) => setState({ washes: WASHES }));
   };
 
   let currentForm = null;
@@ -63,10 +69,10 @@ const IndexPage = () => {
                   </span>
                   <div className={styles.innerBlock}>
                     <Field
-                      name="Text"
+                      name="text"
                       render={({ input, meta }) => (
                         <Input
-                          placeholder="Поиск по названию, адресу, услуге"
+                          placeholder="Поиск по названию мойки"
                           meta={meta}
                           {...input}
                         />
@@ -98,9 +104,9 @@ const IndexPage = () => {
                       </Field>
                     </div>
                     <div className={styles.field}>
-                      <img src={Clock} alt="Clock" />
+                      <img src={Clock} alt="time" />
                       <Field
-                        name="Time"
+                        name="time"
                         render={({ input, meta }) => (
                           <Select
                             placeholder="Время *"
@@ -128,7 +134,7 @@ const IndexPage = () => {
       <div className={styles.section}>
         <h2 className={styles.cityWashes}>Мойки в Москве</h2>
         <div className={styles.washList}>
-          {WASHES.map((item) => (
+          {state.washes.map((item) => (
             <div className={styles.card} key={item.id}>
               <WashCard id={item.id} item={item} />
             </div>

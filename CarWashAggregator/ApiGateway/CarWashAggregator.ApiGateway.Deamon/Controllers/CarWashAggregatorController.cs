@@ -115,6 +115,21 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 
         [Route("/[action]")]
         [HttpGet]
+        public async Task<IActionResult> AddCity()
+        {
+	        await _repository.Add<City>(new City() {Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "Москва"});
+	        await _repository.Add(new Car() {Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "A"});
+	        await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "B" });
+	        await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "C" });
+	        await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "D" });
+	        await _repository.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [Route("/[action]")]
+        [HttpGet]
+        [Produces("application/json")]
         public IActionResult Constants()
         {
             try

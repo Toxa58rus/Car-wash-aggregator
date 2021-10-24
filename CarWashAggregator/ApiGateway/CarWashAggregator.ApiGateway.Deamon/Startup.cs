@@ -43,8 +43,26 @@ namespace CarWashAggregator.ApiGateway.Deamon
 
             //Subscriptions
             //services.AddTransient<>();
+/*
+            services.AddMvcCore(options =>
+            {
+	            options.RequireHttpsPermanent = true;
+	            options.RespectBrowserAcceptHeader = true;
+            }).AddFormatterMappings(); */
+			//services.AddControllers().AddNewtonsoftJson();
+	            //.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-            services.AddMvc();
+	            services.AddMvc().AddNewtonsoftJson();
+            //    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+
+            services.AddCors(options => options.AddDefaultPolicy(
+	            builder =>
+	            {
+		            builder//.WithOrigins("http://89.108.65.74", "http://localhost:5000")
+			            .AllowAnyHeader()
+			            .AllowAnyMethod()
+			            .AllowAnyOrigin();
+	            }));
             services.AddAutoMapper(typeof(Startup));
             BusContainer.RegisterBusService(services, _configuration);
         }
@@ -58,13 +76,13 @@ namespace CarWashAggregator.ApiGateway.Deamon
             }
 
             app.UseRouting();
-
+            app.UseCors();
             app.UseMiddleware<JwtMiddleware>();
             ConfigureEventBus(app);
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapDefaultControllerRoute();//.RequireCors("MyPolicy");
             });
         }
 

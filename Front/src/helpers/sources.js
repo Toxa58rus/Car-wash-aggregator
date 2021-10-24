@@ -1,5 +1,9 @@
 const sources = {
-    search: "/search",
-}
+  register: "/Register",
+  login: "/Login",
+
+  constants: "/Constants",
+  search: "/Search",
+};
 
 export default sources;

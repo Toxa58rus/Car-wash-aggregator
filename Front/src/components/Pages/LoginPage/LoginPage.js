@@ -5,6 +5,9 @@ import routes from "../../../helpers/routes";
 import { useDispatch } from "react-redux";
 import { setSession } from "../../../state/session";
 import { ROLES_OPTIONS } from "../../../constants/ROLES";
+import sources from "../../../helpers/sources";
+import api from "../../../lib/api";
+import { setUserCookie } from "../../../lib/cookie";
 import {
   composeValidators,
   required,
@@ -18,12 +21,11 @@ import Input from "../../Input/Input";
 import Header from "../../Header/Header";
 import styles from "./LoginPage.module.scss";
 
-const LoginPage = (props) => {
-  const { history } = props;
-
+const LoginPage = ({ history }) => {
   const [tab, setTab] = useState(history.location.pathname);
   const [state, setState] = useState({
     token: "aljkhsdbefisuwasjdebswvcoijknokwqalpmgfv",
+    refresh: "lakjsnfaslmflaskkkkkgkrgrgrg",
     name: "ra",
     pass: "asdas",
     role: 2,
@@ -41,11 +43,8 @@ const LoginPage = (props) => {
   };
 
   const login = (data) => {
-    setState((prevState) => ({
-      ...prevState,
-      name: data.email,
-      data: data.password,
-    }));
+    api.get(sources.login, { params: { ...data } });
+    setUserCookie(state.refresh);
 
     dispatch(setSession(state));
     history.push(routes.root);
@@ -235,16 +234,31 @@ const LoginPage = (props) => {
                       )}
                     </Field>
                   </div>
-                  <Field name="role" validate={required}>
-                    {({ input, meta }) => (
-                      <Select
-                        options={ROLES_OPTIONS}
-                        placeholder="Выбирите метод регистрации"
-                        meta={meta}
-                        {...input}
-                      />
-                    )}
-                  </Field>
+                  <div className={styles.inputs}>
+                    <div className={cn(styles.inner, styles.mobileInner)}>
+                      <Field name="role" validate={required}>
+                        {({ input, meta }) => (
+                          <Select
+                            options={ROLES_OPTIONS}
+                            placeholder="Выбирите метод регистрации"
+                            meta={meta}
+                            {...input}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                    <div className={cn(styles.inner, styles.mobileInner)}>
+                      <Field name="phone" validate={required}>
+                        {({ input, meta }) => (
+                          <Input
+                            placeholder="Номер телефона"
+                            meta={meta}
+                            {...input}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                  </div>
                   <Button
                     className={styles.sigInBtn}
                     type="submit"

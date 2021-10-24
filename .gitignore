@@ -1,6 +1,6 @@
-/Orders/CarWashAggregator.Orders.Deamon/appsettings.json
-/Orders/CarWashAggregator.Authorization.Deamon/appsettings.json
-
+CarWashAggregator/Orders/CarWashAggregator.Orders.Deamon/appsettings.json
+CarWashAggregator/Authorization/CarWashAggregator.Authorization.Deamon/appsettings.json
+CarWashAggregator/ApiGateway/CarWashAggregator.ApiGateway.Deamon/appsettings.json
 
 
 

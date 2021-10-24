@@ -22,14 +22,13 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
             var password = request.UserPassword;
             var role = request.UserRole;
 
-            if (login is null || password is null || role is null)
+            if (login is null || password is null)
                 return new ResponseUserAuthorization() { AuthFailure = AuthFailure.RequestNotValid };
 
             var jwAuthResult = await _authorizationManager.LoginAsync(login, password, role);
 
             return new ResponseUserAuthorization()
             {
-                Success = jwAuthResult.Success,
                 AccessToken = jwAuthResult.AccessToken,
                 RefreshToken = jwAuthResult.RefreshToken,
                 AuthFailure = (AuthFailure)jwAuthResult.AuthFailure

@@ -12,12 +12,15 @@ using CarWashAggregator.ApiGateway.Domain.Models;
 using CarWashAggregator.ApiGateway.Domain.Models.Authorization;
 using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestsModels;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 
 namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 {
     [ApiController]
     [Route("")]
+    [EnableCors]
+    //[EnableCors("MyPolicy")]
     public class CarWashAggregatorController : ControllerBase
     {
 

@@ -22,8 +22,8 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 
         public async Task<ResponseUserAuthorization> Handle(RequestRegisterNewUser request)
         {
-            var login = request.UserEmail;
-            var password = request.UserPassword;
+            var login = request.Email;
+            var password = request.Password;
             var role = request.UserRole;
 
             if (login is null || password is null)
@@ -37,9 +37,9 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
                 {
                     Firstname = request.Firstname,
                     Lastname = request.Lastname,
-                    TelephoneNumber = request.TelephoneNumber,
-                    UserEmail = request.UserEmail,
-                    UserPassword = request.UserPassword,
+                    TelephoneNumber = request.Phone,
+                    UserEmail = request.Email,
+                    UserPassword = request.Password,
                     UserRole = request.UserRole
                 });
             }

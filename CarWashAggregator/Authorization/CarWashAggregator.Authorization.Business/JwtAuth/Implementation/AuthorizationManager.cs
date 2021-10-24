@@ -62,7 +62,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
                 RefreshToken = refreshToken,
             });
             await _authorizationRepository.SaveChangesAsync();
-            _logger.LogDebug("User {UserEmail} registered", login);
+            _logger.LogDebug("User {Email} registered", login);
 
             return new JwtAuthResult()
             {
@@ -98,7 +98,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             existUser.RefreshToken = refreshToken;
             await _authorizationRepository.Update(existUser);
             await _authorizationRepository.SaveChangesAsync();
-            _logger.LogDebug("User {UserEmail} logged in", login);
+            _logger.LogDebug("User {Email} logged in", login);
 
             return new JwtAuthResult()
             {
@@ -130,7 +130,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError("Check {UserEmail} in DataBase \n Exception Message: {Message}", login, ex.Message);
+                _logger.LogError("Check {Email} in DataBase \n Exception Message: {Message}", login, ex.Message);
                 return new JwtAuthResult()
                 {
                     AuthFailure = AuthFailure.ServerError

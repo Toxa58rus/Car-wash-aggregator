@@ -18,8 +18,8 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 
         public async Task<ResponseUserAuthorization> Handle(RequestLoginUser request)
         {
-            var login = request.UserEmail;
-            var password = request.UserPassword;
+            var login = request.Email;
+            var password = request.Password;
             var role = request.UserRole;
 
             if (login is null || password is null)

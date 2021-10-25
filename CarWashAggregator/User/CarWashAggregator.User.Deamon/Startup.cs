@@ -15,16 +15,14 @@ using CarWashAggregator.User.Domain.Contracts;
 using CarWashAggregator.User.Infa.Repository;
 using CarWashAggregator.User.Infa.Data;
 using Microsoft.EntityFrameworkCore;
-using CarWashAggregator.Orders.Business.Services;
 using CarWashAggregator.Common.Infra;
-using CarWashAggregator.Orders.Business.QueryHandlers;
 using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
 using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
-using CarWashAggregator.Orders.Business.EventHandlers;
 using CarWashAggregator.Common.Domain.DTO.User.Events;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using CarWashAggregator.User.Business.Services;
 using CarWashAggregator.User.Domain.interfaces;
 
 namespace CarWashAggregator.User.Deamon

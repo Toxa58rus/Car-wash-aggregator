@@ -1,15 +1,4 @@
-﻿using AutoMapper;
-using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
-using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
-using CarWashAggregator.User.Domain.Enities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using CarWashAggregator.User.Domain.interfaces;
-
-namespace CarWashAggregator.Orders.Business.QueryHandlers
+﻿namespace CarWashAggregator.User.Business.QueryHandlers
 {
     //public class GetUserByIdQueryHandler : IQueryHandler<RequestGetUserByIdQuery, ResponseGetUserByIdQuery>
     //{

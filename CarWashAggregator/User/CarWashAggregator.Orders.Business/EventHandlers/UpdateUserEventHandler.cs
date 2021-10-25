@@ -1,14 +1,4 @@
-﻿using AutoMapper;
-using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Common.Domain.DTO.User.Events;
-using CarWashAggregator.User.Domain.Enities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using CarWashAggregator.User.Domain.interfaces;
-
-namespace CarWashAggregator.Orders.Business.EventHandlers
+﻿namespace CarWashAggregator.User.Business.EventHandlers
 {
     //public class UpdateUserEventHandler : IEventHandler<UpdateUserEvent>
     //{

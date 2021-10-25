@@ -1,9 +1,11 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
+using System;
 
-namespace CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request
+namespace CarWashAggregator.Common.Domain.DTO.User.Events
 {
-    public class RequestRegisterNewUser : Query
+    public class UserRegisteredEvent : Event
     {
+        public Guid AuthId { get; set; }
         public string Email { get; set; }
         public string City { get; set; }
         public string FirstName { get; set; }

@@ -1,7 +1,6 @@
 ﻿using CarWashAggregator.Authorization.Business.JwtAuth.Contracts;
 using CarWashAggregator.Authorization.Domain.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace CarWashAggregator.Authorization.Deamon.Controllers
 {
@@ -20,7 +19,7 @@ namespace CarWashAggregator.Authorization.Deamon.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult IndexAsync()
         {
             //var register = await _authorizationManager.RegisterAsync("TestLogin", "TestPassword", "test");
             //var token = await _authorizationManager.LoginAsync("TestLogin", "TestPassword", "test");

@@ -7,7 +7,7 @@ namespace CarWashAggregator.ApiGateway.Infra.Data
 {
     public class ApiGatewayContext : DbContext
     {
-        public DbSet<GatewayLog> Orders { get; set; }
+        public DbSet<GatewayLog> GatewayLogs { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<City> Cities { get; set; }
         public ApiGatewayContext(DbContextOptions<ApiGatewayContext> options) : base(options)

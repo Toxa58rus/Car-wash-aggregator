@@ -18,7 +18,7 @@ namespace CarWashAggregator.ApiGateway.Business.Services
         public async Task LogMessageAsync(string message)
         {
             if (message is null)
-                throw new ArgumentNullException(nameof(message), "Nothing to Log");
+                throw new ArgumentNullException(nameof(message), "Nothing to Log :C");
 
             await _repository.Add(new GatewayLog()
             {

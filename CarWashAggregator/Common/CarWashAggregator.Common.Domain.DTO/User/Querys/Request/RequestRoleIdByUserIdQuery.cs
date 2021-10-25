@@ -1,13 +1,10 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
+using System;
 
 namespace CarWashAggregator.Common.Domain.DTO.User.Querys.Request
 {
     public class RequestRoleIdByUserIdQuery : Query
     {
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string NumberPhone { get; set; }
-        public string Role { get; set; }
+        public Guid Id { get; set; }
     }
 }

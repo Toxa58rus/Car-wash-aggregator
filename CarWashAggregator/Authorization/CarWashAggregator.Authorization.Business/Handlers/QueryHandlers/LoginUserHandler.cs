@@ -29,6 +29,7 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
 
             return new ResponseUserAuthorization()
             {
+                UserId = jwAuthResult.UserId,
                 AccessToken = jwAuthResult.AccessToken,
                 RefreshToken = jwAuthResult.RefreshToken,
                 AuthFailure = (AuthFailure)jwAuthResult.AuthFailure

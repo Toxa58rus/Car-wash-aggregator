@@ -1,5 +1,5 @@
-﻿using System;
-using CarWashAggregator.Common.Domain.Contracts;
+﻿using CarWashAggregator.Common.Domain.Contracts;
+using System;
 
 namespace CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response
 {

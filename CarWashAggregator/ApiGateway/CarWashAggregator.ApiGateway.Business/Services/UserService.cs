@@ -23,7 +23,7 @@ namespace CarWashAggregator.ApiGateway.Business.Services
         public async Task<AuthenticatedUserModel> GetUserById(Guid id)
         {
             var response =
-                await _bus.RequestQuery<RequestGetUserByIdQuery, ResponseGetUserQuery>(new RequestGetUserByIdQuery { Id = id });
+                await _bus.RequestQuery<RequestGetUserByIdQuery, ResponseGetUserQuery>(new RequestGetUserByIdQuery { AuthId = id });
 
             var result = response is null ? null : _mapper.Map<AuthenticatedUserModel>(response);
             return result;
@@ -31,8 +31,8 @@ namespace CarWashAggregator.ApiGateway.Business.Services
         public async Task<int?> GetUserRoleByUserId(Guid id)
         {
             var response =
-                await _bus.RequestQuery<RequestRoleIdByUserIdQuery, ResponseRoleIdByUserIdQuery>(new RequestRoleIdByUserIdQuery { Id = id });
-            return response.Role;
+                await _bus.RequestQuery<RequestRoleIdByUserIdQuery, ResponseRoleIdByUserIdQuery>(new RequestRoleIdByUserIdQuery { AuthId = id });
+            return response?.Role;
         }
     }
 }

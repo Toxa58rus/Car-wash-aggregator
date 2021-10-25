@@ -5,6 +5,6 @@ namespace CarWashAggregator.Common.Domain.DTO.User.Querys.Request
 {
     public class RequestRoleIdByUserIdQuery : Query
     {
-        public Guid Id { get; set; }
+        public Guid AuthId { get; set; }
     }
 }

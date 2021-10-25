@@ -49,10 +49,10 @@ namespace CarWashAggregator.User.Deamon
             services.AddScoped<IUserRepository, UserReposirory>();
             services.AddTransient<IUserService, UserService>();
 
-            services.AddTransient<CreateUserQueryHandler>();
+            //services.AddTransient<CreateUserQueryHandler>();
             //services.AddTransient<GetUserByIdQueryHandler>();
-            services.AddTransient<DeleteUserByIdEventHandler>();
-            services.AddTransient<UpdateUserEventHandler>();
+            //services.AddTransient<DeleteUserByIdEventHandler>();
+            //services.AddTransient<UpdateUserEventHandler>();
 
             services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic)); ;
 
@@ -77,11 +77,11 @@ namespace CarWashAggregator.User.Deamon
 
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-            eventBus.SubscribeToQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery, CreateUserQueryHandler>();
+            //eventBus.SubscribeToQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery, CreateUserQueryHandler>();
             //eventBus.SubscribeToQuery<RequestGetUserByIdQuery, ResponseGetUserByIdQuery, GetUserByIdQueryHandler>();
 
-            eventBus.SubscribeToEvent<DeleteUserByIdEvent, DeleteUserByIdEventHandler>();
-            eventBus.SubscribeToEvent<UpdateUserEvent, UpdateUserEventHandler>();
+            //eventBus.SubscribeToEvent<DeleteUserByIdEvent, DeleteUserByIdEventHandler>();
+            //eventBus.SubscribeToEvent<UpdateUserEvent, UpdateUserEventHandler>();
 
             app.UseEndpoints(endpoints =>
             {

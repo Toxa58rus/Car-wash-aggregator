@@ -52,7 +52,7 @@ namespace CarWashAggregator.ApiGateway.Deamon
 
             services.AddMvc().AddNewtonsoftJson();
             //    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
-
+            
             services.AddCors(options => options.AddDefaultPolicy(
                 builder =>
                 {

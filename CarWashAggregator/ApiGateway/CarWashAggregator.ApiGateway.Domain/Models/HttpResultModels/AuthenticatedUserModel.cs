@@ -1,6 +1,6 @@
-﻿namespace CarWashAggregator.ApiGateway.Domain.Models.HttpRequestsModels
+﻿namespace CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels
 {
-    public class RegisteredUserModel
+    public class AuthenticatedUserModel
     {
         public string Email { get; set; }
         public string City { get; set; }

@@ -37,38 +37,38 @@ namespace CarWashAggregator.User.Deamon.Controllers
             return Json(user);
         }
 
-        public async Task<JsonResult> RequestCreateUserQuery()
-        {
-            RequestRoleIdByUserIdQuery user = new RequestRoleIdByUserIdQuery()
-            {
-                Email = "test@test.test",
-                FirstName = "Иван",
-                LastName = "Иванов",
-                NumberPhone = "123456789",
-                Role = "Партнер"
-            };
-            ResponseCreateUserQuery response = await _eventBus.RequestQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery>(user);
-            return Json(response);
-        }
+        //public async Task<JsonResult> RequestCreateUserQuery()
+        //{
+        //    RequestRoleIdByUserIdQuery user = new RequestRoleIdByUserIdQuery()
+        //    {
+        //        Email = "test@test.test",
+        //        FirstName = "Иван",
+        //        LastName = "Иванов",
+        //        NumberPhone = "123456789",
+        //        Role = "Партнер"
+        //    };
+        //    ResponseCreateUserQuery response = await _eventBus.RequestQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery>(user);
+        //    return Json(response);
+        //}
 
-        public void PublishDeleteUserByIdEvent()
-        {
-            Guid id = _carUserService.GetUsers().Last().Id;
-            _eventBus.PublishEvent(new DeleteUserByIdEvent() { Id = id });
-        }
+        //public void PublishDeleteUserByIdEvent()
+        //{
+        //    Guid id = _carUserService.GetUsers().Last().Id;
+        //    _eventBus.PublishEvent(new DeleteUserByIdEvent() { Id = id });
+        //}
 
-        public void PublishUpdateUserEvent()
-        {
-            var mapper = new Mapper(
-                new MapperConfiguration(cfg => cfg.CreateMap<UserInfo, UpdateUserEvent>()
-                    .ForMember("Role", opt => opt.Ignore()))
-            );
+        //public void PublishUpdateUserEvent()
+        //{
+        //    var mapper = new Mapper(
+        //        new MapperConfiguration(cfg => cfg.CreateMap<UserInfo, UpdateUserEvent>()
+        //            .ForMember("Role", opt => opt.Ignore()))
+        //    );
 
-            UserInfo user = _carUserService.GetUsers().Last();
-            UpdateUserEvent userEvent = mapper.Map<UpdateUserEvent>(user);
-            userEvent.FirstName = string.Concat(userEvent.FirstName, "а");
-            _eventBus.PublishEvent(userEvent);
-        }
+        //    UserInfo user = _carUserService.GetUsers().Last();
+        //    UpdateUserEvent userEvent = mapper.Map<UpdateUserEvent>(user);
+        //    userEvent.FirstName = string.Concat(userEvent.FirstName, "а");
+        //    _eventBus.PublishEvent(userEvent);
+        //}
 
         // POST api/values
         [HttpPost]

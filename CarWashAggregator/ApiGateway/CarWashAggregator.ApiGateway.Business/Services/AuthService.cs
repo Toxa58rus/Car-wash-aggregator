@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CarWashAggregator.ApiGateway.Business.Interfaces;
-using CarWashAggregator.ApiGateway.Domain.Models;
 using CarWashAggregator.ApiGateway.Domain.Models.Authorization;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
 using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response;

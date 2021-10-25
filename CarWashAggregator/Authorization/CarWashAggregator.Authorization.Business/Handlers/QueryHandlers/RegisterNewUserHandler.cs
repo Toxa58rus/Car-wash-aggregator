@@ -1,9 +1,9 @@
 ﻿using CarWashAggregator.Authorization.Business.JwtAuth.Contracts;
 using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Common.Domain.DTO.Authorization.Events;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response;
+using CarWashAggregator.Common.Domain.DTO.User.Events;
 using System.Threading.Tasks;
 
 namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
@@ -24,7 +24,7 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
         {
             var login = request.Email;
             var password = request.Password;
-            var role = request.UserRole;
+            var role = request.Role;
 
             if (login is null || password is null)
                 return new ResponseUserAuthorization() { AuthFailure = AuthFailure.RequestNotValid };
@@ -35,12 +35,14 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
             {
                 _bus.PublishEvent(new UserRegisteredEvent()
                 {
-                    Firstname = request.Firstname,
-                    Lastname = request.Lastname,
-                    TelephoneNumber = request.Phone,
-                    UserEmail = request.Email,
-                    UserPassword = request.Password,
-                    UserRole = request.UserRole
+                    AuthId = jwtAuthResult.UserId,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Phone = request.Phone,
+                    Email = request.Email,
+                    Password = request.Password,
+                    Role = request.Role,
+                    City = request.City
                 });
             }
 

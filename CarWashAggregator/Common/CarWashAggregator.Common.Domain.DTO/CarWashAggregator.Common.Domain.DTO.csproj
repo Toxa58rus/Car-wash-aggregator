@@ -13,12 +13,11 @@
     <Folder Include="ApiGateway\Events\" />
     <Folder Include="ApiGateway\Querys\Request\" />
     <Folder Include="ApiGateway\Querys\Response\" />
+    <Folder Include="Authorization\Events\" />
     <Folder Include="Order\Events\" />
     <Folder Include="Reviews\Events\" />
     <Folder Include="Reviews\Querys\Request\" />
     <Folder Include="Reviews\Querys\Response\" />
-    <Folder Include="User\Events\" />
-    <Folder Include="User\Querys\Response\" />
   </ItemGroup>
 
   <ItemGroup>

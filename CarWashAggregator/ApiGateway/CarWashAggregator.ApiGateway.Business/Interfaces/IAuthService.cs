@@ -1,5 +1,5 @@
-﻿using CarWashAggregator.ApiGateway.Domain.Models;
-using CarWashAggregator.ApiGateway.Domain.Models.Authorization;
+﻿using CarWashAggregator.ApiGateway.Domain.Models.Authorization;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
 using System.Threading.Tasks;
 
 namespace CarWashAggregator.ApiGateway.Business.Interfaces

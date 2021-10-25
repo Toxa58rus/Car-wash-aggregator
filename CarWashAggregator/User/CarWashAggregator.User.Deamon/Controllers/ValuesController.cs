@@ -37,19 +37,19 @@ namespace CarWashAggregator.User.Deamon.Controllers
             return Json(user);
         }
 
-        public async Task<JsonResult> RequestCreateUserQuery()
-        {
-            RequestRoleIdByUserIdQuery user = new RequestRoleIdByUserIdQuery()
-            {
-                Email = "test@test.test",
-                FirstName = "Иван",
-                LastName = "Иванов",
-                NumberPhone = "123456789",
-                Role = "Партнер"
-            };
-            ResponseCreateUserQuery response = await _eventBus.RequestQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery>(user);
-            return Json(response);
-        }
+        //public async Task<JsonResult> RequestCreateUserQuery()
+        //{
+        //    RequestRoleIdByUserIdQuery user = new RequestRoleIdByUserIdQuery()
+        //    {
+        //        Email = "test@test.test",
+        //        FirstName = "Иван",
+        //        LastName = "Иванов",
+        //        NumberPhone = "123456789",
+        //        Role = "Партнер"
+        //    };
+        //    ResponseCreateUserQuery response = await _eventBus.RequestQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery>(user);
+        //    return Json(response);
+        //}
 
         public void PublishDeleteUserByIdEvent()
         {

@@ -33,7 +33,8 @@ namespace CarWashAggregator.ApiGateway.Deamon
                 options.UseNpgsql(_configuration.GetConnectionString(Helper.DataBaseConnectionSection));
             });
             services.AddTransient<IDbLoggerService, DbLoggerService>()
-                .AddScoped<IAuthService, AuthService>();
+                .AddScoped<IAuthService, AuthService>()
+                .AddScoped<IUserService, UserService>();
 
             //Data
             services.AddScoped<IApiGatewayRepository, ApiGatewayRepository>();

@@ -50,7 +50,7 @@ namespace CarWashAggregator.User.Deamon
             services.AddTransient<IUserService, UserService>();
 
             services.AddTransient<CreateUserQueryHandler>();
-            services.AddTransient<GetUserByIdQueryHandler>();
+            //services.AddTransient<GetUserByIdQueryHandler>();
             services.AddTransient<DeleteUserByIdEventHandler>();
             services.AddTransient<UpdateUserEventHandler>();
 
@@ -78,7 +78,7 @@ namespace CarWashAggregator.User.Deamon
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
             eventBus.SubscribeToQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery, CreateUserQueryHandler>();
-            eventBus.SubscribeToQuery<RequestGetUserByIdQuery, ResponseGetUserByIdQuery, GetUserByIdQueryHandler>();
+            //eventBus.SubscribeToQuery<RequestGetUserByIdQuery, ResponseGetUserByIdQuery, GetUserByIdQueryHandler>();
 
             eventBus.SubscribeToEvent<DeleteUserByIdEvent, DeleteUserByIdEventHandler>();
             eventBus.SubscribeToEvent<UpdateUserEvent, UpdateUserEventHandler>();

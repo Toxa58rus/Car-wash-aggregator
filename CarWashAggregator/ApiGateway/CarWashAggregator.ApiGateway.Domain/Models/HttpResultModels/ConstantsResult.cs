@@ -1,5 +1,5 @@
-﻿using CarWashAggregator.ApiGateway.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CarWashAggregator.ApiGateway.Domain.Models.Entities;
 
 namespace CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels
 {

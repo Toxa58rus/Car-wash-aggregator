@@ -6,6 +6,7 @@ using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
 using System;
 using System.Threading.Tasks;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base;
 
 namespace CarWashAggregator.ApiGateway.Business.Services
 {
@@ -20,19 +21,13 @@ namespace CarWashAggregator.ApiGateway.Business.Services
             _bus = bus;
         }
 
-        public async Task<AuthenticatedUserModel> GetUserById(Guid id)
+        public async Task<AuthenticatedUserModel> GetUserByAuthId(Guid id)
         {
             var response =
-                await _bus.RequestQuery<RequestGetUserByIdQuery, ResponseGetUserQuery>(new RequestGetUserByIdQuery { AuthId = id });
+                await _bus.RequestQuery<RequestGetUserByAuthId, ResponseGetUser>(new RequestGetUserByAuthId { AuthId = id });
 
             var result = response is null ? null : _mapper.Map<AuthenticatedUserModel>(response);
             return result;
-        }
-        public async Task<int?> GetUserRoleByUserId(Guid id)
-        {
-            var response =
-                await _bus.RequestQuery<RequestRoleIdByUserIdQuery, ResponseRoleIdByUserIdQuery>(new RequestRoleIdByUserIdQuery { AuthId = id });
-            return response?.Role;
         }
     }
 }

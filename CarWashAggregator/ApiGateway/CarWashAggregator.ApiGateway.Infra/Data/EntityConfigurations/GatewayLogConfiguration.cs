@@ -1,4 +1,4 @@
-﻿using CarWashAggregator.ApiGateway.Domain.Entities;
+﻿using CarWashAggregator.ApiGateway.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +8,7 @@ namespace CarWashAggregator.ApiGateway.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<GatewayLog> builder)
         {
-            builder.ToTable("Orders");
+            builder.ToTable("GatewayLogs");
 
             builder.Property(e => e.Id)
                 .HasColumnName("id")

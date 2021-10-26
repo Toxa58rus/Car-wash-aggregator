@@ -2,7 +2,7 @@
 
 namespace CarWashAggregator.Common.Domain.DTO.User.Querys.Response
 {
-    public class ResponseGetUserQuery : Query
+    public class ResponseGetUser : Query
     {
         public string City { get; set; }
         public string FirstName { get; set; }

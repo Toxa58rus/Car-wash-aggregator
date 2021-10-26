@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace CarWashAggregator.Common.Domain.DTO.Reviews.Querys.Response
 {
-    public class ResponseGetReviewsBuUserIdDtoQuery : Query
+    public class ResponseGetReviews : Query
     {
-        public IEnumerable<ReviewDto> Reviews { get; set; }
+        public List<ReviewDto> Reviews { get; set; }
     }
 }

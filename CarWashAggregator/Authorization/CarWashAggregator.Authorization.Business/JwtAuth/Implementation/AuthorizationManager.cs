@@ -180,15 +180,15 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             if (validationFailure == ValidationFailure.None)
             {
                 var login = GetClaim(jwtToken, JwtRegisteredClaimNames.Sub);
-                var userId = _authorizationRepository.Get<AuthorizationData>()
+                var authId = _authorizationRepository.Get<AuthorizationData>()
                     .SingleOrDefault(x => x.UserLogin == login)?.Id;
-                if (userId is null)
+                if (authId is null)
                 {
                     result.ValidationFailure = ValidationFailure.InvalidToken;
                 }
                 else
                 {
-                    result.UserId = (Guid)userId;
+                    result.AuthId = (Guid)authId;
                 }
             }
             return Task.FromResult(result);

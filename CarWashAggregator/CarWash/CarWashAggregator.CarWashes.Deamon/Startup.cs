@@ -73,7 +73,7 @@ namespace CarWashAggregator.CarWashes.Deamon
             eventBus.SubscribeToEvent<UpdateCarWashEvent, UpdateCarWashEventHandler>();
             eventBus.SubscribeToEvent<UpdateCarWashRatingEvent, UpdateCarWashRatingEventHandler>();
 
-            eventBus.SubscribeToQuery<RequestGetCarWashQuery, ResponseGetCarWashQuery, GetCarWashQueryHandler>();
+            eventBus.SubscribeToQuery<RequestGetCarWashById, ResponseGetCarWashById, GetCarWashQueryHandler>();
             eventBus.SubscribeToQuery<RequestCreateCarWashQuery, ResponseCreateCarWashQuery, CreateCarWashQueryHandler>();
             eventBus.SubscribeToQuery<RequestGetCarWashesPaginatedQuery, ResponseGetCarWashesPaginatedQuery, GetCarWashesPaginatedQueryHandler>();
 

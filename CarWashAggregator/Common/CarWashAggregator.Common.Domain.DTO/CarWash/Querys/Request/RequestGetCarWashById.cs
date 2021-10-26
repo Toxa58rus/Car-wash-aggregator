@@ -3,7 +3,7 @@ using System;
 
 namespace CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Request
 {
-    public class RequestGetCarWashQuery : Query
+    public class RequestGetCarWashById : Query
     {
         public Guid Id { get; set; }
     }

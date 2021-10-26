@@ -42,7 +42,7 @@ namespace CarWashAggregator.CarWashes.Deamon.Controllers
 
         public async Task<JsonResult> RequestGetCarWashQuery()
         {
-            ResponseGetCarWashQuery carWashQuery = await _eventBus.RequestQuery<RequestGetCarWashQuery, ResponseGetCarWashQuery>(new RequestGetCarWashQuery() { Id = new Guid("eb095127-0c41-48a1-be94-5013d38181df") });
+            ResponseGetCarWashById carWashQuery = await _eventBus.RequestQuery<RequestGetCarWashById, ResponseGetCarWashById>(new RequestGetCarWashById() { Id = new Guid("eb095127-0c41-48a1-be94-5013d38181df") });
             return Json(carWashQuery);
         }
 

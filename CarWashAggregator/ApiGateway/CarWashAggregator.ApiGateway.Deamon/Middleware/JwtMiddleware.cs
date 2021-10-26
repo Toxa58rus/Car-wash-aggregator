@@ -1,11 +1,11 @@
 ﻿using CarWashAggregator.ApiGateway.Business.Interfaces;
-using CarWashAggregator.ApiGateway.Domain.Models.Authorization;
-using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
 using System.Threading.Tasks;
+using CarWashAggregator.ApiGateway.Domain.Models.Authorization;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels;
 using ValidationFailure = CarWashAggregator.ApiGateway.Domain.Models.Authorization.ValidationFailure;
 
 namespace CarWashAggregator.ApiGateway.Deamon.Middleware
@@ -51,7 +51,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Middleware
             switch (responseRefresh.AuthFailure)
             {
                 case AuthFailure.None:
-                    var user = await userService.GetUserById(responseRefresh.UserId);
+                    var user = await userService.GetUserByAuthId(responseRefresh.UserId);
                     if (user is null)
                     {
                         context.Response.StatusCode = 401;
@@ -89,18 +89,18 @@ namespace CarWashAggregator.ApiGateway.Deamon.Middleware
             switch (responseValidate.ValidationFailure)
             {
                 case ValidationFailure.None:
-                    var userId = responseValidate.UserId;
-                    context.Items["UserId"] = userId;
+                    var authId = responseValidate.AuthId;
+                    context.Items["AuthId"] = authId;
                     //TODO Authorize middleware
-                    var userRole = await userService.GetUserRoleByUserId(userId);
-                    if (userRole is null)
+                    var user = await userService.GetUserByAuthId(authId);
+                    if (user is null)
                     {
                         context.Response.StatusCode = 401;
                         context.Response.ContentType = "application/json; charset=utf-8";
                         await context.Response.WriteAsync("{\"message\" : \"access_token_not_valid\"}");
                         return false;
                     }
-                    context.Items["Role"] = userRole;
+                    context.Items["Role"] = user.Role;
                     return true;
                 case ValidationFailure.InvalidLifetime:
                     context.Response.StatusCode = 401;

@@ -16,8 +16,6 @@
     <Folder Include="Authorization\Events\" />
     <Folder Include="Order\Events\" />
     <Folder Include="Reviews\Events\" />
-    <Folder Include="Reviews\Querys\Request\" />
-    <Folder Include="Reviews\Querys\Response\" />
   </ItemGroup>
 
   <ItemGroup>

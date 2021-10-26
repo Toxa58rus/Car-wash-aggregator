@@ -1,4 +1,4 @@
-﻿namespace CarWashAggregator.ApiGateway.Domain.Entities
+﻿namespace CarWashAggregator.ApiGateway.Domain.Models.Entities
 {
     public class GatewayLog : BaseEntity
     {

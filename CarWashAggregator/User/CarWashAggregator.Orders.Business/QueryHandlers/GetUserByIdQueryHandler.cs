@@ -1,6 +1,6 @@
 ﻿namespace CarWashAggregator.User.Business.QueryHandlers
 {
-    //public class GetUserByIdQueryHandler : IQueryHandler<RequestGetUserByIdQuery, ResponseGetUserByIdQuery>
+    //public class GetUserByIdQueryHandler : IQueryHandler<RequestGetUserByAuthId, ResponseGetUserByIdQuery>
     //{
     //    private readonly IUserService _userService;
 
@@ -9,7 +9,7 @@
     //        _userService = userService;
     //    }
 
-    //    public async Task<ResponseGetUserByIdQuery> Handle(RequestGetUserByIdQuery request)
+    //    public async Task<ResponseGetUserByIdQuery> Handle(RequestGetUserByAuthId request)
     //    {
     //        var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<UserInfo, ResponseGetUserByIdQuery>()));
 

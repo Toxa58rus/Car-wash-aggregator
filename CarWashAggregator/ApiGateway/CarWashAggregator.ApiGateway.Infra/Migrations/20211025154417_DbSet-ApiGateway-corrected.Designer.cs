@@ -3,15 +3,17 @@ using System;
 using CarWashAggregator.ApiGateway.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CarWashAggregator.ApiGateway.Infra.Migrations
 {
     [DbContext(typeof(ApiGatewayContext))]
-    partial class ApiGatewayContextModelSnapshot : ModelSnapshot
+    [Migration("20211025154417_DbSet-ApiGateway-corrected")]
+    partial class DbSetApiGatewaycorrected
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -75,8 +75,8 @@ namespace CarWashAggregator.User.Deamon
 
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-            //eventBus.SubscribeToQuery<RequestRoleIdByUserIdQuery, ResponseCreateUserQuery, CreateUserQueryHandler>();
-            //eventBus.SubscribeToQuery<RequestGetUserByIdQuery, ResponseGetUserByIdQuery, GetUserByIdQueryHandler>();
+            //eventBus.SubscribeToQuery<RequestRoleIdByAuthId, ResponseCreateUserQuery, CreateUserQueryHandler>();
+            //eventBus.SubscribeToQuery<RequestGetUserByAuthId, ResponseGetUserByIdQuery, GetUserByIdQueryHandler>();
 
             //eventBus.SubscribeToEvent<DeleteUserByIdEvent, DeleteUserByIdEventHandler>();
             //eventBus.SubscribeToEvent<UpdateUserEvent, UpdateUserEventHandler>();

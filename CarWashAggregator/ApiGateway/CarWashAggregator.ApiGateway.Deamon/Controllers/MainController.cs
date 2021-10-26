@@ -1,15 +1,17 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using CarWashAggregator.ApiGateway.Business.Interfaces;
 using CarWashAggregator.ApiGateway.Domain.Contracts;
-using CarWashAggregator.ApiGateway.Domain.Entities;
-using CarWashAggregator.ApiGateway.Domain.Models.Authorization;
-using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
-using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
+using CarWashAggregator.ApiGateway.Domain.Models.Authorization;
+using CarWashAggregator.ApiGateway.Domain.Models.Entities;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base;
 
 namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 {
@@ -50,9 +52,9 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
                 };
                 return Ok(result);
             }
-            catch
+            catch (Exception ex)
             {
-                return Problem();
+                return Problem(ex.Message);
             }
         }
 
@@ -60,12 +62,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserModel user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            var response = await _authorizationService.RegisterNewUserAsync(user);
+           var response = await _authorizationService.RegisterNewUserAsync(user);
 
             if (response.AuthFailure == AuthFailure.None)
             {
@@ -88,17 +85,12 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserModel user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var authResponse = await _authorizationService.LoginUserAsync(user);
             //TODO Request User service
 
             if (authResponse.AuthFailure == AuthFailure.None)
             {
-                var userResponse = await _userService.GetUserById(authResponse.UserId);
+                var userResponse = await _userService.GetUserByAuthId(authResponse.UserId);
                 if (userResponse is null)
                     return Problem();
                 userResponse.Email = user.Email;

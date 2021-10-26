@@ -1,29 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using CarWashAggregator.User.Domain;
 using CarWashAggregator.User.Domain.Contracts;
 using CarWashAggregator.User.Infa.Repository;
 using CarWashAggregator.User.Infa.Data;
 using Microsoft.EntityFrameworkCore;
 using CarWashAggregator.Common.Infra;
 using CarWashAggregator.Common.Domain.Contracts;
-using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
-using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
-using CarWashAggregator.Common.Domain.DTO.User.Events;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-using CarWashAggregator.User.Business.Services;
 using CarWashAggregator.User.Domain.interfaces;
+using CarWashAggregator.User.Business.Services;
 
 namespace CarWashAggregator.User.Deamon
 {

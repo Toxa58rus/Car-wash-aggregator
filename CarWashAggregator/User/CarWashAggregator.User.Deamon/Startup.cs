@@ -12,6 +12,12 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using CarWashAggregator.User.Domain.interfaces;
 using CarWashAggregator.User.Business.Services;
+using System;
+using CarWashAggregator.User.Business.EventHandlers;
+using CarWashAggregator.User.Business.QueryHandlers;
+using CarWashAggregator.Common.Domain.DTO.User.Events;
+using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
+using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
 
 namespace CarWashAggregator.User.Deamon
 {
@@ -32,12 +38,14 @@ namespace CarWashAggregator.User.Deamon
             services.AddDbContext<UserContext>(options => options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IUserRepository, UserReposirory>();
             services.AddTransient<IUserService, UserService>();
 
-            //services.AddTransient<CreateUserQueryHandler>();
-            //services.AddTransient<GetUserByIdQueryHandler>();
-            //services.AddTransient<DeleteUserByIdEventHandler>();
+            services.AddTransient<UserRegisteredEventHandler>();
+            services.AddTransient<GetUserByAuthIdQueryHandler>();
+            services.AddTransient<GetUserByUserIdQueryHandler>();
             //services.AddTransient<UpdateUserEventHandler>();
 
             services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic)); ;
@@ -63,10 +71,10 @@ namespace CarWashAggregator.User.Deamon
 
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-            //eventBus.SubscribeToQuery<RequestRoleIdByAuthId, ResponseCreateUserQuery, CreateUserQueryHandler>();
-            //eventBus.SubscribeToQuery<RequestGetUserByAuthId, ResponseGetUserByIdQuery, GetUserByIdQueryHandler>();
+            eventBus.SubscribeToQuery<RequestGetUserByAuthId, ResponseGetUser, GetUserByAuthIdQueryHandler>();
+            eventBus.SubscribeToQuery<RequestGetUserByUserId, ResponseGetUser, GetUserByUserIdQueryHandler>();
 
-            //eventBus.SubscribeToEvent<DeleteUserByIdEvent, DeleteUserByIdEventHandler>();
+            eventBus.SubscribeToEvent<UserRegisteredEvent, UserRegisteredEventHandler>();
             //eventBus.SubscribeToEvent<UpdateUserEvent, UpdateUserEventHandler>();
 
             app.UseEndpoints(endpoints =>

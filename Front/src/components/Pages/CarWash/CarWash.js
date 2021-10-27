@@ -63,6 +63,10 @@ const CarWash = () => {
   };
 
   const createOrder = (values) => {
+    console.log({
+      phone: values.phone,
+      date: `${values.date} ${values.time.name}`,
+    });
     setState({
       updateTimeFields: false,
       sendOrder: true,

@@ -4,22 +4,27 @@ import { useSelector } from "react-redux";
 import sources from "../../../helpers/sources";
 import api from "../../../lib/api";
 import { selectSession } from "../../../state/session";
-import get from "lodash/get";
 
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import styles from "./ProfilePage.module.scss";
+import { getRefreshUserFromCookie } from "../../../lib/cookie";
 
 const ProfileSettings = () => {
   const [state, setState] = useState(false);
   const requestUser = () => {
-    api.get(sources.profileSettings).then((response) => {
-      // console.log(response);
-    });
-    // .catch((error) => console.log(error.response));
+    api
+      .get(sources.profileSettings)
+      .then((response) => {
+        // console.log(response);
+      })
+      .catch((error) => error);
 
     setState(true);
   };
+
+  const refresh = getRefreshUserFromCookie();
+  console.log(refresh);
 
   useEffect(() => {
     if (!state) {
@@ -31,8 +36,14 @@ const ProfileSettings = () => {
   const user = useSelector(selectSession);
   console.log(user);
 
+  const con = () => {
+    console.log(refresh);
+    console.log(user);
+  };
+
   return (
     <div className={styles.tabWrap}>
+      <Button onClick={con}></Button>
       <Form
         onSubmit={saveSettings}
         initialValues={user}

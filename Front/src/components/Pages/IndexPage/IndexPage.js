@@ -15,6 +15,11 @@ import DateForm from "../../DateForm/DateForm";
 import Header from "../../Header/Header";
 import Select from "../../Select/Select";
 import styles from "./IndexPage.module.scss";
+import { removeUserCookie } from "../../../lib/cookie";
+import { useDispatch } from "react-redux";
+import { setSession } from "../../../state/session";
+import sources from "../../../helpers/sources";
+import { setConstants } from "../../../state/constants";
 
 const IndexPage = () => {
   const [calendarIsOpen, setCalendar] = useState(false);
@@ -43,9 +48,25 @@ const IndexPage = () => {
   };
 
   const initialValues = { date: getDate(new Date()) };
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    // removeUserCookie();
+    // dispatch(setSession(null));
+    api.get(sources.constants).then((response) => {
+      console.log(response);
+      dispatch(setConstants(response.data));
+
+      if (response.user) {
+        dispatch(setSession(response.user));
+      }
+    });
+  };
+
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
       <Header />
+      <Button onClick={logOut}>Click</Button>
       <div className={styles.washSearch}>
         <div className={styles.searchUpperBlock}>
           <h2>Поиск моек</h2>

@@ -26,9 +26,6 @@ const IndexPage = () => {
   const [state, setState] = useState({ washes: WASHES });
 
   const session = useSelector(selectSession);
-  const constants = useSelector(selectConstants);
-
-  const { cities, cars } = constants;
 
   const dispatch = useDispatch();
 
@@ -79,21 +76,9 @@ const IndexPage = () => {
 
   const initialValues = { date: getDate(new Date()) };
 
-  const logOut = () => {
-    api.get(sources.constants).then((response) => {
-      console.log(response);
-      dispatch(setConstants(response.data));
-
-      if (response.user) {
-        dispatch(setSession(response.user));
-      }
-    });
-  };
-
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
       <Header />
-      {/* <Button onClick={logOut}>Click</Button> */}
       <div className={styles.washSearch}>
         <div className={styles.searchUpperBlock}>
           <h2>Поиск моек</h2>

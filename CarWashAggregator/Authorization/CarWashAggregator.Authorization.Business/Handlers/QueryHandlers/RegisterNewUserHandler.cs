@@ -39,8 +39,6 @@ namespace CarWashAggregator.Authorization.Business.Handlers.QueryHandlers
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     Phone = request.Phone,
-                    Email = request.Email,
-                    Password = request.Password,
                     Role = request.Role,
                     City = request.City
                 });

@@ -11,18 +11,14 @@ namespace CarWashAggregator.User.Infa.Data
 {
     public class UserContext: DbContext
     {
-        public DbSet<Car> Cars { get; set; }
         public DbSet<UserInfo> UserInfos { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserConfigurations())
-                .ApplyConfiguration(new CarConfigurations())
-                .ApplyConfiguration(new RoleConfigurations());
+            modelBuilder.ApplyConfiguration(new UserConfigurations());
         }
     }
 }

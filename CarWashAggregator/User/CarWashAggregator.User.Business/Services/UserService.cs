@@ -27,6 +27,11 @@ namespace CarWashAggregator.User.Business.Services
             await _dbRepository.DeleteUserByIdAsync(id);
         }
 
+        public async Task<UserInfo> GetUserByAuthIdAsync(Guid id)
+        {
+            return await _dbRepository.GetUserByAuthIdAsync(id);
+        }
+
         public async Task<UserInfo> GetUserByIdAsync(Guid id)
         {
             return await _dbRepository.GetUserByIdAsync(id);

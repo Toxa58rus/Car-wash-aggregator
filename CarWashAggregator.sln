@@ -60,7 +60,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Authoriza
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{AF3C154C-6440-4A7E-A6CF-620FB1591863}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Business", "CarWashAggregator\User\CarWashAggregator.Orders.Business\CarWashAggregator.User.Business.csproj", "{95F7322C-D83A-4EA5-AED5-FD72F9EFDA1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Business", "CarWashAggregator\User\CarWashAggregator.User.Business\CarWashAggregator.User.Business.csproj", "{95F7322C-D83A-4EA5-AED5-FD72F9EFDA1B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Deamon", "CarWashAggregator\User\CarWashAggregator.User.Deamon\CarWashAggregator.User.Deamon.csproj", "{DFFBB8B1-382E-416D-B161-A0352D7C7562}"
 EndProject

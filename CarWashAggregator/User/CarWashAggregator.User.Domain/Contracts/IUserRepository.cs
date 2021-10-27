@@ -11,6 +11,7 @@ namespace CarWashAggregator.User.Domain.Contracts
     {
         IQueryable<UserInfo> Get();
         Task<UserInfo> GetUserByIdAsync(Guid id);
+        Task<UserInfo> GetUserByAuthIdAsync(Guid id);
         Task<Guid> Add(UserInfo newEntity);
         Task Remove(UserInfo entity);
         Task DeleteUserByIdAsync(Guid id);

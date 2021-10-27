@@ -24,21 +24,23 @@ namespace CarWashAggregator.User.Infa.Data.EntityConfigurations
                     .ValueGeneratedOnAdd()
                     .HasColumnType("uuid");
 
+            builder.Property<Guid>("AuthId")
+                    .HasColumnType("uuid");
+
+            builder.Property<int>("Role")
+                    .HasColumnType("integer");
+
             builder.Property<string>("FirstName")
                     .HasColumnType("text");
 
             builder.Property<string>("LastName")
                     .HasColumnType("text");
 
-            builder.Property<string>("NumberPhone")
+            builder.Property<string>("Phone")
                     .HasColumnType("text");
-
-
-
-            builder.Property<Guid>("CarId")
-                    .HasColumnType("uuid");
-            builder.Property<Guid>("RoleId")
-                    .HasColumnType("uuid");
+            
+            builder.Property<string>("City")
+                    .HasColumnType("text");
 
             builder.HasKey("Id");
 

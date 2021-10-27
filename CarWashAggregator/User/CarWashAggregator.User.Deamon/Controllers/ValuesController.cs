@@ -18,11 +18,13 @@ namespace CarWashAggregator.User.Deamon.Controllers
     {
         private readonly IUserService _carUserService;
         private readonly IEventBus _eventBus;
+        private readonly IMapper _mapper;
 
-        public ValuesController(IUserService carUserService, IEventBus eventBus)
+        public ValuesController(IUserService carUserService, IEventBus eventBus, IMapper mapper)
         {
             _carUserService = carUserService;
             _eventBus = eventBus;
+            _mapper = mapper;
         }
         // GET api/values
         [HttpGet]
@@ -70,22 +72,25 @@ namespace CarWashAggregator.User.Deamon.Controllers
         //    _eventBus.PublishEvent(userEvent);
         //}
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        public void PublishUserRegisteredEvent()
         {
+            UserInfo user = new UserInfo();
+            UserRegisteredEvent @event = _mapper.Map<UserRegisteredEvent>(user);
+            _eventBus.PublishEvent(@event);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<JsonResult> RequestGetUserByAuthIdQuery()
         {
+            UserInfo user = _carUserService.GetUsers().Last();
+            var response = await _eventBus.RequestQuery<RequestGetUserByAuthId, ResponseGetUser>(new RequestGetUserByAuthId() { AuthId = user.AuthId });
+            return Json(response);
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<JsonResult> RequestGetUserByUserIdQuery()
         {
+            UserInfo user = _carUserService.GetUsers().Last();
+            var response = await _eventBus.RequestQuery<RequestGetUserByUserId, ResponseGetUser>(new RequestGetUserByUserId() { UserId = user.Id });
+            return Json(response);
         }
     }
 }

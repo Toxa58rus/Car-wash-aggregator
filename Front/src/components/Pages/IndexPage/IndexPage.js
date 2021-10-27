@@ -6,7 +6,9 @@ import WASHES from "../../../constants/WASHES";
 import api from "../../../lib/api";
 import { useDispatch, useSelector } from "react-redux";
 import sources from "../../../helpers/sources";
-import session, { setSession,selectSession } from "../../../state/session";
+import { setSession, selectSession } from "../../../state/session";
+import { selectConstants, setConstants } from "../../../state/constants";
+import get from "lodash/get";
 
 import MapMark from "../../../icons/Vector.svg";
 import Clock from "../../../icons/Clock.svg";
@@ -19,20 +21,22 @@ import Header from "../../Header/Header";
 import Select from "../../Select/Select";
 import styles from "./IndexPage.module.scss";
 
-
 const IndexPage = () => {
   const [calendarIsOpen, setCalendar] = useState(false);
-  const [state, setState] = useState({ washes: [] });
+  const [state, setState] = useState({ washes: WASHES });
 
   const session = useSelector(selectSession);
+  const constants = useSelector(selectConstants);
+
+  const { cities, cars } = constants;
 
   const dispatch = useDispatch();
 
   const getData = async (data) => {
     dispatch(
       setSession({
-        date:data.date.value,
-        time:data.time.value
+        date: data.date.value,
+        time: data.time.value,
       })
     );
     api
@@ -58,26 +62,38 @@ const IndexPage = () => {
     console.log(date);
   };
 
-  useEffect(() => {   
-    if (!session.data.city.name) { 
+  useEffect(() => {
+    if (!session || !get(session, "data.city.name")) {
       var cityname = "Москва";
-    }
-    else{
+    } else {
       cityname = session.data.city.name;
     }
     api
-      .get(sources.search,{
+      .get(sources.search, {
         params: {
-          city: cityname
-        }
+          city: cityname,
+        },
       })
-      .then((responce) => setState({washes: WASHES}))
+      .then((responce) => setState({ washes: WASHES }));
   });
 
   const initialValues = { date: getDate(new Date()) };
+
+  const logOut = () => {
+    api.get(sources.constants).then((response) => {
+      console.log(response);
+      dispatch(setConstants(response.data));
+
+      if (response.user) {
+        dispatch(setSession(response.user));
+      }
+    });
+  };
+
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
       <Header />
+      {/* <Button onClick={logOut}>Click</Button> */}
       <div className={styles.washSearch}>
         <div className={styles.searchUpperBlock}>
           <h2>Поиск моек</h2>
@@ -141,7 +157,7 @@ const IndexPage = () => {
                         name="time"
                         render={({ input, meta }) => (
                           <Select
-                            placeholder="Время *"
+                            placeholder="Время"
                             options={TIME_FIELDS}
                             meta={meta}
                             {...input}
@@ -149,14 +165,26 @@ const IndexPage = () => {
                         )}
                       />
                     </div>
-                    <Button
-                      type="submit"
-                      className={styles.innerBlockButton}
-                      increased
-                    >
-                      Подобрать мойку
-                    </Button>
+                    <div className={styles.field}>
+                      <Field
+                        name="carCategory"
+                        render={({ input, meta }) => (
+                          <Select
+                            placeholder="Автомобиль"
+                            meta={meta}
+                            {...input}
+                          />
+                        )}
+                      />
+                    </div>
                   </div>
+                  <Button
+                    type="submit"
+                    className={styles.innerBlockButton}
+                    increased
+                  >
+                    Подобрать мойку
+                  </Button>
                 </div>
               </form>
             );

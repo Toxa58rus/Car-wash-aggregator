@@ -1,22 +1,23 @@
 import axios from "axios";
-import { getRefreshUserFromCookie, setUserCookie } from "./cookie";
+import { getRefreshUserFromCookie, removeUserCookie } from "./cookie";
 import get from "lodash/get";
-import { useDispatch } from "react-redux";
-import { setSession } from "../state/session";
+import routes from "../helpers/routes";
+import { getAccess, refreshRequest } from "../helpers/request";
+import sources from "../helpers/sources";
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   responseType: "json",
 });
 
-let config = null;
-const storage = JSON.parse(window.sessionStorage.getItem("redux"));
-const access = storage && get(storage, "session.data.token");
-const refresh = getRefreshUserFromCookie();
-
 api.interceptors.request.use(
   (axiosConfig) => {
-    config = axiosConfig;
+    const refresh = getRefreshUserFromCookie();
+    const storage = JSON.parse(window.sessionStorage.getItem("redux"));
+    const access =
+      storage && storage.session.data
+        ? get(storage, "session.data.token")
+        : null;
 
     if (!access && !refresh) {
       return axiosConfig;
@@ -44,26 +45,32 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    if (response.accessToken && response.refreshToken) {
-      useDispatch(
-        setSession({ ...response.user, token: response.accessToken })
-      );
-      setUserCookie(response.refreshToken);
-      console.log("kshjdbgiwsbdgisjdbgkisjdbvkisjdvnbgkisjdnksdjb");
+    console.log(response.config);
+    if (
+      response.data.accessToken &&
+      response.data.refreshToken &&
+      response.config.url !== sources.login &&
+      response.config.url !== sources.register
+    ) {
+      return refreshRequest(response, response.config);
     }
+    return response;
   },
   (error) => {
-    if (error.response.data.message === "access_token_life_time_expired") {
-      console.log(error.response);
-      console.log(config);
-      axios({
-        ...config,
-        headers: {
-          ...config.headers,
-          Authorization: `JwtRefreshToken ${refresh}`,
-        },
-      });
+    const refresh = getRefreshUserFromCookie();
+
+    if (get(error, "response.data.message") === "refresh_token_not_valid") {
+      removeUserCookie();
+      window.location.replace(routes.root);
     }
+
+    if (
+      get(error, "response.data.message") === "access_token_life_time_expired"
+    ) {
+      return getAccess(error.config, refresh);
+    }
+
+    return Promise.reject(error);
   }
 );
 

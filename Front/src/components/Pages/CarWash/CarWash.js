@@ -4,6 +4,7 @@ import { TIME_FIELDS } from "../../../constants/TIME-FIELDS";
 import { useSelector } from "react-redux";
 import { selectSession } from "../../../state/session";
 import { ROLES } from "../../../constants/ROLES";
+import get from "lodash/get";
 import { getDate } from "../../../helpers/dateFormatter";
 import {
   required,
@@ -63,6 +64,10 @@ const CarWash = () => {
   };
 
   const createOrder = (values) => {
+    console.log({
+      phone: values.phone,
+      date: `${values.date} ${values.time.name}`,
+    });
     setState({
       updateTimeFields: false,
       sendOrder: true,
@@ -84,7 +89,10 @@ const CarWash = () => {
     });
   };
 
-  const initialValues = { date: session.data.date.value, time: session.data.time.value };
+  const initialValues = {
+    date: get(session, "data.date.value") || getDate(new Date()),
+    time: get(session, "data.time.value"),
+  };
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
       <Header />
@@ -104,7 +112,7 @@ const CarWash = () => {
           {role !== ROLES.PARTNER && (
             <Form
               onSubmit={createOrder}
-              initialValues = {initialValues}
+              initialValues={initialValues}
               render={({ handleSubmit, form }) => {
                 currentForm = form;
                 return (

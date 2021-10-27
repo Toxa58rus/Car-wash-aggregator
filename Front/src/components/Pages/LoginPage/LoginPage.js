@@ -8,7 +8,6 @@ import { selectConstants } from "../../../state/constants";
 import { ROLES_OPTIONS } from "../../../constants/ROLES";
 import sources from "../../../helpers/sources";
 import api from "../../../lib/api";
-import omit from "lodash/omit";
 import { setUserCookie } from "../../../lib/cookie";
 import {
   composeValidators,
@@ -27,7 +26,6 @@ const LoginPage = ({ history }) => {
   const [tab, setTab] = useState(history.location.pathname);
 
   const constants = useSelector(selectConstants);
-
   const dispatch = useDispatch();
 
   const setLoginTab = () => {
@@ -41,19 +39,24 @@ const LoginPage = ({ history }) => {
   };
 
   const login = (data) => {
-    api.post(sources.login, { params: { ...data } });
-    // setUserCookie(state.refresh);
-
-    // dispatch(setSession(state));
-    // history.push(routes.root);
+    api
+      .post(sources.login, { ...data })
+      .then((response) => {
+        setUserCookie(response.data.refreshToken);
+        dispatch(
+          setSession({
+            ...response.data.user,
+            token: response.data.accessToken,
+          })
+        );
+        history.push(routes.root);
+      })
+      .catch((e) => console.log(e.response));
   };
   const register = (data) => {
-    console.log(data);
-    const fields = omit(data, ["confirm_password"]);
-
     api
       .post(sources.register, {
-        ...fields,
+        ...data,
         role: data.role.id,
         city: data.city.name,
       })

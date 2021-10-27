@@ -71,7 +71,7 @@ namespace CarWashAggregator.ApiGateway.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("GatewayLogs");
                 });
 #pragma warning restore 612, 618
         }

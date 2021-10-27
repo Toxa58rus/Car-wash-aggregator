@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarWashAggregator.CarWashes.BL.QueryHandlers
 {
-    public class GetCarWashQueryHandler : IQueryHandler<RequestGetCarWashQuery, ResponseGetCarWashQuery>
+    public class GetCarWashQueryHandler : IQueryHandler<RequestGetCarWashById, ResponseGetCarWashById>
     {
         private readonly ICarWashService _carWashService;
 
@@ -19,12 +19,12 @@ namespace CarWashAggregator.CarWashes.BL.QueryHandlers
         {
             _carWashService = carWashService;
         }
-        public async Task<ResponseGetCarWashQuery> Handle(RequestGetCarWashQuery request)
+        public async Task<ResponseGetCarWashById> Handle(RequestGetCarWashById request)
         {
-            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<CarWash, ResponseGetCarWashQuery>()));
+            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<CarWash, ResponseGetCarWashById>()));
 
             CarWash carWash = await _carWashService.GetCarWashAsync(request.Id);
-            ResponseGetCarWashQuery carWashQuery = mapper.Map<ResponseGetCarWashQuery>(carWash);
+            ResponseGetCarWashById carWashQuery = mapper.Map<ResponseGetCarWashById>(carWash);
 
             return await Task.FromResult(carWashQuery);
         }

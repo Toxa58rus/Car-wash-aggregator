@@ -1,7 +1,7 @@
 ﻿using CarWashAggregator.Authorization.Business.JwtAuth.Contracts;
 using CarWashAggregator.Authorization.Domain.Contracts;
+using CarWashAggregator.Authorization.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace CarWashAggregator.Authorization.Deamon.Controllers
 {
@@ -20,11 +20,11 @@ namespace CarWashAggregator.Authorization.Deamon.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult IndexAsync()
         {
-            //var register = await _authorizationManager.RegisterAsync("TestLogin", "TestPassword", "test");
-            //var token = await _authorizationManager.LoginAsync("TestLogin", "TestPassword", "test");
-            //var newToken = await _authorizationManager.RefreshAccessTokenAsync(token.RefreshToken);
+            //_dbRepository.Add(new Role() {IndexId = 0, Name = "User"});
+            //_dbRepository.Add(new Role() { IndexId = 1, Name = "Partner" });
+            //_dbRepository.SaveChangesAsync();
             return Ok("Started");
         }
     }

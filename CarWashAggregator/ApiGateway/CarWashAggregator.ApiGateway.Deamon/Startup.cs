@@ -7,9 +7,6 @@ using CarWashAggregator.ApiGateway.Infra.Repository;
 using CarWashAggregator.Common.Domain;
 using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Infra;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -36,33 +33,34 @@ namespace CarWashAggregator.ApiGateway.Deamon
                 options.UseNpgsql(_configuration.GetConnectionString(Helper.DataBaseConnectionSection));
             });
             services.AddTransient<IDbLoggerService, DbLoggerService>()
-                .AddScoped<IAuthService,AuthService>();
- 
+                .AddScoped<IAuthService, AuthService>()
+                .AddScoped<IUserService, UserService>();
+
             //Data
             services.AddScoped<IApiGatewayRepository, ApiGatewayRepository>();
 
             //Subscriptions
             //services.AddTransient<>();
-/*
-            services.AddMvcCore(options =>
-            {
-	            options.RequireHttpsPermanent = true;
-	            options.RespectBrowserAcceptHeader = true;
-            }).AddFormatterMappings(); */
-			//services.AddControllers().AddNewtonsoftJson();
-	            //.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+            /*
+                        services.AddMvcCore(options =>
+                        {
+                            options.RequireHttpsPermanent = true;
+                            options.RespectBrowserAcceptHeader = true;
+                        }).AddFormatterMappings(); */
+            //services.AddControllers().AddNewtonsoftJson();
+            //.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-	            services.AddMvc().AddNewtonsoftJson();
+            services.AddMvc().AddNewtonsoftJson();
             //    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
-
+            
             services.AddCors(options => options.AddDefaultPolicy(
-	            builder =>
-	            {
-		            builder//.WithOrigins("http://89.108.65.74", "http://localhost:5000")
-			            .AllowAnyHeader()
-			            .AllowAnyMethod()
-			            .AllowAnyOrigin();
-	            }));
+                builder =>
+                {
+                    builder//.WithOrigins("http://89.108.65.74", "http://localhost:5000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                }));
             services.AddAutoMapper(typeof(Startup));
             BusContainer.RegisterBusService(services, _configuration);
         }

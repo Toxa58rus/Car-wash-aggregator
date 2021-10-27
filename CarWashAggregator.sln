@@ -60,13 +60,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Authoriza
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{AF3C154C-6440-4A7E-A6CF-620FB1591863}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Orders.Business", "CarWashAggregator\User\CarWashAggregator.Orders.Business\CarWashAggregator.Orders.Business.csproj", "{95F7322C-D83A-4EA5-AED5-FD72F9EFDA1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Business", "CarWashAggregator\User\CarWashAggregator.Orders.Business\CarWashAggregator.User.Business.csproj", "{95F7322C-D83A-4EA5-AED5-FD72F9EFDA1B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Deamon", "CarWashAggregator\User\CarWashAggregator.User.Deamon\CarWashAggregator.User.Deamon.csproj", "{DFFBB8B1-382E-416D-B161-A0352D7C7562}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Domain", "CarWashAggregator\User\CarWashAggregator.User.Domain\CarWashAggregator.User.Domain.csproj", "{DDC6DDB7-60F8-4A22-A2F3-678D91DB7923}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.User.Infa", "CarWashAggregator\User\CarWashAggregator.User.Infa\CarWashAggregator.User.Infa.csproj", "{4A7A2B56-BC02-4E6F-90D2-B1CC94360111}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Review", "Review", "{0AE016B7-7BC6-448E-A7FB-DA11C9B9991A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Review.BL", "CarWashAggregator\Review\CarWashAggregator.Review.BL\CarWashAggregator.Review.BL.csproj", "{44C90326-59B9-4831-A3BD-462EE145486A}"
@@ -77,13 +78,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Review.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.Review.Deamon", "CarWashAggregator\Review\CarWashAggregator.Review.Deamon\CarWashAggregator.Review.Deamon.csproj", "{957D17F1-6BBE-4DAC-99B0-A84CEC8AD208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.ApiGateway.Infra", "CarWashAggregator\ApiGateway\CarWashAggregator.ApiGateway.Infra\CarWashAggregator.ApiGateway.Infra.csproj", "{1E0A0BA9-8E5B-42A2-9344-0474015FC6CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.ApiGateway.Infra", "CarWashAggregator\ApiGateway\CarWashAggregator.ApiGateway.Infra\CarWashAggregator.ApiGateway.Infra.csproj", "{1E0A0BA9-8E5B-42A2-9344-0474015FC6CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.ApiGateway.Business", "CarWashAggregator\ApiGateway\CarWashAggregator.ApiGateway.Business\CarWashAggregator.ApiGateway.Business.csproj", "{E28BE062-282C-43D1-BB9A-8F4AC1DE8C5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.ApiGateway.Business", "CarWashAggregator\ApiGateway\CarWashAggregator.ApiGateway.Business\CarWashAggregator.ApiGateway.Business.csproj", "{E28BE062-282C-43D1-BB9A-8F4AC1DE8C5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.ApiGateway.Domain", "CarWashAggregator\ApiGateway\CarWashAggregator.ApiGateway.Domain\CarWashAggregator.ApiGateway.Domain.csproj", "{C641038B-C5F6-45C1-9862-9B000FA5EC18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.ApiGateway.Domain", "CarWashAggregator\ApiGateway\CarWashAggregator.ApiGateway.Domain\CarWashAggregator.ApiGateway.Domain.csproj", "{C641038B-C5F6-45C1-9862-9B000FA5EC18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWashAggregator.ApiGateway.Deamon", "CarWashAggregator\ApiGateway\CarWashAggregator.ApiGateway.Deamon\CarWashAggregator.ApiGateway.Deamon.csproj", "{37711B30-29C7-4644-AD2C-22D58DCE4AB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarWashAggregator.ApiGateway.Deamon", "CarWashAggregator\ApiGateway\CarWashAggregator.ApiGateway.Deamon\CarWashAggregator.ApiGateway.Deamon.csproj", "{37711B30-29C7-4644-AD2C-22D58DCE4AB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

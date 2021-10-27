@@ -1,13 +1,12 @@
-﻿using CarWashAggregator.User.Domain.Contracts;
-using CarWashAggregator.User.Domain.Enities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using CarWashAggregator.User.Domain.Contracts;
+using CarWashAggregator.User.Domain.Enities;
 using CarWashAggregator.User.Domain.interfaces;
 
-namespace CarWashAggregator.Orders.Business.Services
+namespace CarWashAggregator.User.Business.Services
 {
     public class UserService : IUserService
     {

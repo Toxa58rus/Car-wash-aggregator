@@ -16,6 +16,7 @@ using ValidationFailure = CarWashAggregator.Authorization.Business.JwtAuth.Model
 
 namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 {
+    //TODO Send Exceptions to ApiGateway
     public class AuthorizationManager : IAuthorizationManager
     {
         private const string ClaimsRoleType = "user_role";
@@ -55,7 +56,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 
             var refreshToken = await GenerateToken(claims, _jwtTokenConfig.RefreshTokenExpiration);
             var accessToken = await GenerateToken(claims, _jwtTokenConfig.AccessTokenExpiration);
-            await _authorizationRepository.Add(new AuthorizationData()
+            var authId = await _authorizationRepository.Add(new AuthorizationData()
             {
                 UserLogin = login,
                 HashPassword = hashPassword,
@@ -66,6 +67,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 
             return new JwtAuthResult()
             {
+                UserId = authId,
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
             };
@@ -102,6 +104,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 
             return new JwtAuthResult()
             {
+                UserId = existUser.Id,
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
             };
@@ -161,6 +164,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
 
             return new JwtAuthResult()
             {
+                UserId = existUser.Id,
                 AccessToken = newAccessToken,
                 RefreshToken = newRefreshToken
             };
@@ -176,8 +180,16 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             if (validationFailure == ValidationFailure.None)
             {
                 var login = GetClaim(jwtToken, JwtRegisteredClaimNames.Sub);
-                result.UserId = _authorizationRepository.Get<AuthorizationData>()
+                var authId = _authorizationRepository.Get<AuthorizationData>()
                     .SingleOrDefault(x => x.UserLogin == login)?.Id;
+                if (authId is null)
+                {
+                    result.ValidationFailure = ValidationFailure.InvalidToken;
+                }
+                else
+                {
+                    result.AuthId = (Guid)authId;
+                }
             }
             return Task.FromResult(result);
         }

@@ -34,7 +34,7 @@ namespace CarWashAggregator.Review.Infra.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("double precision");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("AuthId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("СarWashId")

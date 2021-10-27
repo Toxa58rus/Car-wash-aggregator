@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using CarWashAggregator.ApiGateway.Domain.Entities;
+using CarWashAggregator.ApiGateway.Domain.Models.Entities;
 
-namespace CarWashAggregator.ApiGateway.Domain.Models
+namespace CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels
 {
     public class ConstantsResult
     {

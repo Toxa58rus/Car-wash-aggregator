@@ -1,6 +1,6 @@
 export const ROLES = {
-  CLIENT: 1,
-  PARTNER: 2,
+  CLIENT: "0",
+  PARTNER: "1",
 };
 
 export const ROLES_NAMES = {

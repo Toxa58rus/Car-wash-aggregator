@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import cn from "classnames";
 import routes from "../../helpers/routes";
-import { selectSession } from "../../state/session";
-import { useSelector } from "react-redux";
+import { selectSession, setSession } from "../../state/session";
+import { useDispatch, useSelector } from "react-redux";
 import { ROLES } from "../../constants/ROLES";
+import { removeUserCookie } from "../../lib/cookie";
+import { useHistory } from "react-router";
 
 import Button from "../Button/Button";
 import styles from "./Header.module.scss";
@@ -21,6 +23,8 @@ const Header = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const session = useSelector(selectSession);
   const role = session && session.role;
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleOpenMobileMenu = () => {
     setMobileMenu("mobileMenu");
@@ -30,6 +34,12 @@ const Header = () => {
   };
   const handleOpenMobileSubMenu = () => {
     setMobileMenu("mobileSubMenu");
+  };
+
+  const logOut = () => {
+    removeUserCookie();
+    dispatch(setSession(null));
+    history.push(routes.root);
   };
 
   const profileLink = !session ? routes.login : routes.profileSettings;
@@ -142,6 +152,22 @@ const Header = () => {
                       </a>
                     </li>
                   )}
+                  <li className={styles.sublistItem}>
+                    <Button
+                      className={styles.logOut}
+                      size="maxWidth"
+                      onClick={logOut}
+                    >
+                      <div className={styles.listItemLink}>
+                        Выход
+                        <img
+                          src={arrowRight}
+                          alt="icon"
+                          className={styles.mobile}
+                        />
+                      </div>
+                    </Button>
+                  </li>
                 </ul>
               )}
 

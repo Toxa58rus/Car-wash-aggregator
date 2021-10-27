@@ -6,21 +6,21 @@
   background: $bg-layout;
 }
 
-.washSearch{
+.washSearch {
   display: flex;
   flex-flow: column nowrap;
   padding: 60px 150px 70px 150px;
 
-  @media (max-width: $xl - 1){
+  @media (max-width: $xl - 1) {
     padding: 60px 0 70px 0;
   }
 
-  @media (max-width: $xl - 1){
+  @media (max-width: $xl - 1) {
     padding: 15px 0 70px 0;
   }
 }
 
-.searchUpperBlock{
+.searchUpperBlock {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,7 +40,7 @@
   }
 }
 
-.searchBlock{
+.searchBlock {
   position: relative;
   display: flex;
   align-items: center;
@@ -50,7 +50,7 @@
   background-color: $bg-gray;
   box-sizing: border-box;
 
-  @media (max-width: $lg - 1){
+  @media (max-width: $lg - 1) {
     padding-left: 21px;
     flex-direction: column;
     height: auto;
@@ -67,7 +67,7 @@
   }
 }
 
-.blockStr{
+.blockStr {
   width: 400px;
 
   @media (max-width: $lg - 1) {
@@ -76,18 +76,18 @@
   }
 }
 
-.innerBlock{
+.innerBlock {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: $lg - 1){
+  @media (max-width: $lg - 1) {
     flex-direction: column;
   }
 }
 
-.field{
+.field {
   display: flex;
   align-items: center;
   width: 30%;
@@ -96,38 +96,43 @@
     margin-right: 10px;
   }
 
-  @media (max-width: $lg - 1){
+  @media (max-width: $lg - 1) {
     width: 100%;
     margin-bottom: 15px;
   }
 }
 
-.innerBlockDateInput{
+.innerBlockDateInput {
   border-style: none;
   height: 30px;
   width: 100px;
   margin-left: 10px;
   border-radius: 6px;
 
-  @media (max-width: $lg - 1){
+  @media (max-width: $lg - 1) {
     margin-left: 0px;
   }
 
-  @media (max-width: $xs - 1){
+  @media (max-width: $xs - 1) {
     margin-left: 5px;
     margin-right: 15px;
   }
 }
 
-.innerBlockButton{
+.innerBlockButton {
+  position: absolute;
   font-size: 14px;
   padding: 7px 22px;
+  right: 21px;
+  width: 180px;
 
-  @media (max-width: $lg - 1){
+  @media (max-width: $lg - 1) {
     padding: 7px 11px;
+    width: 100%;
+    position: static;
   }
 
-  @media (max-width: $sm - 1){
+  @media (max-width: $sm - 1) {
     margin-left: 10px;
     padding: 7px 5px;
     height: 45px;
@@ -144,7 +149,7 @@
   }
 }
 
-.citySelect{
+.citySelect {
   width: 100%;
   display: flex;
   align-items: center;
@@ -154,7 +159,6 @@
   }
 
   @media (min-width: $lg) {
-    
   }
 }
 
@@ -170,11 +174,11 @@
   }
 }
 
-.cityWashes{
+.cityWashes {
   width: 100%;
 }
 
-.washList{
+.washList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -188,14 +192,14 @@
   margin: 15px;
 }
 
-.nearestWash{
+.nearestWash {
   display: flex;
   width: 180px;
   align-items: center;
   position: absolute;
   right: 21px;
 
-  @media (min-width: $lg ) {
+  @media (min-width: $lg) {
     :global {
       .select {
         &__control {
@@ -204,14 +208,14 @@
           border: none;
           background: transparent;
         }
-  
+
         &__indicator-separator {
           display: none;
         }
-        
+
         &__dropdown-indicator {
           padding-top: 10px;
-  
+
           svg {
             fill: $black;
           }
@@ -226,20 +230,19 @@
     width: 100%;
   }
 
-  @media (max-width: $sm - 1){
+  @media (max-width: $sm - 1) {
     bottom: -50px;
   }
 
-  @media (max-width: $xs - 1){
+  @media (max-width: $xs - 1) {
     bottom: auto;
   }
 }
 
-.nearestWashLink{
+.nearestWashLink {
   margin-left: 14px;
- 
-  &:hover{
+
+  &:hover {
     text-decoration-line: underline;
   }
-
 }

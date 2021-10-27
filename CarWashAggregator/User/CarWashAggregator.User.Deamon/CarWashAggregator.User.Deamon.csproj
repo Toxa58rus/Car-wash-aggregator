@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
@@ -23,7 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\CarWashAggregator.Common.Infra\CarWashAggregator.Common.Infra.csproj" />
-    <ProjectReference Include="..\CarWashAggregator.Orders.Business\CarWashAggregator.User.Business.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.User.Business\CarWashAggregator.User.Business.csproj" />
+    <ProjectReference Include="..\CarWashAggregator.User.Business\CarWashAggregator.User.Business.csproj" />
     <ProjectReference Include="..\CarWashAggregator.User.Domain\CarWashAggregator.User.Domain.csproj" />
     <ProjectReference Include="..\CarWashAggregator.User.Infa\CarWashAggregator.User.Infa.csproj" />
   </ItemGroup>

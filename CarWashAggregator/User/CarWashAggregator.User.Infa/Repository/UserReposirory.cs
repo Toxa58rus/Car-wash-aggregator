@@ -58,5 +58,10 @@ namespace CarWashAggregator.User.Infa.Repository
             _context.Remove(await _context.UserInfos.Where(x => x.Id == id).FirstOrDefaultAsync());
             await _context.SaveChangesAsync();
         }
+
+        public async Task<UserInfo> GetUserByAuthIdAsync(Guid id)
+        {
+            return await _context.UserInfos.Where(x => x.AuthId == id).FirstOrDefaultAsync();
+        }
     }
 }

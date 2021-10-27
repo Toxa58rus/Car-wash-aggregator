@@ -9,6 +9,7 @@ namespace CarWashAggregator.User.Domain.interfaces
     {
         IEnumerable<UserInfo> GetUsers();
         Task<UserInfo> GetUserByIdAsync(Guid id);
+        Task<UserInfo> GetUserByAuthIdAsync(Guid id);
         Task<Guid> CreateUserAsync(UserInfo user);
         Task UpdateUserAsync(UserInfo user);
         Task DeleteUserByIdAsync(Guid id);

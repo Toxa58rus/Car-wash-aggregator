@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import cn from "classnames";
 import { Form, Field } from "react-final-form";
 import routes from "../../../helpers/routes";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSession } from "../../../state/session";
+import { selectConstants } from "../../../state/constants";
 import { ROLES_OPTIONS } from "../../../constants/ROLES";
+import sources from "../../../helpers/sources";
+import api from "../../../lib/api";
+import { setUserCookie } from "../../../lib/cookie";
 import {
   composeValidators,
   required,
@@ -18,16 +22,10 @@ import Input from "../../Input/Input";
 import Header from "../../Header/Header";
 import styles from "./LoginPage.module.scss";
 
-const LoginPage = (props) => {
-  const { history } = props;
-
+const LoginPage = ({ history }) => {
   const [tab, setTab] = useState(history.location.pathname);
-  const [state, setState] = useState({
-    token: "aljkhsdbefisuwasjdebswvcoijknokwqalpmgfv",
-    name: "ra",
-    pass: "asdas",
-    role: 2,
-  });
+
+  const constants = useSelector(selectConstants);
   const dispatch = useDispatch();
 
   const setLoginTab = () => {
@@ -41,17 +39,39 @@ const LoginPage = (props) => {
   };
 
   const login = (data) => {
-    setState((prevState) => ({
-      ...prevState,
-      name: data.email,
-      data: data.password,
-    }));
-
-    dispatch(setSession(state));
-    history.push(routes.root);
+    api
+      .post(sources.login, { ...data })
+      .then((response) => {
+        setUserCookie(response.data.refreshToken);
+        dispatch(
+          setSession({
+            ...response.data.user,
+            token: response.data.accessToken,
+          })
+        );
+        history.push(routes.root);
+      })
+      .catch((e) => console.log(e.response));
   };
   const register = (data) => {
-    console.log(data);
+    api
+      .post(sources.register, {
+        ...data,
+        role: data.role.id,
+        city: data.city.name,
+      })
+      .then((response) => {
+        console.log(response);
+        setUserCookie(response.data.refreshToken);
+        dispatch(
+          setSession({
+            ...response.data.user,
+            token: response.data.accessToken,
+          })
+        );
+        history.push(routes.root);
+      })
+      .catch((erorr) => console.log(erorr.response));
   };
 
   const loginBtnCn = cn(styles.containerBoxBtn, {
@@ -162,7 +182,7 @@ const LoginPage = (props) => {
                       {({ input, meta }) => (
                         <Input
                           className={styles.input}
-                          placeholder="Ваш Email"
+                          placeholder="Ваш Email *"
                           meta={meta}
                           {...input}
                         />
@@ -174,12 +194,12 @@ const LoginPage = (props) => {
                       <Field
                         name="firstName"
                         type="firstName"
-                        validate={composeValidators(required, validEmail)}
+                        validate={required}
                       >
                         {({ input, meta }) => (
                           <Input
                             className={styles.input}
-                            placeholder="Имя"
+                            placeholder="Имя *"
                             meta={meta}
                             {...input}
                           />
@@ -190,12 +210,12 @@ const LoginPage = (props) => {
                       <Field
                         name="lastName"
                         type="lastName"
-                        validate={composeValidators(required, validEmail)}
+                        validate={required}
                       >
                         {({ input, meta }) => (
                           <Input
                             className={styles.input}
-                            placeholder="Фамилия"
+                            placeholder="Фамилия *"
                             meta={meta}
                             {...input}
                           />
@@ -212,7 +232,7 @@ const LoginPage = (props) => {
                       {({ input, meta }) => (
                         <Input
                           className={styles.input}
-                          placeholder="Пароль"
+                          placeholder="Пароль *"
                           meta={meta}
                           {...input}
                         />
@@ -228,23 +248,50 @@ const LoginPage = (props) => {
                       {({ input, meta }) => (
                         <Input
                           className={styles.input}
-                          placeholder="Поторите пароль"
+                          placeholder="Поторите пароль *"
                           meta={meta}
                           {...input}
                         />
                       )}
                     </Field>
                   </div>
-                  <Field name="role" validate={required}>
-                    {({ input, meta }) => (
-                      <Select
-                        options={ROLES_OPTIONS}
-                        placeholder="Выбирите метод регистрации"
-                        meta={meta}
-                        {...input}
-                      />
-                    )}
-                  </Field>
+                  <div className={styles.inputs}>
+                    <div className={cn(styles.inner, styles.mobileInner)}>
+                      <Field name="role" validate={required}>
+                        {({ input, meta }) => (
+                          <Select
+                            options={ROLES_OPTIONS}
+                            placeholder="Выбирите метод регистрации *"
+                            meta={meta}
+                            {...input}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                    <div className={cn(styles.inner, styles.mobileInner)}>
+                      <Field name="city">
+                        {({ input, meta }) => (
+                          <Select
+                            options={constants.cities}
+                            placeholder="Выбирите город"
+                            meta={meta}
+                            {...input}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                  </div>
+                  <div className={styles.field}>
+                    <Field name="phone">
+                      {({ input, meta }) => (
+                        <Input
+                          placeholder="Номер телефона "
+                          meta={meta}
+                          {...input}
+                        />
+                      )}
+                    </Field>
+                  </div>
                   <Button
                     className={styles.sigInBtn}
                     type="submit"

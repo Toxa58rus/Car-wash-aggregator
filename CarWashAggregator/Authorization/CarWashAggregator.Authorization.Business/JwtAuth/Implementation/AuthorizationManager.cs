@@ -158,7 +158,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             var newRefreshToken = await GenerateToken(claims, _jwtTokenConfig.RefreshTokenExpiration);
             var newAccessToken = await GenerateToken(claims, _jwtTokenConfig.AccessTokenExpiration);
 
-            existUser.RefreshToken = refreshToken;
+            existUser.RefreshToken = newRefreshToken;
             await _authorizationRepository.Update(existUser);
             await _authorizationRepository.SaveChangesAsync();
 
@@ -244,7 +244,7 @@ namespace CarWashAggregator.Authorization.Business.JwtAuth.Implementation
             }
             return sBuilder.ToString();
         }
-        private Task<string> GenerateToken(IEnumerable<Claim> claims, int minutesTilExpire)
+        private Task<string> GenerateToken(IEnumerable<Claim> claims, double minutesTilExpire)
         {
             var now = DateTime.UtcNow;
             var tokenHandler = new JwtSecurityTokenHandler();

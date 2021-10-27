@@ -92,7 +92,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             {
                 var userResponse = await _userService.GetUserByAuthId(authResponse.UserId);
                 if (userResponse is null)
-                    return Problem();
+                    return Problem("incorrect user response in Login");
                 userResponse.Email = user.Email;
                 var result = new AuthResult()
                 {

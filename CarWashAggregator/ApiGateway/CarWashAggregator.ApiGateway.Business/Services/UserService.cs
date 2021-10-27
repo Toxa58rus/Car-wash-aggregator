@@ -26,7 +26,7 @@ namespace CarWashAggregator.ApiGateway.Business.Services
             var response =
                 await _bus.RequestQuery<RequestGetUserByAuthId, ResponseGetUser>(new RequestGetUserByAuthId { AuthId = id });
 
-            var result = response is null ? null : _mapper.Map<AuthenticatedUserModel>(response);
+            var result = response is null ? new AuthenticatedUserModel() : _mapper.Map<AuthenticatedUserModel>(response);
             return result;
         }
     }

@@ -84,7 +84,7 @@ const CarWash = () => {
     });
   };
 
-  const initialValues = { date: getDate(new Date()) };
+  const initialValues = { date: session.data.date.value, time: session.data.time.value };
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
       <Header />
@@ -104,7 +104,7 @@ const CarWash = () => {
           {role !== ROLES.PARTNER && (
             <Form
               onSubmit={createOrder}
-              initialValues={initialValues}
+              initialValues = {initialValues}
               render={({ handleSubmit, form }) => {
                 currentForm = form;
                 return (

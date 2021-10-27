@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { getDate } from "../../../helpers/dateFormatter";
 import { TIME_FIELDS } from "../../../constants/TIME-FIELDS";
 import WASHES from "../../../constants/WASHES";
 import api from "../../../lib/api";
+import { useDispatch, useSelector } from "react-redux";
+import sources from "../../../helpers/sources";
+import session, { setSession,selectSession } from "../../../state/session";
 
 import MapMark from "../../../icons/Vector.svg";
 import Clock from "../../../icons/Clock.svg";
@@ -16,16 +19,29 @@ import Header from "../../Header/Header";
 import Select from "../../Select/Select";
 import styles from "./IndexPage.module.scss";
 
+
 const IndexPage = () => {
   const [calendarIsOpen, setCalendar] = useState(false);
   const [state, setState] = useState({ washes: [] });
 
+  const session = useSelector(selectSession);
+
+  const dispatch = useDispatch();
+
   const getData = async (data) => {
+    dispatch(
+      setSession({
+        date:data.date.value,
+        time:data.time.value
+      })
+    );
     api
-      .get("/v2/matches", {
+      .get(sources.search, {
         params: { ...data, time: data && data.time ? data.time.name : null },
       })
-      .then((response) => setState({ washes: WASHES }));
+      .then((response) => {
+        setState({ washes: WASHES });
+      });
   };
 
   let currentForm = null;
@@ -41,6 +57,22 @@ const IndexPage = () => {
     setCalendar(false);
     console.log(date);
   };
+
+  useEffect(() => {   
+    if (!session.data.city.name) { 
+      var cityname = "Москва";
+    }
+    else{
+      cityname = session.data.city.name;
+    }
+    api
+      .get(sources.search,{
+        params: {
+          city: cityname
+        }
+      })
+      .then((responce) => setState({washes: WASHES}))
+  });
 
   const initialValues = { date: getDate(new Date()) };
   return (

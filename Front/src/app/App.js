@@ -25,8 +25,8 @@ function App() {
   // console.log(storage);
 
   const getConstants = () => {
-    api.get(sources.constants).then((respose) => {
-      dispatch(setConstants(respose.data));
+    api.get(sources.constants).then((response) => {
+      dispatch(setConstants(response.data));
     });
   };
 

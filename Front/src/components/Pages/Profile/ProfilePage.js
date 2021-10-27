@@ -2,8 +2,9 @@ import React from "react";
 import routes from "../../../helpers/routes";
 import cn from "classnames";
 import { ROLES } from "../../../constants/ROLES";
-import { selectSession } from "../../../state/session";
-import { useSelector } from "react-redux";
+import { selectSession, setSession } from "../../../state/session";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUserCookie } from "../../../lib/cookie";
 
 import Button from "../../Button/Button";
 import Header from "../../Header/Header";
@@ -24,6 +25,13 @@ const ProfilePage = ({ history }) => {
   };
   const setCarWashTab = () => {
     history.replace(routes.profileCarWashes);
+  };
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    removeUserCookie();
+    dispatch(setSession(null));
+    history.push(routes.root);
   };
 
   const settingsBtn = cn(styles.menuBtn, {
@@ -74,6 +82,9 @@ const ProfilePage = ({ history }) => {
                 Мойки
               </Button>
             )}
+            <Button className={styles.menuBtn} size="maxWidth" onClick={logOut}>
+              Выход
+            </Button>
           </div>
           <div className={styles.containerWrap}>
             {history.location.pathname === routes.profileSettings && (

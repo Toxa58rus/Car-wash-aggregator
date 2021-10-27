@@ -4,15 +4,13 @@ import { useSelector } from "react-redux";
 import { selectSession } from "../../state/session";
 
 import vector from "../../icons/location.svg";
-import car from "../../icons/car.svg";
 
 import RateStars from "../RateStars/RateStars";
-import Button from "../Button/Button";
 import styles from "./WashCard.module.scss";
 import { ROLES } from "../../constants/ROLES";
 
 const WashCard = ({ id, item }) => {
-  const { name, description, adress, pic, availability, category } = item;
+  const { name, description, adress, pic, category } = item;
   const session = useSelector(selectSession);
   const role = !session ? null : session.role;
 
@@ -32,7 +30,7 @@ const WashCard = ({ id, item }) => {
       </div>
       <div className={styles.cardAdress}>
         <img src={vector} alt="location" />
-        <span className={styles.cardAdressText}> {adress}</span>
+        <span className={styles.cardAdressText}>{adress}</span>
       </div>
       <div className={styles.rating}>
         <span className={styles.ratingLabel}>Рэйтинг:</span>{" "}
@@ -44,18 +42,9 @@ const WashCard = ({ id, item }) => {
       </div>
 
       {role !== ROLES.PARTNER && (
-        <>
-          <div className={styles.cardAvailability}>
-            <img src={car} alt="car" />
-            <span className={styles.cardAvailabilityText}>
-              {availability} мест свободно
-            </span>
-          </div>
-
-          <Button className={styles.washCardButton} size="maxWidth">
-            Забронировать
-          </Button>
-        </>
+        <a href={routes.carWash(id)} className={styles.washLink}>
+          Забронировать
+        </a>
       )}
     </div>
   );

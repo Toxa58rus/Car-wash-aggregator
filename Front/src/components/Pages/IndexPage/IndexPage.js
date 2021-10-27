@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { getDate } from "../../../helpers/dateFormatter";
 import { TIME_FIELDS } from "../../../constants/TIME-FIELDS";
 import WASHES from "../../../constants/WASHES";
+import api from "../../../lib/api";
+import { useDispatch, useSelector } from "react-redux";
+import sources from "../../../helpers/sources";
+import { setSession, selectSession } from "../../../state/session";
+import { selectConstants, setConstants } from "../../../state/constants";
+import get from "lodash/get";
 
 import MapMark from "../../../icons/Vector.svg";
 import Clock from "../../../icons/Clock.svg";
@@ -17,9 +23,29 @@ import styles from "./IndexPage.module.scss";
 
 const IndexPage = () => {
   const [calendarIsOpen, setCalendar] = useState(false);
+  const [state, setState] = useState({ washes: WASHES });
+
+  const session = useSelector(selectSession);
+  const constants = useSelector(selectConstants);
+
+  const { cities, cars } = constants;
+
+  const dispatch = useDispatch();
 
   const getData = async (data) => {
-    // api.get(sources.search, { params: {...data}}).then((response) => setState({washes: response.data}))
+    dispatch(
+      setSession({
+        date: data.date.value,
+        time: data.time.value,
+      })
+    );
+    api
+      .get(sources.search, {
+        params: { ...data, time: data && data.time ? data.time.name : null },
+      })
+      .then((response) => {
+        setState({ washes: WASHES });
+      });
   };
 
   let currentForm = null;
@@ -36,10 +62,38 @@ const IndexPage = () => {
     console.log(date);
   };
 
+  useEffect(() => {
+    if (!session || !get(session, "data.city.name")) {
+      var cityname = "Москва";
+    } else {
+      cityname = session.data.city.name;
+    }
+    api
+      .get(sources.search, {
+        params: {
+          city: cityname,
+        },
+      })
+      .then((responce) => setState({ washes: WASHES }));
+  });
+
   const initialValues = { date: getDate(new Date()) };
+
+  const logOut = () => {
+    api.get(sources.constants).then((response) => {
+      console.log(response);
+      dispatch(setConstants(response.data));
+
+      if (response.user) {
+        dispatch(setSession(response.user));
+      }
+    });
+  };
+
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
       <Header />
+      {/* <Button onClick={logOut}>Click</Button> */}
       <div className={styles.washSearch}>
         <div className={styles.searchUpperBlock}>
           <h2>Поиск моек</h2>
@@ -63,10 +117,10 @@ const IndexPage = () => {
                   </span>
                   <div className={styles.innerBlock}>
                     <Field
-                      name="Text"
+                      name="text"
                       render={({ input, meta }) => (
                         <Input
-                          placeholder="Поиск по названию, адресу, услуге"
+                          placeholder="Поиск по названию мойки"
                           meta={meta}
                           {...input}
                         />
@@ -98,12 +152,12 @@ const IndexPage = () => {
                       </Field>
                     </div>
                     <div className={styles.field}>
-                      <img src={Clock} alt="Clock" />
+                      <img src={Clock} alt="time" />
                       <Field
-                        name="Time"
+                        name="time"
                         render={({ input, meta }) => (
                           <Select
-                            placeholder="Время *"
+                            placeholder="Время"
                             options={TIME_FIELDS}
                             meta={meta}
                             {...input}
@@ -111,14 +165,26 @@ const IndexPage = () => {
                         )}
                       />
                     </div>
-                    <Button
-                      type="submit"
-                      className={styles.innerBlockButton}
-                      increased
-                    >
-                      Подобрать мойку
-                    </Button>
+                    <div className={styles.field}>
+                      <Field
+                        name="carCategory"
+                        render={({ input, meta }) => (
+                          <Select
+                            placeholder="Автомобиль"
+                            meta={meta}
+                            {...input}
+                          />
+                        )}
+                      />
+                    </div>
                   </div>
+                  <Button
+                    type="submit"
+                    className={styles.innerBlockButton}
+                    increased
+                  >
+                    Подобрать мойку
+                  </Button>
                 </div>
               </form>
             );
@@ -128,7 +194,7 @@ const IndexPage = () => {
       <div className={styles.section}>
         <h2 className={styles.cityWashes}>Мойки в Москве</h2>
         <div className={styles.washList}>
-          {WASHES.map((item) => (
+          {state.washes.map((item) => (
             <div className={styles.card} key={item.id}>
               <WashCard id={item.id} item={item} />
             </div>

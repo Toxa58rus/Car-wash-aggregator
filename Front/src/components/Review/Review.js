@@ -41,7 +41,7 @@ const Review = () => {
               />
             </div>
             <Field
-              name="description"
+              name="review"
               render={({ input, meta }) => (
                 <textarea
                   className={styles.textarea}

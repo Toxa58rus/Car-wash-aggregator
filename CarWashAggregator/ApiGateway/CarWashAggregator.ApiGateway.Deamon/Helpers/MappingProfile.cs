@@ -5,6 +5,7 @@ using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.Authorization.Querys.Response;
 using CarWashAggregator.Common.Domain.DTO.CarWash.Querys;
+using CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
 
 namespace CarWashAggregator.ApiGateway.Deamon.Helpers
@@ -28,6 +29,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Helpers
             CreateMap<UserModel, RequestLoginUser>().ReverseMap();
             CreateMap<AuthenticatedUserModel, UserModel>().ReverseMap();
             CreateMap<CarWashDTO, CarWashModel>().ReverseMap();
+            CreateMap<CarWashSearch, RequestCarWashByFilters>();
         }
     }
 }

@@ -13,6 +13,7 @@ using CarWashAggregator.Common.Domain.DTO.Reviews.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.Reviews.Querys.Response;
 using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
+using Microsoft.Extensions.Logging;
 
 
 namespace CarWashAggregator.ApiGateway.Business.Services
@@ -21,15 +22,26 @@ namespace CarWashAggregator.ApiGateway.Business.Services
     {
         private readonly IEventBus _bus;
         private readonly IMapper _mapper;
+        private readonly ILogger<CarWashService> _logger;
 
-        public CarWashService(IMapper mapper, IEventBus bus)
+        public CarWashService(IMapper mapper, IEventBus bus, ILogger<CarWashService> logger)
         {
             _mapper = mapper;
             _bus = bus;
+            _logger = logger;
         }
 
         public async Task<SearchWashesResult> SearchAsync(CarWashSearch query)
         {
+            try
+            {
+                DateTime.Parse(query.Date);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             var filters = _mapper.Map<RequestCarWashByFilters>(query);
             var response =
                 await _bus.RequestQuery<RequestCarWashByFilters, ResponseCarWashSearchByFilters>(filters);

@@ -4,7 +4,7 @@ namespace CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels
 {
     public class CarWashGet
     {
-        [FromRoute]
+        [FromQuery]
         public string Id { get; set; }
         [FromQuery]
         public string Date { get; set; }

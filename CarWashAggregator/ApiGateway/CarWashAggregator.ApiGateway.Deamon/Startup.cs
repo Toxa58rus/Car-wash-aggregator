@@ -34,7 +34,10 @@ namespace CarWashAggregator.ApiGateway.Deamon
             });
             services.AddTransient<IDbLoggerService, DbLoggerService>()
                 .AddScoped<IAuthService, AuthService>()
-                .AddScoped<IUserService, UserService>();
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<IOrderService,OrderService>()
+                .AddScoped<IReviewService,ReviewService>()
+                .AddScoped<ICarWashService,CarWashService>();
 
             //Data
             services.AddScoped<IApiGatewayRepository, ApiGatewayRepository>();

@@ -3,10 +3,8 @@ using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base;
 
 namespace CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels
 {
-    public class GetWashResult
+  public  class ListReviewsResult
     {
-        public CarWashModel Wash { get; set; }
-        public List<CommentModel> Comments { get; set; }
-        public List<OrderModel> Orders { get; set; }
+        public List<ReviewModel> Reviews { get; set; }
     }
 }

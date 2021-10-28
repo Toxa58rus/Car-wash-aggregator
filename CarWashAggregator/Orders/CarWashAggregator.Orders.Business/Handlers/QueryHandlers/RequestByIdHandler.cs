@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 {
-    public class RequestByIdHandler : IQueryHandler<RequestOrderById, ResponseOneOrder>
+    public class RequestByIdHandler : IQueryHandler<RequestOrderById, ResponseOrders>
     {
         private readonly IOrderRepository _dbRepository;
 
@@ -17,15 +17,15 @@ namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
             _dbRepository = dbRepository;
         }
 
-        public Task<ResponseOneOrder> Handle(RequestOrderById request)
+        public Task<ResponseOrders> Handle(RequestOrderById request)
         {
             //some_logic
             var order = _dbRepository.Get<Order>().SingleOrDefault(o => o.Id == request.Id);
             if (order is null)
-                return Task.FromResult(new ResponseOneOrder());
+                return Task.FromResult(new ResponseOrders());
 
-            var response = new ResponseOneOrder() { Price = order.Price };
-            return Task.FromResult(response);
+            //var response = new ResponseOrders() { Price = order.Price };
+            return Task.FromResult(new ResponseOrders());
         }
     }
 }

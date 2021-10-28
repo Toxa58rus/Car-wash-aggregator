@@ -2,7 +2,7 @@
 
 namespace CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels
 {
-    public class CarWashGet
+    public class OrderGet
     {
         public string Id { get; set; }
     }

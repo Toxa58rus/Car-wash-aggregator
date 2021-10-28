@@ -80,7 +80,7 @@ const IndexPage = () => {
 
   const initialValues = {
     date: getDate(new Date()),
-    city: cities.reduce((city) => city.name === session.city),
+    city: cities && cities.reduce((city) => city.name === session.city),
   };
 
   return (
@@ -94,9 +94,10 @@ const IndexPage = () => {
               <img src={MapMark} alt="MapMark" />
               <Select
                 placeholder="Город"
-                defaultValue={cities.reduce(
-                  (city) => city.name === userEvent.city
-                )}
+                defaultValue={
+                  cities &&
+                  cities.reduce((city) => city.name === userEvent.city)
+                }
                 transparent
                 options={cities}
               />

@@ -53,7 +53,7 @@ Select.defaultProps = {
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  defaultValue: PropTypes.string,
+  defaultValue: PropTypes.objectOf(PropTypes.string),
   placeholder: PropTypes.string.isRequired,
   meta: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   transparent: PropTypes.bool,

@@ -5,14 +5,17 @@ import ReactSelect from "react-select";
 import SelectOtion from "./SelectOption";
 import styles from "./Select.module.scss";
 
-const Select = ({
-  options,
-  defaultValue,
-  placeholder,
-  meta,
-  transparent,
-  ...rest
-}) => {
+const Select = (props) => {
+  const {
+    options,
+    defaultValue,
+    placeholder,
+    meta,
+    transparent,
+    isMulti,
+    ...rest
+  } = props;
+
   const containerCn = cn(styles.contain, {
     [styles.error]: meta && (meta.error || meta.submitError) && meta.touched,
     [styles.transparent]: Boolean(transparent),
@@ -27,6 +30,7 @@ const Select = ({
         classNamePrefix="select"
         placeholder={placeholder}
         options={options}
+        isMulti={isMulti}
         defaultValue={defaultValue}
         isOptionDisabled={(option) => option.status === "Booked"}
         getOptionLabel={(option) => option.name}
@@ -44,14 +48,16 @@ Select.defaultProps = {
   defaultValue: null,
   meta: null,
   transparent: null,
+  isMulti: false,
 };
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  defaultValue: PropTypes.shape(),
+  defaultValue: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   meta: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   transparent: PropTypes.bool,
+  isMulti: PropTypes.bool,
 };
 
 export default Select;

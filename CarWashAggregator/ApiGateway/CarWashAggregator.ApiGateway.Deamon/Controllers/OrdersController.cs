@@ -49,14 +49,14 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 
         [Route("/[action]")]
         [HttpGet]
-        public async Task<IActionResult> GetByUserId([FromRoute] OrderGet request)
+        public async Task<IActionResult> GetByUserId([FromRoute] OrderGet request, [FromQuery] string status)
         {
             try
             {
                 if (!Guid.TryParse(request.Id, out var id))
                     return Problem("cant parse guid");
 
-                var orders = await _orderService.GetByUserId(id);
+                var orders = await _orderService.GetByUserId(id, status);
                 var result = new ListOrdersResult { Orders = orders };
                 return Ok(result);
             }

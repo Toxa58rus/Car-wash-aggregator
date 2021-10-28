@@ -38,12 +38,13 @@ namespace CarWashAggregator.ApiGateway.Business.Services
             return _mapper.Map<OrderModel>(result.Order);
         }
 
-        public async Task<List<OrderModel>> GetByUserId(Guid userId)
+        public async Task<List<OrderModel>> GetByUserId(Guid userId, string status)
         {
             var result =
                 await _bus.RequestQuery<RequestOrderByUserId, ResponseOrders>(new RequestOrderByUserId
                 {
-                    UserId = userId
+                    UserId = userId,
+                    Status = status
                 });
 
             return _mapper.Map<List<OrderModel>>(result.Orders);
@@ -92,7 +93,7 @@ namespace CarWashAggregator.ApiGateway.Business.Services
 
             var result =
                 await _bus.RequestQuery<RequestSaveNewOrder, ResponseOrderSaved>(request);
-            return result?.OrderId != null;
+            return result?.Success ?? false;
         }
     }
 }

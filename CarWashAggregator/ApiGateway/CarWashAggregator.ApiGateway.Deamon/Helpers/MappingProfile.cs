@@ -44,7 +44,9 @@ namespace CarWashAggregator.ApiGateway.Deamon.Helpers
 
             //CarWashService
             CreateMap<CarWashDTO, CarWashModel>().ReverseMap();
-            CreateMap<CarWashSearch, RequestCarWashByFilters>().ReverseMap();
+            CreateMap<CarWashSearch, RequestCarWashByFilters>()
+                .ForMember(dest => dest.CityId,
+                    opt => opt.MapFrom(src => new Guid(src.CityId)));
             CreateMap<CarWashAdd, RequestCreateCarWashQuery>()
                 .ForMember(dest => dest.CityId,
                     opt => opt.MapFrom(src => new Guid(src.CityId)))

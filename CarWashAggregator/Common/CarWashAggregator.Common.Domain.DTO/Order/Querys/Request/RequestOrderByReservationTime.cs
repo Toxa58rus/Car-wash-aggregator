@@ -5,10 +5,10 @@ using CarWashAggregator.Common.Domain.Contracts;
 
 namespace CarWashAggregator.Common.Domain.DTO.Order.Querys.Request
 {
-    public class RequestOrderByReservationTme :Query
+    public class RequestOrderByReservationTime :Query
     {
         public DateTime ReservationDate { get; set; }
-        public int? ReservationTime { get; set; }
+        public DateTime? ReservationTime { get; set; }
 
     }
 }

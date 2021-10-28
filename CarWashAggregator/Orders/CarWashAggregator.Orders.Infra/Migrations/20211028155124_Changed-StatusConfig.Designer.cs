@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarWashAggregator.Orders.Infra.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20211005140130_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211028155124_Changed-StatusConfig")]
+    partial class ChangedStatusConfig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,13 @@ namespace CarWashAggregator.Orders.Infra.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<string>("CarCategory")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("CarWashId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("carwash_Id");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
@@ -40,20 +47,21 @@ namespace CarWashAggregator.Orders.Infra.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("wash_price");
 
+                    b.Property<Guid>("StatusId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
-                    b.Property<Guid>("CarWashId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("carwash_Id");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("CarWashAggregator.Orders.Domain.Entities.OrderStatus", b =>
+            modelBuilder.Entity("CarWashAggregator.Orders.Domain.Entities.Status", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,31 +77,25 @@ namespace CarWashAggregator.Orders.Infra.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name_of_status");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
 
                     b.ToTable("Statuses");
                 });
 
-            modelBuilder.Entity("CarWashAggregator.Orders.Domain.Entities.OrderStatus", b =>
+            modelBuilder.Entity("CarWashAggregator.Orders.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("CarWashAggregator.Orders.Domain.Entities.Order", "Order")
-                        .WithOne("СarWashStatus")
-                        .HasForeignKey("CarWashAggregator.Orders.Domain.Entities.OrderStatus", "OrderId")
+                    b.HasOne("CarWashAggregator.Orders.Domain.Entities.Status", "OrderStatus")
+                        .WithMany("Orders")
+                        .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
+                    b.Navigation("OrderStatus");
                 });
 
-            modelBuilder.Entity("CarWashAggregator.Orders.Domain.Entities.Order", b =>
+            modelBuilder.Entity("CarWashAggregator.Orders.Domain.Entities.Status", b =>
                 {
-                    b.Navigation("СarWashStatus");
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

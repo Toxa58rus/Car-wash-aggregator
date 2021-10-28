@@ -33,12 +33,7 @@ namespace CarWashAggregator.Orders.Infra.Data.EntityConfigurations
             builder.Property(e => e.DateReservation)
                 .HasColumnName("reservation_at")
                                 .IsRequired();
-
-
-            builder.HasOne(d => d.СarWashStatus)
-                .WithOne(p => p.Order)
-                .HasForeignKey<Status>(d => d.OrderId);
-
+            
         }
     }
 }

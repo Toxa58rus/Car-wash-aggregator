@@ -6,11 +6,11 @@ using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base;
 
 namespace CarWashAggregator.ApiGateway.Business.Interfaces
 {
-    public interface ICarWashService
+    public interface IReviewService
     {
-        Task<List<CarWashModel>> SearchAsync(CarWashSearch query);
-        Task<CarWashModel> GetById(Guid id);
-        Task<List<CarWashModel>> GetByUserId(Guid userId);
-        Task<bool> AddCarWash(CarWashAdd carWash);
+        Task<ReviewModel> GetById(Guid id);
+        Task<List<ReviewModel>> GetByUserId(Guid userId);
+        Task<List<ReviewModel>> GetByCarWashId(Guid carWashId);
+        Task<bool> AddReview(ReviewAdd review);
     }
 }

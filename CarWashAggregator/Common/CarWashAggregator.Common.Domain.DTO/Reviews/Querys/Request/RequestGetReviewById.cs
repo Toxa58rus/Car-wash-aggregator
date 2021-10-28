@@ -1,9 +1,9 @@
 ﻿using CarWashAggregator.Common.Domain.Contracts;
 using System;
 
-namespace CarWashAggregator.Common.Domain.DTO.Order.Querys.Request
+namespace CarWashAggregator.Common.Domain.DTO.Reviews.Querys.Request
 {
-    public class RequestOrderById : Query
+    public class RequestGetReviewById : Query
     {
         public Guid Id { get; set; }
     }

@@ -1,18 +1,17 @@
-﻿using System;
-using System.Globalization;
-using AutoMapper;
+﻿using AutoMapper;
 using CarWashAggregator.ApiGateway.Business.Interfaces;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
+using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base;
 using CarWashAggregator.Common.Domain.Contracts;
 using CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Response;
+using CarWashAggregator.Common.Domain.DTO.Order.Querys.Request;
+using CarWashAggregator.Common.Domain.DTO.Order.Querys.Response;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
-using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels;
-using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base;
-using CarWashAggregator.Common.Domain.DTO.Reviews.Querys.Request;
-using CarWashAggregator.Common.Domain.DTO.Reviews.Querys.Response;
-using CarWashAggregator.Common.Domain.DTO.User.Querys.Request;
-using CarWashAggregator.Common.Domain.DTO.User.Querys.Response;
 
 
 namespace CarWashAggregator.ApiGateway.Business.Services
@@ -21,57 +20,88 @@ namespace CarWashAggregator.ApiGateway.Business.Services
     {
         private readonly IEventBus _bus;
         private readonly IMapper _mapper;
+        private readonly ILogger<CarWashService> _logger;
 
-        public CarWashService(IMapper mapper, IEventBus bus)
+        public CarWashService(IMapper mapper, IEventBus bus, ILogger<CarWashService> logger)
         {
             _mapper = mapper;
             _bus = bus;
+            _logger = logger;
         }
 
-        public async Task<SearchWashesResult> SearchAsync(CarWashSearch query)
+        public async Task<List<CarWashModel>> SearchAsync(CarWashSearch query)
         {
-            var filters = _mapper.Map<RequestCarWashByFilters>(query);
-            var response =
-                await _bus.RequestQuery<RequestCarWashByFilters, ResponseCarWashSearchByFilters>(filters);
-
-            var result = response is null ? null : _mapper.Map<SearchWashesResult>(response);
-            return result;
-        }
-        public async Task<GetWashResult> GetById(Guid id, bool includeOrders = false)
-        {
-            var result = new GetWashResult();
-            var responseWash =
-                await _bus.RequestQuery<RequestGetCarWashById, ResponseGetCarWashById>(new RequestGetCarWashById { Id = id });
-            var carWash = responseWash.Wash;
-            result.Wash = _mapper.Map<CarWashModel>(carWash);
-
-            var responseReview = await _bus.RequestQuery<RequestGetReviewsByCarWashId, ResponseGetReviews>(
-                new RequestGetReviewsByCarWashId { CarWashId = carWash.Id });
-
-            foreach (var review in responseReview.Reviews)
+            var requestOrders = new RequestOrderByReservationTme();
+            if (!string.IsNullOrWhiteSpace(query.Date))
             {
-                var user = await _bus.RequestQuery<RequestGetUserByUserId, ResponseGetUser>(
-                    new RequestGetUserByUserId { UserId = review.UserId });
-
-                result.Comments.Add(new CommentModel
+                try
                 {
-                    User =  {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName
-                    },
-                    Date = review.PostedAt.ToLongDateString(),
-                    Rating = review.Rating.ToString(CultureInfo.CurrentCulture),
-                    Comment = review.Body
-                });
-            }
+                    requestOrders.ReservationDate = DateTime.Parse(query.Date);
+                }
+                catch 
+                {
+                    _logger.LogWarning("Cant Parse Date");
+                    throw;
+                }
 
-            if (includeOrders)
-            {
-                //await _bus.RequestQuery<RequestGetUserByUserId, ResponseGetUser>(new RequestGetUserByUserId { UserId = review.Reviews })
+                if (!string.IsNullOrWhiteSpace(query.Time))
+                {
+                    try
+                    {
+                        requestOrders.ReservationTime = int.Parse(query.Time);
+                    }
+                    catch
+                    {
+                        _logger.LogWarning("Cant Parse Time");
+                        throw;
+                    }
+                }
             }
-            
-            return result;
+            var responseOrders = await _bus.RequestQuery<RequestOrderByReservationTme, ResponseOrders>(requestOrders);
+
+            var requestCarWashes = _mapper.Map<RequestCarWashByFilters>(query); 
+            var responseCarWashes = await _bus.RequestQuery<RequestCarWashByFilters, ResponseCarWashSearchByFilters>(requestCarWashes);
+
+            try
+            {
+                //TODO Check performance
+                var result = responseCarWashes.Washes.ToDictionary(x => x.Id);
+                foreach (var order in responseOrders.Orders)
+                {
+                    result.Remove(order.CarWashId);
+                }
+                return _mapper.Map<List<CarWashModel>>(result.Values.ToList());
+            }
+            catch
+            {
+                _logger.LogError("Error in carWashService");
+                throw;
+            }
         }
 
+        public async Task<CarWashModel> GetById(Guid id)
+        {
+            var result =
+                await _bus.RequestQuery<RequestGetCarWashById, ResponseGetCarWashById>(new RequestGetCarWashById
+                    {Id = id});
+
+            return _mapper.Map<CarWashModel>(result.Wash);
+        }
+        
+        public async Task<List<CarWashModel>> GetByUserId(Guid userId)
+        {
+            var result =
+                await _bus.RequestQuery<RequestGetCarWashByUserId, ResponseGetCarWashByUserId>(new RequestGetCarWashByUserId
+                { UserId = userId });
+
+            return _mapper.Map<List<CarWashModel>>(result.CarWashes);
+        }
+        public async Task<bool> AddCarWash(CarWashAdd carWash)
+        {
+            var request = _mapper.Map<RequestCreateCarWashQuery>(carWash);
+            var result =
+                await _bus.RequestQuery<RequestCreateCarWashQuery, ResponseCreateCarWashQuery>(request);
+            return result?.Id != null;
+        }
     }
 }

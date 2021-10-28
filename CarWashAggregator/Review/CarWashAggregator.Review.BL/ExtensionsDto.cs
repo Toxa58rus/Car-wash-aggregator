@@ -26,7 +26,7 @@ namespace CarWashAggregator.Review.BL
 				Id = model.Id ,
 				Body = model.Body,
 				Rating = model.Rating,
-				СarWashId = model.СarWashId,
+				CarWashId = model.СarWashId,
 				UserId = model.UserId
 			};
 		}

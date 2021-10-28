@@ -1,7 +1,10 @@
-﻿namespace CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base
+﻿using System;
+
+namespace CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base
 {
     public class AuthenticatedUserModel
     {
+        public Guid Id { get; set; }
         public string Email { get; set; }
         public string City { get; set; }
         public string FirstName { get; set; }

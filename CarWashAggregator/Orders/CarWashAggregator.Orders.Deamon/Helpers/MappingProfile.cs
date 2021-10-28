@@ -19,10 +19,10 @@ namespace CarWashAggregator.Orders.Deamon.Helpers
         public MappingProfile()
         {
             CreateMap<Order, OrderDTO>()
-                .ForMember(dest => dest.Status,
+                .ForPath(dest => dest.Status,
                     opt => opt.MapFrom(src => src.OrderStatus.Name))
                 .ReverseMap()
-                .ForMember(dest => dest.OrderStatus.Name,
+                .ForPath(dest => dest.OrderStatus.Name,
                     opt => opt.MapFrom(src => src.Status));
 
             CreateMap<RequestSaveNewOrder, Order>();

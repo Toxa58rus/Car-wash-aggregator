@@ -1,21 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.Xml;
-using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Business.Interfaces;
-using CarWashAggregator.ApiGateway.Business.Services;
-using CarWashAggregator.ApiGateway.Domain.Models;
+﻿using CarWashAggregator.ApiGateway.Business.Interfaces;
 using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
 using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 {
     [ApiController]
-    [Route("/reviews")]
     [EnableCors]
     public class ReviewsController : Controller
     {
@@ -29,15 +23,15 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
         }
 
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] ReviewGet request)
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
             try
             {
-                if (!Guid.TryParse(request.Id, out var id))
+                if (!Guid.TryParse(id, out var reviewId))
                     return Problem("cant parse guid");
-                var result = await _reviewService.GetById(id);
+                var result = await _reviewService.GetById(reviewId);
                 return Ok(result);
             }
             catch
@@ -47,16 +41,16 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
      
-        [Route("/[action]")]
+        [Route("/[controller]/[action]/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetByUserId([FromRoute] ReviewGet request)
+        public async Task<IActionResult> GetByUserId([FromRoute] string id)
         {
             try
             {
-                if (!Guid.TryParse(request.Id, out var id))
+                if (!Guid.TryParse(id, out var reviewId))
                     return Problem("cant parse guid");
 
-                var reviews = await _reviewService.GetByUserId(id);
+                var reviews = await _reviewService.GetByUserId(reviewId);
                 var result = new ListReviewsResult() { Reviews = reviews };
                 return Ok(result);
             }
@@ -67,16 +61,16 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]")]
         [HttpGet]
-        public async Task<IActionResult> GetByCarWashId([FromRoute] ReviewGet request)
+        public async Task<IActionResult> GetByCarWashId([FromRoute] string id)
         {
             try
             {
-                if (!Guid.TryParse(request.Id, out var id))
+                if (!Guid.TryParse(id, out var reviewId))
                     return Problem("cant parse guid");
 
-                var reviews = await _reviewService.GetByCarWashId(id);
+                var reviews = await _reviewService.GetByCarWashId(reviewId);
                 var result = new ListReviewsResult() { Reviews = reviews };
                 return Ok(result);
             }
@@ -87,7 +81,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]")]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ReviewAdd request)
         {

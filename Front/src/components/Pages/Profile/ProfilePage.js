@@ -34,6 +34,8 @@ const ProfilePage = ({ history }) => {
     history.push(routes.root);
   };
 
+  console.log(session);
+
   const settingsBtn = cn(styles.menuBtn, {
     [styles.activeMenuBtn]:
       history.location.pathname === routes.profileSettings,

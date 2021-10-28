@@ -9,10 +9,31 @@ import Button from "../Button/Button";
 import Select from "../Select/Select";
 import styles from "./AddCarWash.module.scss";
 import AddPhoto from "../AddPhoto/AddPhoto";
+import api from "../../lib/api";
+import sources from "../../helpers/sources";
 
 const AddCarWash = () => {
   const saveCarWash = (values) => {
     console.log(values);
+    let arr = [];
+    values.carCategories.map((i) => {
+      arr.push(i.name);
+      return i;
+    });
+    console.log({
+      ...values,
+      carCategories: arr,
+      photo: values.photo.data_url,
+      city: values.city.name,
+    });
+    api
+      .get(sources.carWashAdd, {
+        ...values,
+        carCategories: arr,
+        photo: values.photo.data_url,
+        city: values.city.name,
+      })
+      .then((response) => console.log(response));
   };
   let currentForm = null;
 
@@ -82,7 +103,7 @@ const AddCarWash = () => {
               </div>
               <div className={styles.inner}>
                 <Field
-                  name="categories"
+                  name="carCategories"
                   render={({ input, meta }) => {
                     return (
                       <Select

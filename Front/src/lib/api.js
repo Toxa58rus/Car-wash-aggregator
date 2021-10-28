@@ -45,7 +45,7 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    console.log(response.config);
+    console.log(response);
     if (
       response.data.accessToken &&
       response.data.refreshToken &&
@@ -60,8 +60,8 @@ api.interceptors.response.use(
     const refresh = getRefreshUserFromCookie();
 
     if (get(error, "response.data.message") === "refresh_token_not_valid") {
-      removeUserCookie();
-      window.location.replace(routes.root);
+      // removeUserCookie();
+      // window.location.replace(routes.root);
     }
 
     if (

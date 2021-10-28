@@ -42,14 +42,15 @@ const LoginPage = ({ history }) => {
     api
       .post(sources.login, { ...data })
       .then((response) => {
-        setUserCookie(response.data.refreshToken);
+        console.log(response);
         dispatch(
           setSession({
             ...response.data.user,
             token: response.data.accessToken,
           })
         );
-        history.push(routes.root);
+        setUserCookie(response.data.refreshToken);
+        // history.push(routes.root);
       })
       .catch((e) => console.log(e.response));
   };
@@ -69,7 +70,7 @@ const LoginPage = ({ history }) => {
             token: response.data.accessToken,
           })
         );
-        history.push(routes.root);
+        // history.push(routes.root);
       })
       .catch((erorr) => console.log(erorr.response));
   };

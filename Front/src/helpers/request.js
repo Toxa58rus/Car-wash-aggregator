@@ -41,8 +41,8 @@ export const getAccess = async (config, refresh) => {
     })
     .catch((error) => {
       if (get(error, "response.data.message") === "refresh_token_not_valid") {
-        removeUserCookie();
-        window.location.replace(routes.root);
+        // removeUserCookie();
+        // window.location.replace(routes.root);
       }
     });
 };

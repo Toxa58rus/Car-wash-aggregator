@@ -7,6 +7,6 @@ namespace CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Response
    
    public class ResponseCarWashSearchByFilters :Query
     {
-        private List<CarWashDTO> Washes { get; set; }
+        public List<CarWashDTO> Washes { get; set; }
     }
 }

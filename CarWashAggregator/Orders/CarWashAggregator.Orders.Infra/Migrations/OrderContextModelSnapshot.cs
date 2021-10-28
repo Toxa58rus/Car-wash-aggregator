@@ -42,7 +42,7 @@ namespace CarWashAggregator.Orders.Infra.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
-                    b.Property<Guid>("СarWashId")
+                    b.Property<Guid>("CarWashId")
                         .HasColumnType("uuid")
                         .HasColumnName("carwash_Id");
 

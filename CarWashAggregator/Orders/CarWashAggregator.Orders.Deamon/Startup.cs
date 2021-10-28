@@ -70,7 +70,7 @@ namespace CarWashAggregator.Orders.Deamon
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.SubscribeToQuery<RequestOrderById, ResponseOneOrder, RequestByIdHandler>();
+            eventBus.SubscribeToQuery<RequestOrderById, ResponseOrders, RequestByIdHandler>();
         }
     }
 }

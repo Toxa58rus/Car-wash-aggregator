@@ -12,7 +12,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Helpers
     public class AuthorizeAttribute : Attribute, IAuthorizationFilter
     {
         private readonly IList<Roles> _roles;
-        public AuthorizeAttribute(IAuthService authService, params Roles[] roles)
+        public AuthorizeAttribute(params Roles[] roles)
         {
             _roles = roles ?? new Roles[] { };
         }

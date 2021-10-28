@@ -27,28 +27,28 @@ namespace CarWashAggregator.Orders.Deamon.Controllers
             _bus = bus;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> IndexAsync()
-        {
+        //[HttpGet]
+        //public async Task<IActionResult> IndexAsync()
+        //{
 
-            //var ordersCount = _orderService.GetOrders().ToList().Count;
-            //_bus.PublishEvent(new OrderCreatedEvent());
-            var ordersQuerys = new List<ResponseOneOrder>();
-            for (int i = 0; i < 10; i++)
-            {
-                var order = await _bus.RequestQuery<RequestOrderById, ResponseOneOrder>(new RequestOrderById() { Id = new Guid("598e5bad-b077-48b0-8ecc-a75fe034742d") });
-                ordersQuerys.Add(order);
-            }
+        //    var ordersCount = _orderService.GetOrders().ToList().Count;
+        //    _bus.PublishEvent(new OrderCreatedEvent());
+        //    var ordersQuerys = new List<ResponseOrders>();
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        var order = await _bus.RequestQuery<RequestOrderById, ResponseOrders>(new RequestOrderById() { Id = new Guid("598e5bad-b077-48b0-8ecc-a75fe034742d") });
+        //        ordersQuerys.Add(order);
+        //    }
 
-            var stringBuilder = new StringBuilder();
-            foreach (var order in ordersQuerys)
-            {
-                stringBuilder.Append(order.Price + "---");
-            }
+        //    var stringBuilder = new StringBuilder();
+        //    foreach (var order in ordersQuerys)
+        //    {
+        //        stringBuilder.Append(order + "---");
+        //    }
 
-            return Ok("Started, " + stringBuilder);
+        //    return Ok("Started, " + stringBuilder);
 
 
-        }
+        //}
     }
 }

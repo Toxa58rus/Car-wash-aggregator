@@ -22,7 +22,7 @@ namespace CarWashAggregator.Orders.Infra.Data.EntityConfigurations
                 .HasColumnName("user_id")
                 .IsRequired();
 
-            builder.Property(e => e.СarWashId)
+            builder.Property(e => e.CarWashId)
                 .HasColumnName("carwash_Id")
                 .IsRequired();
 

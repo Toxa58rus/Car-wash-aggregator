@@ -42,7 +42,8 @@ namespace CarWashAggregator.CarWashes.Deamon.Controllers
 
         public async Task<JsonResult> RequestGetCarWashQuery()
         {
-            ResponseGetCarWashById carWashQuery = await _eventBus.RequestQuery<RequestGetCarWashById, ResponseGetCarWashById>(new RequestGetCarWashById() { Id = new Guid("eb095127-0c41-48a1-be94-5013d38181df") });
+            var carWash = (await _carWashService.GetCarWashesAsync()).Last();
+            ResponseGetCarWashById carWashQuery = await _eventBus.RequestQuery<RequestGetCarWashById, ResponseGetCarWashById>(new RequestGetCarWashById() { Id = carWash.Id});
             return Json(carWashQuery);
         }
 
@@ -53,10 +54,12 @@ namespace CarWashAggregator.CarWashes.Deamon.Controllers
                 UserId = new Guid(),
                 Name = "Автомойка",
                 Price = 999.99,
-                Image = "",
+                Image = "Image",
+                CityId = new Guid(),
                 Description = "Самая крутая автомойка",
                 Address = "Твои мечты",
-                CarCategories = new string[] { "Седан" }
+                Phone = "123456789",
+                CarCategories = new string[] { "A", "B", "C" }
             }); ;
             return Json(responseCreateCarWashQuery);
         }
@@ -97,6 +100,19 @@ namespace CarWashAggregator.CarWashes.Deamon.Controllers
                 PageNumber = page
             };
             return Json(await _eventBus.RequestQuery<RequestGetCarWashesPaginatedQuery, ResponseGetCarWashesPaginatedQuery>(request));
+        }
+
+        public async Task<JsonResult> RequestGetCarWashByUserIdQuery()
+        {
+            var carWash = (await _carWashService.GetCarWashesAsync()).Last();
+            RequestGetCarWashByUserId request = new RequestGetCarWashByUserId() { UserId = carWash.UserId };
+            return Json(await _eventBus.RequestQuery<RequestGetCarWashByUserId, ResponseGetCarWashByUserId>(request));
+        }
+
+        public async Task<JsonResult> RequestCarWashSearchByFilterQuery()
+        {
+            RequestCarWashByFilters request = new RequestCarWashByFilters() { CarCategory = "A", CityId = null, CarWashName = null };
+            return Json(await _eventBus.RequestQuery<RequestCarWashByFilters, ResponseCarWashSearchByFilters>(request));
         }
     }
 }

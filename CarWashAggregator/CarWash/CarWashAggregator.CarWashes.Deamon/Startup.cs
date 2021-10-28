@@ -23,6 +23,7 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using CarWashAggregator.Common.Domain.DTO.CarWash.Events;
 using CarWashAggregator.CarWashes.BL.EventHandlers;
+using CarWashAggregator.Common.Domain.DTO.CarWash.Querys;
 
 namespace CarWashAggregator.CarWashes.Deamon
 {
@@ -40,6 +41,7 @@ namespace CarWashAggregator.CarWashes.Deamon
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(_config.GetConnectionString("DefaultConnection")));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddTransient<ICarWashRepository, CarWashRepository>();
             services.AddTransient<ICarWashService, CarWashService>();
@@ -48,7 +50,9 @@ namespace CarWashAggregator.CarWashes.Deamon
             services.AddTransient<UpdateCarWashEventHandler>();
             services.AddTransient<UpdateCarWashRatingEventHandler>();
 
+            services.AddTransient<CarWashSearchByFilterQueryHandler>();
             services.AddTransient<GetCarWashQueryHandler>();
+            services.AddTransient<GetCarWashByUserIdQueryHandler>();
             services.AddTransient<CreateCarWashQueryHandler>();
             services.AddTransient<GetCarWashesPaginatedQueryHandler>();
 
@@ -73,7 +77,9 @@ namespace CarWashAggregator.CarWashes.Deamon
             eventBus.SubscribeToEvent<UpdateCarWashEvent, UpdateCarWashEventHandler>();
             eventBus.SubscribeToEvent<UpdateCarWashRatingEvent, UpdateCarWashRatingEventHandler>();
 
+            eventBus.SubscribeToQuery<RequestCarWashByFilters, ResponseCarWashSearchByFilters, CarWashSearchByFilterQueryHandler>();
             eventBus.SubscribeToQuery<RequestGetCarWashById, ResponseGetCarWashById, GetCarWashQueryHandler>();
+            eventBus.SubscribeToQuery<RequestGetCarWashByUserId, ResponseGetCarWashByUserId, GetCarWashByUserIdQueryHandler>();
             eventBus.SubscribeToQuery<RequestCreateCarWashQuery, ResponseCreateCarWashQuery, CreateCarWashQueryHandler>();
             eventBus.SubscribeToQuery<RequestGetCarWashesPaginatedQuery, ResponseGetCarWashesPaginatedQuery, GetCarWashesPaginatedQueryHandler>();
 

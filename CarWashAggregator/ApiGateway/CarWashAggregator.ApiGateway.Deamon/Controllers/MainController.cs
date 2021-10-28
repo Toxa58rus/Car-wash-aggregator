@@ -98,7 +98,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
                 {
                     AccessToken = authResponse.AccessToken,
                     RefreshToken = authResponse.RefreshToken,
-                    User = _mapper.Map<AuthenticatedUserModel>(user)
+                    User = _mapper.Map<AuthenticatedUserModel>(userResponse)
                 };
                 return Ok(result);
             }

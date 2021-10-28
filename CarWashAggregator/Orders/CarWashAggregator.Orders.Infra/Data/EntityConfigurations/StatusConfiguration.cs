@@ -21,7 +21,10 @@ namespace CarWashAggregator.Orders.Infra.Data.EntityConfigurations
             builder.Property(e => e.Name)
                 .HasColumnName("name_of_status")
                 .IsRequired();
-
+            
+            builder.HasMany(d => d.Orders)
+                .WithOne(p => p.OrderStatus)
+                .HasForeignKey(d => d.StatusId);
         }
     }
 }

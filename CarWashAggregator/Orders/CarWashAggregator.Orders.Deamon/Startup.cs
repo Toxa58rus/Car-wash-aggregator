@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AutoMapper;
 
 namespace CarWashAggregator.Orders.Deamon
 {
@@ -34,7 +35,7 @@ namespace CarWashAggregator.Orders.Deamon
             {
                 options.UseNpgsql(_configuration.GetConnectionString(Helper.DataBaseConnectionSection));
             });
-
+            services.AddAutoMapper(typeof(Startup));
             //Services
             services.AddTransient<IOrderService, OrderService>();
 
@@ -70,7 +71,14 @@ namespace CarWashAggregator.Orders.Deamon
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.SubscribeToQuery<RequestOrderById, ResponseOrders, RequestByIdHandler>();
+            eventBus.SubscribeToQuery<RequestOrderById, ResponseOrder, RequestByIdHandler>();
+            eventBus.SubscribeToQuery<RequestOrderByCarWashId, ResponseOrders, RequestOrderByCarWashIdHandler>();
+            eventBus.SubscribeToQuery<RequestOrderByReservationTime, ResponseOrders, RequestOrderByReservationTimeHandler>();
+            eventBus.SubscribeToQuery<RequestOrderByUserId, ResponseOrders, RequestOrderByUserIdHandler>();
+            eventBus.SubscribeToQuery<RequestSaveNewOrder, ResponseOrderSaved, RequestSaveNewOrderHandler>();
+            eventBus.SubscribeToQuery<RequestStatusChange, ResponseStatusChange, RequestStatusChangeHandler>();
+            eventBus.SubscribeToQuery<RequestStatuses, ResponseStatuses, RequestStatusesHandler>();
+
         }
     }
 }

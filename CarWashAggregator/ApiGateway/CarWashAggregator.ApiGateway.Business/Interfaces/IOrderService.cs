@@ -9,7 +9,7 @@ namespace CarWashAggregator.ApiGateway.Business.Interfaces
     public interface IOrderService
     {
         Task<OrderModel> GetById(Guid id);
-        Task<List<OrderModel>> GetByUserId(Guid userId);
+        Task<List<OrderModel>> GetByUserId(Guid userId, string status);
         Task<List<OrderModel>> GetByCarWashId(Guid carWashId, DateTime? filterDate = null);
         Task<string[]> GetOrderStatuses();
         Task<bool> ChangeStatus(string newStatus, Guid orderId);

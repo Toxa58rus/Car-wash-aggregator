@@ -31,7 +31,7 @@ namespace CarWashAggregator.ApiGateway.Business.Services
 
         public async Task<List<CarWashModel>> SearchAsync(CarWashSearch query)
         {
-            var requestOrders = new RequestOrderByReservationTme();
+            var requestOrders = new RequestOrderByReservationTime();
             if (!string.IsNullOrWhiteSpace(query.Date))
             {
                 try
@@ -48,7 +48,7 @@ namespace CarWashAggregator.ApiGateway.Business.Services
                 {
                     try
                     {
-                        requestOrders.ReservationTime = int.Parse(query.Time);
+                        requestOrders.ReservationTime = DateTime.Parse(query.Time);
                     }
                     catch
                     {
@@ -57,7 +57,7 @@ namespace CarWashAggregator.ApiGateway.Business.Services
                     }
                 }
             }
-            var responseOrders = await _bus.RequestQuery<RequestOrderByReservationTme, ResponseOrders>(requestOrders);
+            var responseOrders = await _bus.RequestQuery<RequestOrderByReservationTime, ResponseOrders>(requestOrders);
 
             var requestCarWashes = _mapper.Map<RequestCarWashByFilters>(query); 
             var responseCarWashes = await _bus.RequestQuery<RequestCarWashByFilters, ResponseCarWashSearchByFilters>(requestCarWashes);

@@ -8,8 +8,10 @@ namespace CarWashAggregator.Orders.Domain.Entities
         public DateTime DateReservation { get; set; }
         public decimal Price { get; set; }
         public Guid CarWashId { get; set; }
+        public string CarCategory { get; set; }
 
-        public Status СarWashStatus { get; set; }
+        public Guid StatusId { get; set; }
+        public Status OrderStatus { get; set; }
 
     }
 }

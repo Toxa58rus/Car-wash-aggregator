@@ -5,27 +5,29 @@ using CarWashAggregator.Orders.Domain.Contracts;
 using CarWashAggregator.Orders.Domain.Entities;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using CarWashAggregator.Common.Domain.DTO.Order.Querys;
 
 namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 {
-    public class RequestByIdHandler : IQueryHandler<RequestOrderById, ResponseOrders>
+    public class RequestByIdHandler : IQueryHandler<RequestOrderById, ResponseOrder>
     {
         private readonly IOrderRepository _dbRepository;
+        private readonly IMapper _mapper;
 
-        public RequestByIdHandler(IOrderRepository dbRepository)
+        public RequestByIdHandler(IOrderRepository dbRepository, IMapper mapper)
         {
             _dbRepository = dbRepository;
+            _mapper = mapper;
         }
 
-        public Task<ResponseOrders> Handle(RequestOrderById request)
+        public Task<ResponseOrder> Handle(RequestOrderById request)
         {
-            //some_logic
             var order = _dbRepository.Get<Order>().SingleOrDefault(o => o.Id == request.Id);
             if (order is null)
-                return Task.FromResult(new ResponseOrders());
+                return Task.FromResult(new ResponseOrder());
 
-            //var response = new ResponseOrders() { Price = order.Price };
-            return Task.FromResult(new ResponseOrders());
+            return Task.FromResult(new ResponseOrder {Order = _mapper.Map<OrderDTO>(order)});
         }
     }
 }

@@ -13,5 +13,6 @@ namespace CarWashAggregator.Common.Domain.DTO.Order.Querys
         public decimal Price { get; set; }
         public string CarCategory { get; set; }
         public string Status { get; set; }
+
     }
 }

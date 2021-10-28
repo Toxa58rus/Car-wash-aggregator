@@ -98,7 +98,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
                 {
                     AccessToken = authResponse.AccessToken,
                     RefreshToken = authResponse.RefreshToken,
-                    User = _mapper.Map<AuthenticatedUserModel>(user)
+                    User = _mapper.Map<AuthenticatedUserModel>(userResponse)
                 };
                 return Ok(result);
             }
@@ -129,18 +129,18 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        //[Route("/[action]")]
-        //[HttpGet]
-        //public async Task<IActionResult> AddCity()
-        //{
-        // await _repository.Add<City>(new City() {AuthId = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "Москва"});
-        // await _repository.Add(new Car() {AuthId = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "A"});
-        // await _repository.Add(new Car() { AuthId = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "B" });
-        // await _repository.Add(new Car() { AuthId = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "C" });
-        // await _repository.Add(new Car() { AuthId = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "D" });
-        // await _repository.SaveChangesAsync();
+        [Route("/[action]")]
+        [HttpGet]
+        public async Task<IActionResult> AddCity()
+        {
+         await _repository.Add<City>(new City() {Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "Москва"});
+         await _repository.Add(new Car() {Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "A"});
+         await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "B" });
+         await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "C" });
+         await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "D" });
+         await _repository.SaveChangesAsync();
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
     }
 }

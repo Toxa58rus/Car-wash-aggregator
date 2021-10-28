@@ -58,7 +58,7 @@ const LoginPage = ({ history }) => {
       .post(sources.register, {
         ...data,
         role: data.role.id,
-        city: data.city.name,
+        city: data.city ? data.city.name : null,
       })
       .then((response) => {
         console.log(response);

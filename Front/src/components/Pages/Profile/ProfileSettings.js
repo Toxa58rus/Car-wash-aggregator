@@ -3,12 +3,15 @@ import { Field, Form } from "react-final-form";
 import { useSelector } from "react-redux";
 import sources from "../../../helpers/sources";
 import api from "../../../lib/api";
+import cn from "classnames";
 import { selectSession } from "../../../state/session";
+import { selectConstants } from "../../../state/constants";
 
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import styles from "./ProfilePage.module.scss";
 import { getRefreshUserFromCookie } from "../../../lib/cookie";
+import Select from "../../Select/Select";
 
 const ProfileSettings = () => {
   const [state, setState] = useState(false);
@@ -34,13 +37,16 @@ const ProfileSettings = () => {
 
   const saveSettings = () => {};
   const user = useSelector(selectSession);
-  console.log(user);
+  const constants = useSelector(selectConstants);
 
   return (
     <div className={styles.tabWrap}>
       <Form
         onSubmit={saveSettings}
-        initialValues={user}
+        initialValues={{
+          ...user,
+          city: constants.cities.reduce((city) => city.name === user.city),
+        }}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.field}>
@@ -87,6 +93,19 @@ const ProfileSettings = () => {
                   <Input
                     className={styles.input}
                     placeholder="Номер телефона"
+                    meta={meta}
+                    {...input}
+                  />
+                )}
+              </Field>
+            </div>
+            <div className={cn(styles.field, styles.unborder)}>
+              <Field name="city">
+                {({ input, meta }) => (
+                  <Select
+                    placeholder="Город"
+                    options={constants.cities}
+                    defaultValue={user.city}
                     meta={meta}
                     {...input}
                   />

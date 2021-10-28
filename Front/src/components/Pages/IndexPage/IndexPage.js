@@ -7,7 +7,7 @@ import api from "../../../lib/api";
 import { useDispatch, useSelector } from "react-redux";
 import sources from "../../../helpers/sources";
 import { setSession, selectSession } from "../../../state/session";
-import { selectConstants, setConstants } from "../../../state/constants";
+import { selectConstants } from "../../../state/constants";
 import get from "lodash/get";
 
 import MapMark from "../../../icons/Vector.svg";
@@ -20,12 +20,16 @@ import DateForm from "../../DateForm/DateForm";
 import Header from "../../Header/Header";
 import Select from "../../Select/Select";
 import styles from "./IndexPage.module.scss";
+import userEvent from "@testing-library/user-event";
 
 const IndexPage = () => {
   const [calendarIsOpen, setCalendar] = useState(false);
   const [state, setState] = useState({ washes: WASHES });
 
   const session = useSelector(selectSession);
+  const constants = useSelector(selectConstants);
+  const cities = !constants ? null : constants.cities;
+  const cars = !constants ? null : constants.cars;
 
   const dispatch = useDispatch();
 
@@ -74,7 +78,10 @@ const IndexPage = () => {
       .then((responce) => setState({ washes: WASHES }));
   });
 
-  const initialValues = { date: getDate(new Date()) };
+  const initialValues = {
+    date: getDate(new Date()),
+    city: cities && cities.reduce((city) => city.name === session.city),
+  };
 
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
@@ -85,7 +92,15 @@ const IndexPage = () => {
           <div className={styles.inner}>
             <div className={styles.citySelect}>
               <img src={MapMark} alt="MapMark" />
-              <Select placeholder="Город" transparent />
+              <Select
+                placeholder="Город"
+                defaultValue={
+                  cities &&
+                  cities.reduce((city) => city.name === userEvent.city)
+                }
+                transparent
+                options={cities}
+              />
             </div>
           </div>
         </div>
@@ -115,7 +130,7 @@ const IndexPage = () => {
                   <div className={styles.nearestWash}>
                     <div className={styles.citySelect}>
                       <img src={MapMark} alt="MapMark" />
-                      <Select placeholder="Город" />
+                      <Select placeholder="Город" options={cities} />
                     </div>
                   </div>
                 </div>
@@ -156,6 +171,7 @@ const IndexPage = () => {
                         render={({ input, meta }) => (
                           <Select
                             placeholder="Автомобиль"
+                            options={cars}
                             meta={meta}
                             {...input}
                           />

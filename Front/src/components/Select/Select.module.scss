@@ -49,7 +49,6 @@
   border: 2px solid $red;
 }
 
-
 .transparent {
   :global {
     .select {
@@ -63,7 +62,7 @@
       &__indicator-separator {
         display: none;
       }
-      
+
       &__dropdown-indicator {
         padding-top: 10px;
 

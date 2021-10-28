@@ -7,7 +7,6 @@ const validEmailRegExp = new RegExp(
 /* eslint-enable */
 
 const required = (value) => (trim(value) ? undefined : "Обязательное поле");
-
 const requiredWithMessage = (message) => (value) => value ? undefined : message;
 const minValue = (min) => (value) =>
   value.length >= min ? undefined : `Меньше ${min} сиволов`;

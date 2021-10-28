@@ -46,6 +46,12 @@ namespace CarWashAggregator.CarWashes.Infra
             builder.Property<Guid>("UserId")
                     .HasColumnType("uuid");
 
+            builder.Property<Guid>("CityId")
+                    .HasColumnType("uuid");
+
+            builder.Property<string>("Phone")
+                    .HasColumnType("text");
+
             builder.HasKey("Id");
 
             builder.ToTable("CarWashes");

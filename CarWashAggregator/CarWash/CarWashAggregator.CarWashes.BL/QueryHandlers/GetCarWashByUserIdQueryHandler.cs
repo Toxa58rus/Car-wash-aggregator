@@ -1,33 +1,32 @@
 ﻿using AutoMapper;
 using CarWashAggregator.CarWashes.Domain.Interfaces;
-using CarWashAggregator.CarWashes.Domain.Models;
 using CarWashAggregator.Common.Domain.Contracts;
+using CarWashAggregator.Common.Domain.DTO.CarWash.Querys;
 using CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Request;
 using CarWashAggregator.Common.Domain.DTO.CarWash.Querys.Response;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CarWashAggregator.CarWashes.BL.QueryHandlers
 {
-    public class CreateCarWashQueryHandler : IQueryHandler<RequestCreateCarWashQuery, ResponseCreateCarWashQuery>
+    public class GetCarWashByUserIdQueryHandler : IQueryHandler<RequestGetCarWashByUserId, ResponseGetCarWashByUserId>
     {
         private readonly ICarWashService _carWashService;
         private readonly IMapper _mapper;
 
-        public CreateCarWashQueryHandler(ICarWashService carWashService, IMapper mapper)
+        public GetCarWashByUserIdQueryHandler(ICarWashService carWashService, IMapper mapper)
         {
             _carWashService = carWashService;
             _mapper = mapper;
         }
-        public async Task<ResponseCreateCarWashQuery> Handle(RequestCreateCarWashQuery request)
+
+        public async Task<ResponseGetCarWashByUserId> Handle(RequestGetCarWashByUserId request)
         {
-            CarWash carWash = _mapper.Map<CarWash>(request);
-
-            Guid id = await _carWashService.CreateCarWashAsync(carWash);
-
-            return new ResponseCreateCarWashQuery() { Id = id };
+            var carWashes = (await _carWashService.GetCarWashesAsync()).Where(x => x.UserId == request.UserId);
+            return new ResponseGetCarWashByUserId() { CarWashes = _mapper.Map<List<CarWashDTO>>(carWashes) };
         }
     }
 }

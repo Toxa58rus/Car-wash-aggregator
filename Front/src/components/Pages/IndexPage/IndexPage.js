@@ -13,6 +13,7 @@ import get from "lodash/get";
 import MapMark from "../../../icons/Vector.svg";
 import Clock from "../../../icons/Clock.svg";
 
+import Spinner from "../../Spinner/Spinner";
 import WashCard from "../../WashCard/WashCard";
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";
@@ -24,30 +25,19 @@ import userEvent from "@testing-library/user-event";
 
 const IndexPage = () => {
   const [calendarIsOpen, setCalendar] = useState(false);
-  const [state, setState] = useState({ washes: WASHES });
-
+  const [state, setState] = useState({
+    washes: null,
+    loading: true,
+    sohouldUpdate: false,
+  });
+  const [initialValues, setValues] = useState({ date: getDate(new Date()) });
+  const storage = JSON.parse(window.sessionStorage.getItem("redux"));
   const session = useSelector(selectSession);
   const constants = useSelector(selectConstants);
   const cities = !constants ? null : constants.cities;
   const cars = !constants ? null : constants.cars;
 
   const dispatch = useDispatch();
-
-  const getData = async (data) => {
-    dispatch(
-      setSession({
-        date: data.date.value,
-        time: data.time.value,
-      })
-    );
-    api
-      .get(sources.search, {
-        params: { ...data, time: data && data.time ? data.time.name : null },
-      })
-      .then((response) => {
-        setState({ washes: WASHES });
-      });
-  };
 
   let currentForm = null;
   const handleOpenCalendar = (event) => {
@@ -63,25 +53,45 @@ const IndexPage = () => {
     console.log(date);
   };
 
-  useEffect(() => {
-    if (!session || !get(session, "data.city.name")) {
-      var cityname = "Москва";
-    } else {
-      cityname = session.data.city.name;
-    }
+  const getData = (data) => {
+    setState((prevState) => ({
+      ...prevState,
+      sohouldUpdate: true,
+    }));
+    dispatch(
+      setSession({
+        ...get(session, "data"),
+        date: data.date && data.date,
+        time: data.time && data.time,
+      })
+    );
+
     api
       .get(sources.search, {
         params: {
-          city: cityname,
+          ...data,
+          date: data.date ? data.date : getDate(new Date()),
+          city: !data.city ? "Moscow" : data.city.name,
         },
       })
-      .then((responce) => setState({ washes: WASHES }));
-  });
+      .then((response) => {
+        setState({ washes: WASHES });
+      });
 
-  const initialValues = {
-    date: getDate(new Date()),
-    city: cities && cities.reduce((city) => city.name === session.city),
+    setState({ washes: WASHES, loading: false, sohouldUpdate: false });
   };
+
+  console.log(storage);
+
+  useEffect(() => {
+    if (state.loading && get(storage, "session")) {
+      getData({});
+      setValues((prevState) => ({
+        ...prevState,
+        city: session && session.sity ? session.city : null,
+      }));
+    }
+  }, [storage]);
 
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
@@ -195,11 +205,15 @@ const IndexPage = () => {
       <div className={styles.section}>
         <h2 className={styles.cityWashes}>Мойки в Москве</h2>
         <div className={styles.washList}>
-          {state.washes.map((item) => (
-            <div className={styles.card} key={item.id}>
-              <WashCard id={item.id} item={item} />
-            </div>
-          ))}
+          {!state.washes || state.loading || state.sohouldUpdate ? (
+            <Spinner center />
+          ) : (
+            state.washes.map((item) => (
+              <div className={styles.card} key={item.id}>
+                <WashCard id={item.id} item={item} />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

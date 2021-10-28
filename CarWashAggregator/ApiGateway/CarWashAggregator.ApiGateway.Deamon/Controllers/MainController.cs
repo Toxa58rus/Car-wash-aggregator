@@ -17,12 +17,10 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 {
     //TODO Add AuthId in UserService (or login)
     [ApiController]
-    [Route("")]
     [EnableCors]
     //[EnableCors("MyPolicy")]
     public class MainController : ControllerBase
     {
-
         private readonly ILogger<MainController> _logger;
         private readonly IAuthService _authorizationService;
         private readonly IMapper _mapper;
@@ -62,15 +60,15 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserModel user)
         {
-           var response = await _authorizationService.RegisterNewUserAsync(user);
-
+            var response = await _authorizationService.RegisterNewUserAsync(user);
+            var userResponse = await _userService.GetUserByAuthId(response.UserId);
             if (response.AuthFailure == AuthFailure.None)
             {
                 var result = new AuthResult()
                 {
                     AccessToken = response.AccessToken,
                     RefreshToken = response.RefreshToken,
-                    User = _mapper.Map<AuthenticatedUserModel>(user)
+                    User = _mapper.Map<AuthenticatedUserModel>(userResponse)
                 };
                 return Ok(result);
             }
@@ -98,7 +96,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
                 {
                     AccessToken = authResponse.AccessToken,
                     RefreshToken = authResponse.RefreshToken,
-                    User = _mapper.Map<AuthenticatedUserModel>(userResponse)
+                    User = userResponse
                 };
                 return Ok(result);
             }
@@ -129,18 +127,18 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        [Route("/[action]")]
-        [HttpGet]
-        public async Task<IActionResult> AddCity()
-        {
-         await _repository.Add<City>(new City() {Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "Москва"});
-         await _repository.Add(new Car() {Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "A"});
-         await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "B" });
-         await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "C" });
-         await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "D" });
-         await _repository.SaveChangesAsync();
+        //[Route("/[action]")]
+        //[HttpGet]
+        //public async Task<IActionResult> AddCity()
+        //{
+        // await _repository.Add<City>(new City() {Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "Москва"});
+        // await _repository.Add(new Car() {Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "A"});
+        // await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "B" });
+        // await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "C" });
+        // await _repository.Add(new Car() { Id = Guid.NewGuid(), CreatedAt = DateTime.UtcNow, Name = "D" });
+        // await _repository.SaveChangesAsync();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }

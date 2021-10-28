@@ -1,21 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.Xml;
-using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Business.Interfaces;
-using CarWashAggregator.ApiGateway.Business.Services;
-using CarWashAggregator.ApiGateway.Domain.Models;
+﻿using CarWashAggregator.ApiGateway.Business.Interfaces;
 using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
-using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 {
     [ApiController]
-    [Route("/user")]
     [EnableCors]
     public class UserController : Controller
     {
@@ -29,15 +22,15 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
         }
 
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] ReviewGet request)
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
             try
             {
-                if (!Guid.TryParse(request.Id, out var id))
+                if (!Guid.TryParse(id, out var userId))
                     return Problem("cant parse guid");
-                var user = await _userService.GetUserById(id);
+                var user = await _userService.GetUserById(userId);
                 return Ok(new { user.FirstName, user.LastName });
             }
             catch
@@ -49,7 +42,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 
 
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]")]
         [HttpPut]
         public async Task<IActionResult> Settings([FromBody] UserProfile request)
         {

@@ -1,21 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.Xml;
-using System.Threading.Tasks;
-using CarWashAggregator.ApiGateway.Business.Interfaces;
-using CarWashAggregator.ApiGateway.Business.Services;
-using CarWashAggregator.ApiGateway.Domain.Models;
+﻿using CarWashAggregator.ApiGateway.Business.Interfaces;
 using CarWashAggregator.ApiGateway.Domain.Models.HttpRequestModels;
 using CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 {
     [ApiController]
-    [Route("/orders")]
     [EnableCors]
     public class OrdersController : Controller
     {
@@ -29,15 +23,15 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
         }
 
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] OrderGet request)
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
             try
             {
-                if (!Guid.TryParse(request.Id, out var id))
+                if (!Guid.TryParse(id, out var orderId))
                     return Problem("cant parse guid");
-                var result = await _orderService.GetById(id);
+                var result = await _orderService.GetById(orderId);
                 return Ok(result);
             }
             catch
@@ -47,16 +41,16 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetByUserId([FromRoute] OrderGet request, [FromQuery] string status)
+        public async Task<IActionResult> GetByUserId([FromRoute] string id, [FromQuery] string status)
         {
             try
             {
-                if (!Guid.TryParse(request.Id, out var id))
+                if (!Guid.TryParse(id, out var orderId))
                     return Problem("cant parse guid");
 
-                var orders = await _orderService.GetByUserId(id, status);
+                var orders = await _orderService.GetByUserId(orderId, status);
                 var result = new ListOrdersResult { Orders = orders };
                 return Ok(result);
             }
@@ -66,13 +60,13 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
                 throw;
             }
         }
-        [Route("/[action]")]
+        [Route("/[controller]/[action]/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetByCarWashId([FromRoute] OrderGet request, [FromQuery] string filterDate)
+        public async Task<IActionResult> GetByCarWashId([FromRoute] string id, [FromQuery] string filterDate)
         {
             try
             {
-                if (!Guid.TryParse(request.Id, out var id))
+                if (!Guid.TryParse(id, out var orderId))
                     return Problem("cant parse guid");
                 DateTime? dateFilter = null;
                 if (!string.IsNullOrWhiteSpace(filterDate))
@@ -84,7 +78,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
                     }
                     dateFilter = date;
                 }
-                var orders = await _orderService.GetByCarWashId(id, dateFilter);
+                var orders = await _orderService.GetByCarWashId(orderId, dateFilter);
                 var result = new ListOrdersResult { Orders = orders };
                 return Ok(result);
             }
@@ -95,7 +89,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]")]
         [HttpGet]
         public async Task<IActionResult> Statuses()
         {
@@ -112,7 +106,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]")]
         [HttpPut]
         public async Task<IActionResult> Statuses(string status, string id)
         {
@@ -130,7 +124,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        [Route("/[action]")]
+        [Route("/[controller]/[action]")]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] OrderAdd request)
         {

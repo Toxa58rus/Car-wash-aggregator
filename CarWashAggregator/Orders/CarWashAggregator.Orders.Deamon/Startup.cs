@@ -44,6 +44,12 @@ namespace CarWashAggregator.Orders.Deamon
 
             //Subscriptions
             services.AddTransient<RequestByIdHandler>();
+            services.AddTransient<RequestOrderByCarWashIdHandler>();
+            services.AddTransient<RequestOrderByReservationTimeHandler>();
+            services.AddTransient<RequestOrderByUserIdHandler>();
+            services.AddTransient<RequestSaveNewOrderHandler>();
+            services.AddTransient<RequestStatusChangeHandler>();
+            services.AddTransient<RequestStatusesHandler>();
 
             services.AddMvc();
             BusContainer.RegisterBusService(services, _configuration);

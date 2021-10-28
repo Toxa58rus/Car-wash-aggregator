@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CarWashAggregator.Common.Domain.DTO.Order.Querys;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 {

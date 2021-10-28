@@ -16,6 +16,8 @@ namespace CarWashAggregator.CarWashes.Domain.Models
         public string Description { get; set; }
         public double AVG_Rating { get; set; }
         public string Address { get; set; }
+        public Guid CityId { get; set; }
+        public string Phone { get; set; }
         public string[] CarCategories { get; set; }
     }
 }

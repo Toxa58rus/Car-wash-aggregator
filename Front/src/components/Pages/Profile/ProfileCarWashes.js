@@ -20,7 +20,7 @@ const ProfileCarWashes = () => {
   return (
     <div className={styles.contain}>
       {modalIsOpen && (
-        <Modal onClose={closeReviewModal} label="Оставте свой отзыв">
+        <Modal onClose={closeReviewModal} label="Добавить мойку">
           <AddCarWash />
         </Modal>
       )}

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CarWashAggregator.Common.Domain.DTO.Order.Querys;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 {
@@ -25,10 +26,10 @@ namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 
         public Task<ResponseOrders> Handle(RequestOrderByReservationTime request)
         {
-            var orders = _dbRepository.Get<Order>().Where(o => o.DateReservation.Date == request.ReservationDate.Date);
+            var orders = _dbRepository.Get<Order>().Where(o => o.DateReservation.Date == request.ReservationDate.Date).Include(o => o.OrderStatus);
             if (request.ReservationTime != null)
                orders = orders.Where(o =>
-                    o.DateReservation.TimeOfDay == ((DateTime) request.ReservationTime).TimeOfDay);
+                    o.DateReservation.TimeOfDay == ((DateTime) request.ReservationTime).TimeOfDay).Include(o => o.OrderStatus);
 
             return Task.FromResult(new ResponseOrders(){Orders = _mapper.Map<List<OrderDTO>>(orders.ToList())});
         }

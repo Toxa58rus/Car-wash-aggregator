@@ -19,7 +19,7 @@ namespace CarWashAggregator.Review.Infra.ConfigEntity
             
             builder.Property(x => x.UserId).IsRequired();
             
-            builder.Property(x => x.СarWashId).IsRequired();
+            builder.Property(x => x.carWashId).IsRequired();
             
 
         }

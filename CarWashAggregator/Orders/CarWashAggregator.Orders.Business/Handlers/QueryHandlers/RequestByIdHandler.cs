@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CarWashAggregator.Common.Domain.DTO.Order.Querys;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 {
@@ -23,7 +24,7 @@ namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 
         public Task<ResponseOrder> Handle(RequestOrderById request)
         {
-            var order = _dbRepository.Get<Order>().SingleOrDefault(o => o.Id == request.Id);
+            var order = _dbRepository.Get<Order>().Include(o => o.OrderStatus).SingleOrDefault(o => o.Id == request.Id);
             if (order is null)
                 return Task.FromResult(new ResponseOrder());
 

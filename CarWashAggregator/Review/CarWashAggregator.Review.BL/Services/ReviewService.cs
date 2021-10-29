@@ -21,10 +21,19 @@ namespace CarWashAggregator.Review.BL.Services
         {
 	       return await _reviewRepository.GetReviewsByUserIdAsync(userId);
         }
+        public async Task<Domain.Models.Entities.Review> GetReviewByIdAsync(Guid Id)
+		{
+			return await _reviewRepository.GetReviewByIdAsync(Id);
+		}
 
-        public async Task<int> AddReviewAsync(Domain.Models.Entities.Review review)
+		public async Task<int> AddReviewAsync(Domain.Models.Entities.Review review)
         {
 	        return await _reviewRepository.AddReviewAsync(review);
+        }
+
+        public async Task<IEnumerable<Domain.Models.Entities.Review>> GetReviewByCarWashId(Guid carWashId)
+        {
+	        return await _reviewRepository.GetReviewByCarWashId(carWashId);
         }
     }
 }

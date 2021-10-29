@@ -31,6 +31,14 @@ namespace CarWashAggregator.Review.BL
 			};
 		}
 
-		
+		public static Domain.Models.Entities.Review ToModel(this RequestGetReviewByCarWashId getReviewByCarWashId)
+		{
+			return new Domain.Models.Entities.Review()
+			{
+				Id = getReviewByCarWashId.CarWashId
+
+			};
+		}
+
 	}
 }

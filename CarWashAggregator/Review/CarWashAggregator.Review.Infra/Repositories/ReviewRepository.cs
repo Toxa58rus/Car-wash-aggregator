@@ -16,7 +16,11 @@ namespace CarWashAggregator.Review.Infra.Repositories
 		{
 			_context = context;
 		}
-
+		
+		public async Task<Domain.Models.Entities.Review> GetReviewByIdAsync(Guid id)
+		{
+			return await _context.Reviews.Select(x => x).Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+		}
 		public async Task<IEnumerable<Domain.Models.Entities.Review>> GetReviewsByUserIdAsync(Guid userId)
 		{
 			return await _context.Reviews.Select(x => x).Where(x => x.UserId == userId).AsNoTracking().ToListAsync();
@@ -27,6 +31,11 @@ namespace CarWashAggregator.Review.Infra.Repositories
 			await _context.Reviews.AddAsync(review);
 			return await _context.SaveChangesAsync();
 
+		}
+
+		public async Task<IEnumerable<Domain.Models.Entities.Review>> GetReviewByCarWashId(Guid carWashId)
+		{
+			return await _context.Reviews.Select(x => x).Where(x => x.СarWashId == carWashId).AsNoTracking().ToListAsync();
 		}
 	}
 }

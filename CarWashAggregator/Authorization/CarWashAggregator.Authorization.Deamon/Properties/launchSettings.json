@@ -19,9 +19,9 @@
     },
     "CarWashAggregator.Authorization.Deamon": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api",
-      "applicationUrl": "https://localhost:5005;http://localhost:5004",
+      "applicationUrl": "https://localhost:5003;http://localhost:5002",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

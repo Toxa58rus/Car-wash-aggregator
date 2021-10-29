@@ -6,8 +6,13 @@ namespace CarWashAggregator.Review.Domain.Interfaces
 {
     public interface IReviewService
     {
-	    Task<IEnumerable<Models.Entities.Review>> GetReviewsByUserIdAsync(Guid userId);
+	    Task<IEnumerable<Domain.Models.Entities.Review>> GetReviewByCarWashId(Guid carWashId);
+
+
+        Task<IEnumerable<Models.Entities.Review>> GetReviewsByUserIdAsync(Guid userId);
 
         Task<int> AddReviewAsync(Models.Entities.Review review);
+
+        Task<Domain.Models.Entities.Review> GetReviewByIdAsync(Guid Id);
     }
 }

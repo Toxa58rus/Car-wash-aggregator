@@ -35,7 +35,7 @@ namespace CarWashAggregator.Review.Infra.Repositories
 
 		public async Task<IEnumerable<Domain.Models.Entities.Review>> GetReviewByCarWashId(Guid carWashId)
 		{
-			return await _context.Reviews.Select(x => x).Where(x => x.СarWashId == carWashId).AsNoTracking().ToListAsync();
+			return await _context.Reviews.Select(x => x).Where(x => x.CarWashId == carWashId).AsNoTracking().ToListAsync();
 		}
 	}
 }

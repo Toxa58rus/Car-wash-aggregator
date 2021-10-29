@@ -9,7 +9,7 @@ namespace CarWashAggregator.Common.Domain.DTO.Reviews.Querys.Request
 
         public Guid CarWashId { get; set; }
 
-        public string Body { get; set; }
+        public string Message { get; set; }
 
         public double Rating { get; set; }
     }

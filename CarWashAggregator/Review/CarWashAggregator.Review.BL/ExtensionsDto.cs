@@ -11,7 +11,7 @@ namespace CarWashAggregator.Review.BL
 			return new Domain.Models.Entities.Review()
 			{
 				Id = Guid.NewGuid(),
-				Body = reviewQuery.Body,
+				Body = reviewQuery.Message,
 				Rating = reviewQuery.Rating,
 				CarWashId = reviewQuery.CarWashId,
 				UserId = reviewQuery.UserId
@@ -24,7 +24,7 @@ namespace CarWashAggregator.Review.BL
 			return new ReviewDto()
 			{
 				Id = model.Id ,
-				Body = model.Body,
+				Message = model.Body,
 				Rating = model.Rating,
 				CarWashId = model.CarWashId,
 				UserId = model.UserId

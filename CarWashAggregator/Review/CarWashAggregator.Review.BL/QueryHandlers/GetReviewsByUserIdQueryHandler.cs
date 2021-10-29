@@ -8,7 +8,7 @@ using CarWashAggregator.Review.Domain.Interfaces;
 
 namespace CarWashAggregator.Review.BL.QueryHandlers
 {
-    public class GetReviewsByUserIdQueryHandler : IQueryHandler<RequestGetReviewById, ResponseGetReviews>
+    public class GetReviewsByUserIdQueryHandler : IQueryHandler<RequestGetReviewByUserId, ResponseGetReviews>
     {
 	    private readonly IReviewService _reviewService;
 	    private readonly IEventBus _eventBus;
@@ -20,10 +20,10 @@ namespace CarWashAggregator.Review.BL.QueryHandlers
 		    _eventBus = eventBus;
 	    }
 
-        public async Task<ResponseGetReviews> Handle(RequestGetReviewById request)
+        public async Task<ResponseGetReviews> Handle(RequestGetReviewByUserId request)
         {
 	         
-	        var result = await _reviewService.GetReviewsByUserIdAsync(request.Id);
+	        var result = await _reviewService.GetReviewsByUserIdAsync(request.UserId);
 
 			return new ResponseGetReviews()
 			{

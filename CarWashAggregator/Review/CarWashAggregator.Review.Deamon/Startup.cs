@@ -45,7 +45,10 @@ namespace CarWashAggregator.Review.Deamon
 			services.AddScoped<IReviewRepository, ReviewRepository>();
 
 			
-			services.AddScoped<CreateReviewQueryHandler>();
+			services.AddTransient<CreateReviewQueryHandler>();
+			services.AddTransient<GetReviewByCarWashIdHandler>();
+			services.AddTransient<GetReviewByIdHandler>();
+			services.AddTransient<GetReviewsByUserIdQueryHandler>();
 
 			BusContainer.RegisterBusService(services, _configuration);
 		}
@@ -61,6 +64,9 @@ namespace CarWashAggregator.Review.Deamon
 			var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
 			eventBus.SubscribeToQuery<RequestCreateReviewDtoQuery, ResponseCreateReviewDtoQuery, CreateReviewQueryHandler>();
+			eventBus.SubscribeToQuery<RequestGetReviewByCarWashId, ResponseGetReviews, GetReviewByCarWashIdHandler>();
+			eventBus.SubscribeToQuery<RequestGetReviewById, ResponseGetReview, GetReviewByIdHandler>();
+			eventBus.SubscribeToQuery<RequestGetReviewByUserId, ResponseGetReviews, GetReviewsByUserIdQueryHandler>();
 		}
 	}
 }

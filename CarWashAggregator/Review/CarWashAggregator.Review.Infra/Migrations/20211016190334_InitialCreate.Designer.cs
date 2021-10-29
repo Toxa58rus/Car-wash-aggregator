@@ -37,7 +37,7 @@ namespace CarWashAggregator.Review.Infra.Migrations
                     b.Property<Guid>("AuthId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("СarWashId")
+                    b.Property<Guid>("carWashId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");

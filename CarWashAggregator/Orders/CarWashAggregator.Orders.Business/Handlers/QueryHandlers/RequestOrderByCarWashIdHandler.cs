@@ -26,9 +26,9 @@ namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 
         public Task<ResponseOrders> Handle(RequestOrderByCarWashId request)
         {
-            var orders = _dbRepository.Get<Order>().Where(o => o.CarWashId == request.CarWashId);
+            var orders = _dbRepository.Get<Order>().Where(o => o.CarWashId == request.CarWashId).Include(o => o.OrderStatus);
             if (request.FilterDate != null)
-               orders = orders.Where(o => o.DateReservation.Date == ((DateTime) request.FilterDate).Date);
+               orders = orders.Where(o => o.DateReservation.Date == ((DateTime) request.FilterDate).Date).Include(o => o.OrderStatus);
             
             return Task.FromResult(new ResponseOrders(){Orders = _mapper.Map<List<OrderDTO>>(orders.ToList())});
         }

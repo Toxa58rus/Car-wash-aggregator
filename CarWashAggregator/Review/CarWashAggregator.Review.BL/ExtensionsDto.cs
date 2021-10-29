@@ -13,7 +13,7 @@ namespace CarWashAggregator.Review.BL
 				Id = Guid.NewGuid(),
 				Body = reviewQuery.Body,
 				Rating = reviewQuery.Rating,
-				СarWashId = reviewQuery.CarWashId,
+				CarWashId = reviewQuery.CarWashId,
 				UserId = reviewQuery.UserId
 			};
 		}
@@ -26,7 +26,7 @@ namespace CarWashAggregator.Review.BL
 				Id = model.Id ,
 				Body = model.Body,
 				Rating = model.Rating,
-				CarWashId = model.СarWashId,
+				CarWashId = model.CarWashId,
 				UserId = model.UserId
 			};
 		}

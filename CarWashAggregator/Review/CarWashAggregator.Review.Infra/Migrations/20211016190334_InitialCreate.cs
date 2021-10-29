@@ -13,7 +13,7 @@ namespace CarWashAggregator.Review.Infra.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    СarWashId = table.Column<Guid>(nullable: false),
+                    carWashId = table.Column<Guid>(nullable: false),
                     Body = table.Column<string>(nullable: true),
                     Rating = table.Column<double>(nullable: false)
                 },

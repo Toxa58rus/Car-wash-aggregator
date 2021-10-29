@@ -56,7 +56,7 @@ namespace CarWashAggregator.CarWashes.Deamon.Controllers
                 Price = 999.99,
                 Image = "Image",
                 CityId = new Guid(),
-                Description = "Самая крутая автомойка",
+                Description = "самая крутая автомойка",
                 Address = "Твои мечты",
                 Phone = "123456789",
                 CarCategories = new string[] { "A", "B", "C" }

@@ -73,7 +73,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Helpers
                 .ForMember(dest => dest.UserId,
                     opt => opt.MapFrom(src => new Guid(src.UserId)))
                 .ForMember(dest => dest.CarWashId,
-                    opt => opt.MapFrom(src => new Guid(src.carWashId)));
+                    opt => opt.MapFrom(src => new Guid(src.CarWashId)));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CarWashAggregator.Review.Domain.Models.Entities
 	{
 		public Guid Id { get; set; }
 		public Guid UserId { get; set; }
-		public Guid carWashId { get; set; }
+		public Guid CarWashId { get; set; }
 		public string Body { get; set; }
 		public double Rating { get; set; }
 	};

@@ -6,7 +6,7 @@ namespace CarWashAggregator.ApiGateway.Domain.Models.HttpResultModels.Base
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public Guid carWashId { get; set; }
+        public Guid CarWashId { get; set; }
         public DateTime DateReservation { get; set; }
         public decimal Price { get; set; }
         public  string CarCategory { get; set; }

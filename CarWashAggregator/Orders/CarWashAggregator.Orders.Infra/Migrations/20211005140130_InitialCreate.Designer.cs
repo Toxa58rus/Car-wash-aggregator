@@ -83,7 +83,7 @@ namespace CarWashAggregator.Orders.Infra.Migrations
             modelBuilder.Entity("CarWashAggregator.Orders.Domain.Entities.OrderStatus", b =>
                 {
                     b.HasOne("CarWashAggregator.Orders.Domain.Entities.Order", "Order")
-                        .WithOne("СarWashStatus")
+                        .WithOne("carWashStatus")
                         .HasForeignKey("CarWashAggregator.Orders.Domain.Entities.OrderStatus", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -93,7 +93,7 @@ namespace CarWashAggregator.Orders.Infra.Migrations
 
             modelBuilder.Entity("CarWashAggregator.Orders.Domain.Entities.Order", b =>
                 {
-                    b.Navigation("СarWashStatus");
+                    b.Navigation("carWashStatus");
                 });
 #pragma warning restore 612, 618
         }

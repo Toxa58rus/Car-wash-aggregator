@@ -65,7 +65,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Helpers
                 .ForMember(dest => dest.UserId,
                     opt => opt.MapFrom(src => new Guid(src.UserId)))
                 .ForMember(dest => dest.CarWashId,
-                    opt => opt.MapFrom(src => new Guid(src.СarWashId)));
+                    opt => opt.MapFrom(src => new Guid(src.CarWashId)));
 
             //ReviewService
             CreateMap<ReviewModel, ReviewDto>().ReverseMap();
@@ -73,7 +73,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Helpers
                 .ForMember(dest => dest.UserId,
                     opt => opt.MapFrom(src => new Guid(src.UserId)))
                 .ForMember(dest => dest.CarWashId,
-                    opt => opt.MapFrom(src => new Guid(src.СarWashId)));
+                    opt => opt.MapFrom(src => new Guid(src.CarWashId)));
         }
     }
 }

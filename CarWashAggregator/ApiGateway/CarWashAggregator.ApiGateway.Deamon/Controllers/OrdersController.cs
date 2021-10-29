@@ -108,13 +108,13 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
 
         [Route("/[controller]/[action]")]
         [HttpPut]
-        public async Task<IActionResult> Statuses(string status, string id)
+        public async Task<IActionResult> Statuses([FromBody] StatusChange request)
         {
             try
             {
-                if (!Guid.TryParse(id, out var orderId))
+                if (!Guid.TryParse(request.Id, out var orderId))
                     return Problem("cant parse guid");
-                var result = await _orderService.ChangeStatus(status, orderId);
+                var result = await _orderService.ChangeStatus(request.Status, orderId);
                 return result ? (IActionResult)Ok() : Problem("cant change status");
             }
             catch

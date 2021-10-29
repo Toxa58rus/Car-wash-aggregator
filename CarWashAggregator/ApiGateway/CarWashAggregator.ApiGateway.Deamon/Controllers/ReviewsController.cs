@@ -61,7 +61,7 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
             }
         }
 
-        [Route("/[controller]/[action]")]
+        [Route("/[controller]/[action]/{id}")]
         [HttpGet]
         public async Task<IActionResult> GetByCarWashId([FromRoute] string id)
         {

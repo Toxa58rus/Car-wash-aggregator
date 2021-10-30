@@ -53,7 +53,7 @@ const LoginPage = ({ history }) => {
 
         history.push(routes.root);
       })
-      .catch((err) => toast.error(err.data.message));
+      .catch((err) => toast.error(err.response.detail));
   };
 
   const register = (data) => {
@@ -64,16 +64,14 @@ const LoginPage = ({ history }) => {
         city: data.city ? data.city.name : null,
       })
       .then((response) => {
-        setUserCookie(response.data.refreshToken);
-        dispatch(
-          setSession({
-            ...response.data.user,
-            token: response.data.accessToken,
-          })
-        );
-        history.push(routes.root);
+        if (response.status === 200) {
+          toast.success("Вы зарегестрированы");
+          setTimeout(() => {
+            login({ email: data.email, password: data.password });
+          }, 1000);
+        }
       })
-      .catch((err) => toast.error(err.data.message));
+      .catch((err) => toast.error("Error"));
   };
 
   const loginBtnCn = cn(styles.containerBoxBtn, {

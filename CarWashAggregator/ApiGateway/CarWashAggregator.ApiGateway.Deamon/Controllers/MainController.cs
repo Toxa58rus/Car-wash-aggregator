@@ -61,16 +61,16 @@ namespace CarWashAggregator.ApiGateway.Deamon.Controllers
         public async Task<IActionResult> Register([FromBody] UserModel user)
         {
             var response = await _authorizationService.RegisterNewUserAsync(user);
-            var userResponse = await _userService.GetUserByAuthId(response.UserId);
+           // var userResponse = await _userService.GetUserByAuthId(response.UserId);
             if (response.AuthFailure == AuthFailure.None)
             {
-                var result = new AuthResult()
-                {
-                    AccessToken = response.AccessToken,
-                    RefreshToken = response.RefreshToken,
-                    User = _mapper.Map<AuthenticatedUserModel>(userResponse)
-                };
-                return Ok(result);
+               // var result = new AuthResult()
+               // {
+               //     AccessToken = response.AccessToken,
+               //     RefreshToken = response.RefreshToken,
+               //     User = _mapper.Map<AuthenticatedUserModel>(userResponse)
+               // };
+                return Ok("Success registration");
             }
             else
             {

@@ -13,6 +13,7 @@ const Select = (props) => {
     meta,
     transparent,
     isMulti,
+    disabled,
     ...rest
   } = props;
 
@@ -32,6 +33,7 @@ const Select = (props) => {
         options={options}
         isMulti={isMulti}
         defaultValue={defaultValue}
+        isDisabled={disabled}
         isOptionDisabled={(option) => option.status === "Booked"}
         getOptionLabel={(option) => option.name}
         getOptionValue={(option) => option.id}
@@ -49,6 +51,7 @@ Select.defaultProps = {
   meta: null,
   transparent: null,
   isMulti: false,
+  disabled: null,
 };
 
 Select.propTypes = {
@@ -58,6 +61,7 @@ Select.propTypes = {
   meta: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   transparent: PropTypes.bool,
   isMulti: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default Select;

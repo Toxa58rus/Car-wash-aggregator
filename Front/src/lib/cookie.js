@@ -14,6 +14,5 @@ export const setUserCookie = (refreshUser) => {
 };
 
 export const removeUserCookie = () => {
-  cookies.remove("auth");
   cookies.remove("refresh");
 };

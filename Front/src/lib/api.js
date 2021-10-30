@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getRefreshUserFromCookie, removeUserCookie } from "./cookie";
+import { getRefreshUserFromCookie, setUserCookie } from "./cookie";
 import get from "lodash/get";
 import routes from "../helpers/routes";
 import { getAccess, refreshRequest } from "../helpers/request";
@@ -45,7 +45,6 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    console.log(response);
     if (
       response.data.accessToken &&
       response.data.refreshToken &&
@@ -60,8 +59,8 @@ api.interceptors.response.use(
     const refresh = getRefreshUserFromCookie();
 
     if (get(error, "response.data.message") === "refresh_token_not_valid") {
-      // removeUserCookie();
-      // window.location.replace(routes.root);
+      setUserCookie("not_valid");
+      window.location.replace(routes.root);
     }
 
     if (

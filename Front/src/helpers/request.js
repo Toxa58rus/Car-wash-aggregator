@@ -1,6 +1,6 @@
 import axios from "axios";
 import get from "lodash/get";
-import { removeUserCookie, setUserCookie } from "../lib/cookie";
+import { setUserCookie } from "../lib/cookie";
 import routes from "./routes";
 
 export const refreshRequest = async (response, config) => {
@@ -41,8 +41,8 @@ export const getAccess = async (config, refresh) => {
     })
     .catch((error) => {
       if (get(error, "response.data.message") === "refresh_token_not_valid") {
-        // removeUserCookie();
-        // window.location.replace(routes.root);
+        setUserCookie("not_valid");
+        window.location.replace(routes.root);
       }
     });
 };

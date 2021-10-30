@@ -3,6 +3,7 @@
 
 .header {
   background: $bg-light;
+  border-radius: 0 0 16px 16px;
 }
 
 .wrap {
@@ -59,12 +60,13 @@
     height: 100vh;
     overflow: hidden;
     transition: ease 0.3s;
-    background: $bg-light;
+    background: $green;
     z-index: 999;
   }
 }
 
 .navList {
+  box-sizing: border-box;
   display: flex;
   height: 100%;
 
@@ -73,7 +75,7 @@
     min-width: 250px;
     height: calc(100% - 50px);
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
   }
 }
 
@@ -109,9 +111,10 @@
   align-items: center;
   height: 100%;
   width: 100%;
+  color: $white;
 
   &:hover {
-    border-bottom: 1px solid black;
+    opacity: 0.7;
   }
 
   @media (max-width: $m - 1) {
@@ -145,8 +148,7 @@
   width: 0;
   height: 100vh;
   overflow: hidden;
-  background: $bg-light;
-  
+  background: $green;
   box-sizing: border-box;
   transition: all 0.3s;
 }
@@ -182,6 +184,40 @@
   &:first-child {
     padding: 0;
   }
+}
+
+.greetings {
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 35%;
+  min-width: 270px;
+
+  a {
+    margin-left: 10px;
+  }
+
+  @media (max-width: $xs) {
+    width: auto;
+    min-width: 0;
+
+    span {
+      display: none;
+    }
+  }
+}
+
+.greetingsMobile {
+  color: $white;
+  display: none;
+  align-items: center;
+  width: 35%;
+  min-width: 270px;
+
+   @media (max-width: $xs) {
+     display: flex;
+   }
 }
 
 .logOut {

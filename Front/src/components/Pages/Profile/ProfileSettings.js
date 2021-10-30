@@ -6,37 +6,37 @@ import api from "../../../lib/api";
 import cn from "classnames";
 import { selectSession } from "../../../state/session";
 import { selectConstants } from "../../../state/constants";
+import { ROLES_OPTIONS } from "../../../constants/ROLES";
 
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import styles from "./ProfilePage.module.scss";
-import { getRefreshUserFromCookie } from "../../../lib/cookie";
 import Select from "../../Select/Select";
+import CITIES from "../../../constants/CITIES";
 
 const ProfileSettings = () => {
-  const [state, setState] = useState(false);
-  const requestUser = () => {
+  const user = useSelector(selectSession);
+
+  const saveSettings = (val) => {
+    console.log({
+      ...val,
+      city: val.city.name,
+      role: val.role.id,
+      userId: user.id,
+    });
     api
-      .get(sources.profileSettings)
+      .put(sources.profileSettings, {
+        ...val,
+        city: val.city.name,
+        role: val.role.id,
+        userId: user.id,
+      })
       .then((response) => {
-        // console.log(response);
+       
       })
       .catch((error) => error);
-
-    setState(true);
   };
 
-  const refresh = getRefreshUserFromCookie();
-  console.log(refresh);
-
-  useEffect(() => {
-    if (!state) {
-      requestUser();
-    }
-  });
-
-  const saveSettings = () => {};
-  const user = useSelector(selectSession);
   const constants = useSelector(selectConstants);
 
   return (
@@ -49,18 +49,6 @@ const ProfileSettings = () => {
         }}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.field}>
-              <Field name="email" type="email">
-                {({ input, meta }) => (
-                  <Input
-                    className={styles.input}
-                    placeholder="Ваш Email"
-                    meta={meta}
-                    {...input}
-                  />
-                )}
-              </Field>
-            </div>
             <div className={styles.inputs}>
               <div className={styles.inputsWrap}>
                 <Field name="firstName" type="firstName">
@@ -104,7 +92,8 @@ const ProfileSettings = () => {
                 {({ input, meta }) => (
                   <Select
                     placeholder="Город"
-                    options={constants.cities}
+                    // options={constants.cities}
+                    options={CITIES}
                     defaultValue={user.city}
                     meta={meta}
                     {...input}
@@ -112,7 +101,20 @@ const ProfileSettings = () => {
                 )}
               </Field>
             </div>
-            <Button size="maxWidth" increased>
+            <div className={cn(styles.field, styles.unborder)}>
+              <Field name="role">
+                {({ input, meta }) => (
+                  <Select
+                    placeholder="Роль"
+                    options={ROLES_OPTIONS}
+                    defaultValue={user.city}
+                    meta={meta}
+                    {...input}
+                  />
+                )}
+              </Field>
+            </div>
+            <Button size="maxWidth" type="submit" increased>
               Сохранить измененния
             </Button>
           </form>

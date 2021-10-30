@@ -13,7 +13,7 @@ import ProfileCarWashes from "./ProfileCarWashes";
 import ProfileSettings from "./ProfileSettings";
 import styles from "./ProfilePage.module.scss";
 
-const ProfilePage = ({ history }) => {
+const ProfilePage = ({ history, match }) => {
   const session = useSelector(selectSession);
   const role = session.role;
 
@@ -33,8 +33,6 @@ const ProfilePage = ({ history }) => {
     dispatch(setSession(null));
     history.push(routes.root);
   };
-
-  console.log(session);
 
   const settingsBtn = cn(styles.menuBtn, {
     [styles.activeMenuBtn]:
@@ -68,13 +66,15 @@ const ProfilePage = ({ history }) => {
             >
               Настройки профиля
             </Button>
-            <Button
-              className={ordersBtn}
-              size="maxWidth"
-              onClick={setOrdersTab}
-            >
-              История бронирования
-            </Button>
+            {role === ROLES.CLIENT && (
+              <Button
+                className={ordersBtn}
+                size="maxWidth"
+                onClick={setOrdersTab}
+              >
+                История бронирования
+              </Button>
+            )}
             {role === ROLES.PARTNER && (
               <Button
                 className={carWashBtn}
@@ -93,7 +93,7 @@ const ProfilePage = ({ history }) => {
               <ProfileSettings />
             )}
             {history.location.pathname === routes.profileOrders && (
-              <ProfileOrders />
+              <ProfileOrders match={match} />
             )}
             {role === ROLES.PARTNER &&
               history.location.pathname === routes.profileCarWashes && (

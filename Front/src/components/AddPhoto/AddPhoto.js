@@ -11,12 +11,9 @@ const AddPhoto = ({ formChange }) => {
   const maxNumber = 1;
 
   const onChange = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
     formChange(imageList[0]);
   };
-
-  console.log(image);
 
   const handleClick = (addImage, removeImage) => {
     if (image.length === 1) {

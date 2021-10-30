@@ -5,6 +5,8 @@
   width: 100%;
   background: $bg-layout;
   padding-bottom: 300px;
+  min-height: 100vh;
+  box-sizing: border-box;
 
   @media (max-width: $xl - 1) {
     padding-bottom: 200px;
@@ -38,22 +40,10 @@
 }
 
 .carWashIMG {
-  min-height: 292px;
-  min-width: 900px;
+  max-width: 100%;
   background: $gray-light;
   margin-bottom: 40px;
-
-  @media (max-width: $xl - 1) {
-    margin: 0 auto;
-    padding: 0 30px;
-    min-height: 292px;
-    min-width: 450px;
-  }
-
-  @media (max-width: $sm - 1) {
-    min-height: 150px;
-    min-width: 200px;
-  }
+  border-radius: 16px;
 }
 
 .description {

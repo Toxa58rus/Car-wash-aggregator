@@ -3,7 +3,7 @@ import cn from "classnames";
 import routes from "../../helpers/routes";
 import { selectSession, setSession } from "../../state/session";
 import { useDispatch, useSelector } from "react-redux";
-import { ROLES } from "../../constants/ROLES";
+import { ROLES, ROLES_NAMES } from "../../constants/ROLES";
 import { removeUserCookie } from "../../lib/cookie";
 import { useHistory } from "react-router";
 
@@ -13,7 +13,6 @@ import styles from "./Header.module.scss";
 import logo from "../../icons/logo.svg";
 import profile from "../../icons/profile.svg";
 import user from "../../icons/user.svg";
-import phoneIcon from "../../icons/phone.svg";
 import menuIcon from "../../icons/menu.svg";
 import closeIcon from "../../icons/close.svg";
 import arrowRight from "../../icons/arrow-right.svg";
@@ -77,12 +76,6 @@ const Header = () => {
           </Button>
           <ul className={styles.navList}>
             <li className={styles.listItem}>
-              <a className={styles.listItemLink} href={routes.root}>
-                Мойка
-                <img src={arrowRight} alt="icon" className={styles.mobile} />
-              </a>
-            </li>
-            <li className={styles.listItem}>
               <Button
                 className={styles.profileBtn}
                 size="maxWidth"
@@ -93,6 +86,15 @@ const Header = () => {
                   <img src={arrowRight} alt="icon" className={styles.mobile} />
                 </div>
               </Button>
+            </li>
+            <li className={styles.listItem}>
+              <div className={styles.greetingsMobile}>
+                {role && (
+                  <span>
+                    {session.firstName}, вы вошли как {ROLES_NAMES[role]}
+                  </span>
+                )}
+              </div>
             </li>
 
             {session &&
@@ -170,16 +172,19 @@ const Header = () => {
                   </li>
                 </ul>
               )}
-
-            <li className={styles.listItem}>
-              <img src={phoneIcon} alt="phone" />
-              +7 937 247 77 77
-            </li>
           </ul>
         </nav>
-        <a href={profileLink}>
-          <img src={profileIMG} alt="profile" />
-        </a>
+        <div className={styles.greetings}>
+          {role && (
+            <span>
+              {session.firstName}, вы вошли как {ROLES_NAMES[role]}
+            </span>
+          )}
+
+          <a href={profileLink}>
+            <img src={profileIMG} alt="profile" />
+          </a>
+        </div>
       </div>
     </header>
   );

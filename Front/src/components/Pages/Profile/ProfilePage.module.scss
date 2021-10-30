@@ -37,9 +37,9 @@
   left: 0;
   top: 13px;
   width: 25%;
-  background: $gray;
+  background: $green-menu;
   border-radius: 10px;
-  border: 1px solid $gray-dark;
+  border: 1px solid $green-border;
   overflow: hidden;
 
   @media (max-width: $m - 1) {
@@ -51,7 +51,8 @@
   background: transparent;
   height: 50px;
   border-radius: 0;
-  border-bottom: 1px solid $gray-dark;
+  border-bottom: 1px solid $green-border;
+  color: $black;
 
   &:last-child {
     border-bottom: none;
@@ -59,7 +60,7 @@
 }
 
 .activeMenuBtn {
-  background: $gray-dark;
+  background: $green-active;
 }
 
 .containerWrap {

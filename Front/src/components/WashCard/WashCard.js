@@ -5,19 +5,29 @@ import { selectSession } from "../../state/session";
 
 import vector from "../../icons/location.svg";
 
-import RateStars from "../RateStars/RateStars";
+import RateStars from "react-rating-stars-component";
 import styles from "./WashCard.module.scss";
 import { ROLES } from "../../constants/ROLES";
 
 const WashCard = ({ id, item }) => {
-  const { name, description, adress, pic, category } = item;
+  const { name, description, address, rate, carCategories, img } = item;
   const session = useSelector(selectSession);
   const role = !session ? null : session.role;
+
+  const isNumber = (value) => {
+    if (typeof value === "string") {
+      const arr = value.split(",");
+      const str = arr.join(".");
+      return +str;
+    } else {
+      return value;
+    }
+  };
 
   return (
     <div className={styles.Card}>
       <a href={routes.carWash(id)} className={styles.wrap}>
-        <img className={styles.imgPlaceholder} src={pic} alt="Мойка" />
+        <img className={styles.imgPlaceholder} src={img} alt="Мойка" />
       </a>
       <a href={routes.carWash(id)} className={styles.wrap}>
         <span className={styles.cardName}> {name} </span>
@@ -30,15 +40,15 @@ const WashCard = ({ id, item }) => {
       </div>
       <div className={styles.cardAdress}>
         <img src={vector} alt="location" />
-        <span className={styles.cardAdressText}>{adress}</span>
+        <span className={styles.cardAdressText}>{address}</span>
       </div>
       <div className={styles.rating}>
         <span className={styles.ratingLabel}>Рэйтинг:</span>{" "}
-        <RateStars edit={false} />
+        <RateStars edit={false} value={isNumber(rate)} size={25} />
       </div>
       <div className={styles.carCategoties}>
         <span>Категории автомобилей:</span>
-        {category.map((i) => ` ${i} `)}
+        {carCategories.map((i) => ` ${i} `)}
       </div>
 
       {role !== ROLES.PARTNER && (

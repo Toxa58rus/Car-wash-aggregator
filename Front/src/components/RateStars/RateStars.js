@@ -5,11 +5,21 @@ import PropTypes from "prop-types";
 const RateStars = (props) => {
   const { onChange, value, size, edit } = props;
 
+  const isNumber = (value) => {
+    if (typeof value === "string") {
+      const arr = value.split(",");
+      const str = arr.join(".");
+      return +str;
+    } else {
+      return value;
+    }
+  };
+
   return (
     <div>
       <Stars
         count={5}
-        value={value}
+        value={isNumber(value)}
         onChange={onChange}
         isHalf={true}
         size={size}
@@ -28,7 +38,7 @@ RateStars.defaultProps = {
 
 RateStars.propTypes = {
   onChange: PropTypes.func,
-  value: PropTypes.number,
+  value: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
   size: PropTypes.number,
   edit: PropTypes.bool,
 };

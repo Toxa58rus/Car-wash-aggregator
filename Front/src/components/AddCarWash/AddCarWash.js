@@ -3,6 +3,10 @@ import { Form, Field } from "react-final-form";
 import { required } from "../../helpers/validations";
 import { useSelector } from "react-redux";
 import { selectConstants } from "../../state/constants";
+import api from "../../lib/api";
+import sources from "../../helpers/sources";
+import { selectSession } from "../../state/session";
+import { toast } from "react-toastify";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
@@ -10,16 +14,38 @@ import Select from "../Select/Select";
 import styles from "./AddCarWash.module.scss";
 import AddPhoto from "../AddPhoto/AddPhoto";
 
-const AddCarWash = () => {
+const AddCarWash = ({ getCarWashList, onClose }) => {
+  const session = useSelector(selectSession);
+
   const saveCarWash = (values) => {
-    console.log(values);
+    let arr = [];
+    values.carCategories.map((i) => {
+      arr.push(i.name);
+      return i;
+    });
+
+    api
+      .post(sources.carWashAdd, {
+        ...values,
+        partnerId: session.id,
+        carCategories: arr,
+        image: values.photo.data_url,
+        cityId: values.cityId.id,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("Мойка добавлена");
+          getCarWashList();
+          onClose();
+        }
+      })
+      .catch((err) => toast.error(err.data.message));
   };
   let currentForm = null;
 
   const constants = useSelector(selectConstants);
 
   const formChange = (image) => {
-    console.log(image);
     currentForm.change("photo", image);
   };
 
@@ -34,7 +60,7 @@ const AddCarWash = () => {
             <form onSubmit={handleSubmit}>
               <div className={styles.inner}>
                 <Field
-                  name="carWashName"
+                  name="name"
                   validate={required}
                   render={({ input, meta }) => {
                     return (
@@ -50,7 +76,7 @@ const AddCarWash = () => {
               </div>
               <div className={styles.inner}>
                 <Field
-                  name="city"
+                  name="cityId"
                   validate={required}
                   render={({ input, meta }) => {
                     return (
@@ -82,13 +108,45 @@ const AddCarWash = () => {
               </div>
               <div className={styles.inner}>
                 <Field
-                  name="categories"
+                  name="carCategories"
                   render={({ input, meta }) => {
                     return (
                       <Select
                         placeholder="Категории автомобилей*"
                         options={constants.cars}
                         isMulti
+                        meta={meta}
+                        {...input}
+                      />
+                    );
+                  }}
+                />
+              </div>
+              <div className={styles.inner}>
+                <Field
+                  name="phone"
+                  validate={required}
+                  render={({ input, meta }) => {
+                    return (
+                      <Input
+                        placeholder="Телефон *"
+                        className={styles.input}
+                        meta={meta}
+                        {...input}
+                      />
+                    );
+                  }}
+                />
+              </div>
+              <div className={styles.inner}>
+                <Field
+                  name="price"
+                  validate={required}
+                  render={({ input, meta }) => {
+                    return (
+                      <Input
+                        placeholder="Цена *"
+                        className={styles.input}
                         meta={meta}
                         {...input}
                       />

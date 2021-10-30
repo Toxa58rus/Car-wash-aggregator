@@ -1,45 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "normalize.css";
 import "../styles/global.scss";
 import api from "../lib/api";
 import get from "lodash/get";
 import sources from "../helpers/sources";
-import { useDispatch, useSelector } from "react-redux";
-import { selectConstants, setConstants } from "../state/constants";
-import { selectSession, setSession } from "../state/session";
+import { useDispatch } from "react-redux";
+import { setConstants } from "../state/constants";
+import { setSession } from "../state/session";
+import { getRefreshUserFromCookie, removeUserCookie } from "../lib/cookie";
+import { toast } from "react-toastify";
 
 import IndexPage from "../components/Pages/IndexPage/IndexPage";
 import CarWash from "../components/Pages/CarWash/CarWash";
 import LoginPage from "../components/Pages/LoginPage/LoginPage";
 import ProfilePage from "../components/Pages/Profile/ProfilePage";
-import { getRefreshUserFromCookie } from "../lib/cookie";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 function App() {
+  const [state, setState] = useState(false);
   const dispatch = useDispatch();
-  const constantsCONS = useSelector(selectConstants);
-  const session = useSelector(selectSession);
   const storage = JSON.parse(window.sessionStorage.getItem("redux"));
-  console.log(getRefreshUserFromCookie());
-  console.log(constantsCONS);
-  console.log(session);
-  console.log(storage);
 
   const getConstants = () => {
-    api.get(sources.constants).then((response) => {
-      dispatch(setConstants(response.data));
+    api
+      .get(sources.constants)
+      .then((response) => {
+        dispatch(setConstants(response.data));
 
-      if (response.user) {
-        dispatch(setSession(response.user));
-      }
-    });
+        if (response.user) {
+          dispatch(setSession(response.user));
+        }
+      })
+      .catch((err) => {
+        if (err.status === 401) {
+          setState(true);
+        }
+      });
   };
 
   useEffect(() => {
-    if (!getRefreshUserFromCookie()) {
+    if (getRefreshUserFromCookie() === "not_valid") {
       dispatch(setSession(null));
+      removeUserCookie();
     }
-    if (!storage || !get(storage, "constants.data")) {
+    if (!storage || (!get(storage, "constants.data") && !state)) {
       getConstants();
     }
   });

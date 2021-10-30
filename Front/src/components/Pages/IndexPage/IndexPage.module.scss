@@ -47,7 +47,7 @@
   margin-top: 12px;
   padding: 0 230px 0 30px;
   height: 65px;
-  background-color: $bg-gray;
+  background-color: $gray-light;
   box-sizing: border-box;
 
   @media (max-width: $lg - 1) {
@@ -190,6 +190,7 @@
   border-radius: 10px;
   background: $white;
   margin: 15px;
+  box-shadow: 0px 4px 25px $shadow;
 }
 
 .nearestWash {

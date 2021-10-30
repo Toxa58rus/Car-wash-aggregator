@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { TIME_FIELDS } from "../../../constants/TIME-FIELDS";
-import { useSelector } from "react-redux";
-import { selectSession } from "../../../state/session";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSession, setSession } from "../../../state/session";
 import { ROLES } from "../../../constants/ROLES";
-import get from "lodash/get";
-import { getDate } from "../../../helpers/dateFormatter";
+import { toast } from "react-toastify";
 import {
-  required,
-  mustBeNumber,
-  composeValidators,
-} from "../../../helpers/validations";
+  getDate,
+  getMilliseconds,
+  getTime,
+} from "../../../helpers/dateFormatter";
+import { required } from "../../../helpers/validations";
+import api from "../../../lib/api";
+import sources from "../../../helpers/sources";
+import { selectConstants } from "../../../state/constants";
+import { STATUSES } from "../../../constants/STATUSES";
+import { selectDate } from "../../../state/date";
+import { CATEGORIES_OPTIONS } from "../../../constants/CAR-CATEGORIES";
+import routes from "../../../helpers/routes";
 
 import Button from "../../Button/Button";
 import Header from "../../Header/Header";
-import Input from "../../Input/Input";
 import DateForm from "../../DateForm/DateForm";
 import Select from "../../Select/Select";
 import Spinner from "../../Spinner/Spinner";
@@ -25,33 +31,133 @@ import styles from "./CarWash.module.scss";
 
 import locationIcon from "../../../icons/location.svg";
 import timeIcon from "../../../icons/time.svg";
-import phoneIcon from "../../../icons/phone.svg";
 
-const CarWash = () => {
+const CarWash = ({ history, match }) => {
+  const searchVal = useSelector(selectDate);
   const [calendarIsOpen, setCalendar] = useState(false);
   const [state, setState] = useState({
     updateTimeFields: true,
     sendOrder: false,
-    comments: [1, 2, 3],
+    isLoading: true,
+    comments: null,
     data: null,
-    orders: [13, 23, 33],
+    orders: [],
+    timeField: TIME_FIELDS,
   });
   let currentForm = null;
-
+  let filtredArr = TIME_FIELDS;
   const session = useSelector(selectSession);
   const role = session && session.role;
+  const constants = useSelector(selectConstants);
 
-  const requestTimeFields = async () => {
-    setState((prevState) => ({
-      ...prevState,
-      updateTimeFields: false,
-      sendOrder: false,
-    }));
+  const dispatch = useDispatch();
+
+  const getOrders = (date) => {
+    api
+      .get(sources.carWashTimeStatuses(match.params.id), {
+        params: {
+          filterDate: date,
+        },
+      })
+      .then((response) => {
+        filterTimeFields(response.data.orders, date);
+
+        const value = response.data.orders;
+        const reverseArr = value.reverse();
+
+        setState((prevState) => ({
+          ...prevState,
+          orders: reverseArr,
+          updateTimeFields: false,
+          timeField: filtredArr,
+        }));
+
+        if (response.user) {
+          dispatch(setSession(response.user));
+        }
+      })
+      .catch(() => toast.error("Error orders"));
+  };
+
+  const filterTimeFields = (orders, date) => {
+    filtredArr = [];
+    TIME_FIELDS.forEach((timeField) => {
+      let obj = timeField;
+      let nowTime = getTime(new Date());
+
+      if (getDate(new Date()) === date) {
+        if (orders) {
+          orders.map((order) => {
+            let formatTime = order.dateReservation.split("T");
+            if (
+              formatTime[1] === timeField.id &&
+              order.status === STATUSES.BOOKED
+            ) {
+              obj.status = STATUSES.BOOKED;
+            }
+            return order;
+          });
+        }
+        if (getMilliseconds(nowTime) < getMilliseconds(timeField.name)) {
+          filtredArr.push(obj);
+        }
+      } else {
+        filtredArr.push(obj);
+      }
+      return obj;
+    });
+    return filtredArr;
+  };
+
+  const getComments = () => {
+    api
+      .get(sources.comments(match.params.id))
+      .then((response) => {
+        const value = response.data.reviews;
+        const reverseArr = value.reverse();
+        setState((prevState) => ({
+          ...prevState,
+          comments: reverseArr,
+        }));
+
+        if (response.user) {
+          dispatch(setSession(response.user));
+        }
+      })
+      .catch(() => toast.error("Error comment"));
+  };
+
+  const getWash = () => {
+    api
+      .get(sources.carWash(match.params.id))
+      .then((response) => {
+        setState((prevState) => ({
+          ...prevState,
+          data: { ...response.data, washId: response.data.id },
+          isLoading: false,
+        }));
+
+        if (response.user) {
+          dispatch(setSession(response.user));
+        }
+
+        if (role === ROLES.CLIENT) {
+          getOrders(getDate(new Date()));
+        }
+        if (role === ROLES.PARTNER) {
+          getOrders();
+        }
+        getComments();
+      })
+      .catch((err) => !err.status === 401 && toast.error("Error"));
   };
 
   useEffect(() => {
-    if (state.updateTimeFields) {
-      setTimeout(() => requestTimeFields(), 2000);
+    if (state.isLoading) {
+      getWash();
+    }
+    if (!session || !session.token) {
+      history.push(routes.login);
     }
   });
 
@@ -64,154 +170,170 @@ const CarWash = () => {
   };
 
   const createOrder = (values) => {
-    console.log({
-      phone: values.phone,
-      date: `${values.date} ${values.time.name}`,
-    });
-    setState({
-      updateTimeFields: false,
-      sendOrder: true,
-    });
-    setTimeout(() => {
-      setState({
-        updateTimeFields: false,
-        sendOrder: false,
-      });
-    }, 2000);
+    api
+      .post(sources.orederCreate, {
+        userId: session.id,
+        carWashId: match.params.id,
+        carCategory: values.carCategory.name,
+        dateReservation: `${values.date} ${values.time.name}`,
+        price: "100",
+        status: STATUSES.BOOKED,
+      })
+      .then(() => {
+        toast.success("Слот забронирован");
+      })
+      .catch(() => toast.error("Erorr"));
   };
 
-  const setValue = (date) => {
+  const handleChangeDate = (date) => {
     currentForm.change("date", date);
     setCalendar(false);
-    setState({
+    setState((prevState) => ({
+      ...prevState,
       updateTimeFields: true,
-      sendOrder: false,
-    });
+    }));
+
+    getOrders(date);
   };
 
   const initialValues = {
-    date: get(session, "data.date.value") || getDate(new Date()),
-    time: get(session, "data.time.value"),
+    date: searchVal.date || getDate(new Date()),
   };
+
+  const washCity = constants.cities.reduce(
+    (item) => item.id === state.data.cityId
+  );
+
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
       <Header />
-      <div className={styles.wrap}>
-        <h2 className={styles.tittlePage}>Бронирование автомойки</h2>
-        <div className={styles.inner}>
-          <img className={styles.carWashIMG} alt="car wash IMG" />
-          <h2 className={styles.carWashTitle}>Апельсин</h2>
-          <div className={styles.description}>
-            Автомойка Апельсин предоставляет широкий спектор услуг по уборке
-            вашего автомобиля. Действуют скидки. ПРИЕЗЖАЙТЕ К НАМ
-          </div>
-          <div className={styles.address}>
-            <img src={locationIcon} alt="address" />
-            Димитровград, Октябрьская улица, 21Б
-          </div>
-          {role !== ROLES.PARTNER && (
-            <Form
-              onSubmit={createOrder}
-              initialValues={initialValues}
-              render={({ handleSubmit, form }) => {
-                currentForm = form;
-                return (
-                  <form onSubmit={handleSubmit} className={styles.form}>
-                    {state.sendOrder ? (
-                      <Spinner size={4} center />
-                    ) : (
-                      <>
-                        <div
-                          className={styles.formInner}
-                          onClick={handleOpenCalendar}
-                        >
-                          <Field name="date" validate={required}>
-                            {({ input, meta }) => (
-                              <DateForm
-                                calendarIsOpen={calendarIsOpen}
-                                setValue={setValue}
-                                meta={meta}
-                                {...input}
-                              />
-                            )}
-                          </Field>
-                        </div>
+      {state.isLoading ? (
+        <Spinner center />
+      ) : (
+        <div className={styles.wrap}>
+          <h2 className={styles.tittlePage}>Бронирование автомойки</h2>
+          <div className={styles.inner}>
+            {state.data && (
+              <img
+                className={styles.carWashIMG}
+                src={state.data.img}
+                alt="car wash IMG"
+              />
+            )}
+            <h2 className={styles.carWashTitle}>{state.data.name}</h2>
+            <div className={styles.description}>{state.data.description}</div>
+            <div className={styles.address}>
+              <img src={locationIcon} alt="address" />
+              {washCity.name}, {state.data.address}
+            </div>
+            {role !== ROLES.PARTNER && (
+              <Form
+                onSubmit={createOrder}
+                initialValues={initialValues}
+                render={({ handleSubmit, form }) => {
+                  currentForm = form;
+                  return (
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                      {state.sendOrder ? (
+                        <Spinner size={4} center />
+                      ) : (
+                        <>
+                          <div
+                            className={styles.formInner}
+                            onClick={handleOpenCalendar}
+                          >
+                            <Field name="date" validate={required}>
+                              {({ input, meta }) => (
+                                <DateForm
+                                  calendarIsOpen={calendarIsOpen}
+                                  setValue={handleChangeDate}
+                                  meta={meta}
+                                  {...input}
+                                />
+                              )}
+                            </Field>
+                          </div>
 
-                        <div className={styles.formInner}>
-                          {state.updateTimeFields ? (
-                            <Spinner size={2} center />
-                          ) : (
-                            <>
-                              <img src={timeIcon} alt="calendar" />
-                              <Field
-                                name="time"
-                                validate={required}
-                                render={({ input, meta }) => (
-                                  <Select
-                                    placeholder="Время *"
-                                    options={TIME_FIELDS}
-                                    meta={meta}
-                                    {...input}
-                                  />
-                                )}
-                              />
-                            </>
-                          )}
-                        </div>
-                        <div className={styles.formInner}>
-                          <img src={phoneIcon} alt="phone" />
-                          <Field
-                            name="phone"
-                            validate={composeValidators(required, mustBeNumber)}
-                            render={({ input, meta }) => (
-                              <Input
-                                className={styles.input}
-                                placeholder="Телефон *"
-                                meta={meta}
-                                {...input}
-                              />
+                          <div className={styles.formInner}>
+                            {state.updateTimeFields ? (
+                              <Spinner size={2} center />
+                            ) : (
+                              <>
+                                <img src={timeIcon} alt="calendar" />
+                                <Field
+                                  name="time"
+                                  validate={required}
+                                  render={({ input, meta }) => (
+                                    <Select
+                                      placeholder="Время *"
+                                      options={state.timeField}
+                                      meta={meta}
+                                      {...input}
+                                    />
+                                  )}
+                                />
+                              </>
                             )}
-                          />
-                        </div>
-                        <Button
-                          className={styles.submit}
-                          size="maxWidth"
-                          type="submit"
-                        >
-                          Забронировать
-                        </Button>
-                      </>
-                    )}
-                  </form>
-                );
-              }}
-            />
-          )}
-          {role !== ROLES.PARTNER && state.comments && (
-            <div className={styles.section}>
-              {state.comments.map((item) => (
-                <CommentCard key={item} />
-              ))}
-            </div>
-          )}
-          {role === ROLES.PARTNER && (
-            <div className={styles.section}>
-              <Tabs>
-                <div label="История бронирования">
-                  {state.orders.map((item) => (
-                    <OrderCard key={item} />
-                  ))}
-                </div>
-                <div label="Коментарии">
-                  {state.comments.map((item) => (
-                    <CommentCard key={item} />
-                  ))}
-                </div>
-              </Tabs>
-            </div>
-          )}
+                          </div>
+                          <div className={styles.formInner}>
+                            <Field
+                              name="carCategory"
+                              validate={required}
+                              render={({ input, meta }) => (
+                                <Select
+                                  placeholder="Car category *"
+                                  options={CATEGORIES_OPTIONS}
+                                  meta={meta}
+                                  {...input}
+                                />
+                              )}
+                            />
+                          </div>
+                          <Button
+                            className={styles.submit}
+                            size="maxWidth"
+                            type="submit"
+                          >
+                            Забронировать
+                          </Button>
+                        </>
+                      )}
+                    </form>
+                  );
+                }}
+              />
+            )}
+            {role !== ROLES.PARTNER && state.comments && (
+              <div className={styles.section}>
+                {state.comments.map((item) => (
+                  <CommentCard key={item.id} comment={item} />
+                ))}
+              </div>
+            )}
+            {role === ROLES.PARTNER && (
+              <div className={styles.section}>
+                <Tabs>
+                  <div
+                    label="История бронирования"
+                    className={styles.tabSection}
+                  >
+                    {state.orders &&
+                      state.orders.map((item) => (
+                        <OrderCard key={item} item={item} />
+                      ))}
+                  </div>
+                  <div label="Коментарии" className={styles.tabSection}>
+                    {state.comments &&
+                      state.comments.map((item) => (
+                        <CommentCard key={item.id} comment={item} />
+                      ))}
+                  </div>
+                </Tabs>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

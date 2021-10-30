@@ -15,6 +15,7 @@ import {
   validEmail,
   minValue,
 } from "../../../helpers/validations";
+import { toast } from "react-toastify";
 
 import Button from "../../Button/Button";
 import Select from "../../Select/Select";
@@ -42,17 +43,19 @@ const LoginPage = ({ history }) => {
     api
       .post(sources.login, { ...data })
       .then((response) => {
-        setUserCookie(response.data.refreshToken);
         dispatch(
           setSession({
             ...response.data.user,
             token: response.data.accessToken,
           })
         );
+        setUserCookie(response.data.refreshToken);
+
         history.push(routes.root);
       })
-      .catch((e) => console.log(e.response));
+      .catch((err) => toast.error(err.response.detail));
   };
+
   const register = (data) => {
     api
       .post(sources.register, {
@@ -61,17 +64,14 @@ const LoginPage = ({ history }) => {
         city: data.city ? data.city.name : null,
       })
       .then((response) => {
-        console.log(response);
-        setUserCookie(response.data.refreshToken);
-        dispatch(
-          setSession({
-            ...response.data.user,
-            token: response.data.accessToken,
-          })
-        );
-        history.push(routes.root);
+        if (response.status === 200) {
+          toast.success("Вы зарегестрированы");
+          setTimeout(() => {
+            login({ email: data.email, password: data.password });
+          }, 1000);
+        }
       })
-      .catch((erorr) => console.log(erorr.response));
+      .catch((err) => toast.error("Error"));
   };
 
   const loginBtnCn = cn(styles.containerBoxBtn, {
@@ -148,6 +148,7 @@ const LoginPage = ({ history }) => {
                     className={styles.sigInBtn}
                     type="submit"
                     size="maxWidth"
+                    increased
                   >
                     Войти
                   </Button>
@@ -296,6 +297,7 @@ const LoginPage = ({ history }) => {
                     className={styles.sigInBtn}
                     type="submit"
                     size="maxWidth"
+                    increased
                   >
                     Зарегистрироваться
                   </Button>

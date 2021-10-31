@@ -67,14 +67,6 @@ const IndexPage = () => {
       })
     );
 
-    console.log({
-      ...data,
-      cityId: data.cityId && data.cityId.id,
-      carCategory: data.carCategory && data.carCategory.id,
-      time: data.time && data.time.name,
-      date: !data.time ? null : data.date,
-    });
-
     api
       .get(sources.search, {
         params: {

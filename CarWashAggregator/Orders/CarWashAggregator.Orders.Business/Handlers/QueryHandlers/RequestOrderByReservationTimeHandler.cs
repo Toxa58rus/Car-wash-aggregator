@@ -26,12 +26,19 @@ namespace CarWashAggregator.Orders.Business.Handlers.QueryHandlers
 
         public Task<ResponseOrders> Handle(RequestOrderByReservationTime request)
         {
-            var orders = _dbRepository.Get<Order>().Where(o => o.DateReservation.Date == request.ReservationDate.Date).Include(o => o.OrderStatus);
-            if (request.ReservationTime != null)
-               orders = orders.Where(o =>
-                    o.DateReservation.TimeOfDay == ((DateTime) request.ReservationTime).TimeOfDay).Include(o => o.OrderStatus);
+			var filter = request.ReservationDate;
+			if (request.ReservationTime != null)
+				filter = filter.Add(((DateTime)request.ReservationTime).TimeOfDay.Duration());
 
-            return Task.FromResult(new ResponseOrders(){Orders = _mapper.Map<List<OrderDTO>>(orders.ToList())});
-        }
+			var orders = _dbRepository.Get<Order>().Where(o => o.DateReservation == filter).Include(o => o.OrderStatus);
+			//if (request.ReservationTime != null)
+			//{
+			//    var timeReservation = ((DateTime)request.ReservationTime).TimeOfDay;
+			//    orders = orders.Where(o =>
+			//        o.DateReservation.TimeOfDay == timeReservation).Include(o => o.OrderStatus);
+			//}
+
+			return Task.FromResult(new ResponseOrders() { Orders = _mapper.Map<List<OrderDTO>>(orders.ToList()) });
+		}
     }
 }

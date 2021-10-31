@@ -90,8 +90,7 @@ const ProfileSettings = () => {
                 {({ input, meta }) => (
                   <Select
                     placeholder="Город"
-                    // options={constants.cities}
-                    options={CITIES}
+                    options={constants.cities}
                     defaultValue={user.city}
                     meta={meta}
                     {...input}

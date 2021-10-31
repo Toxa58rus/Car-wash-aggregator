@@ -7,47 +7,47 @@ const Tabs = (props) => {
   const { tabsRenderer, children, selected, onChangeTab, tabs, onlyChildren } =
     props;
 
-    const [state, setState] = useState({
-      activeTab: selected || children[0].props.label,
-    });
+  const [state, setState] = useState({
+    activeTab: selected || children[0].props.label,
+  });
 
-    const onClickTabItem = (tab) => {
-      setState({ activeTab: tab });
+  const onClickTabItem = (tab) => {
+    setState({ activeTab: tab });
 
-      if (onChangeTab) onChangeTab(tab);
-    };
+    if (onChangeTab) onChangeTab(tab);
+  };
 
-    return (
-      <div className={styles.tabs}>
-        <div className={styles.tabsWrap}>
-          <div className={styles.inner}>
-            {tabsRenderer
-              ? tabsRenderer(tabs || children, state.activeTab, onClickTabItem)
-              : children.map((child) => {
-                  const { label } = child.props;
-
-                  return (
-                    <Tab
-                      activeTab={state.activeTab}
-                      key={label}
-                      label={label}
-                      onClick={onClickTabItem}
-                    />
-                  );
-                })}
-          </div>
-        </div>
-        <div className={styles.tabContent}>
-          {onlyChildren
-            ? children
+  return (
+    <div className={styles.tabs}>
+      <div className={styles.tabsWrap}>
+        <div className={styles.inner}>
+          {tabsRenderer
+            ? tabsRenderer(tabs || children, state.activeTab, onClickTabItem)
             : children.map((child) => {
-                if (!child) return null;
-                if (child.props.label !== state.activeTab) return null;
-                return child.props.children;
+                const { label } = child.props;
+
+                return (
+                  <Tab
+                    activeTab={state.activeTab}
+                    key={label}
+                    label={label}
+                    onClick={onClickTabItem}
+                  />
+                );
               })}
         </div>
       </div>
-    );
+      <div className={styles.tabContent}>
+        {onlyChildren
+          ? children
+          : children.map((child) => {
+              if (!child) return null;
+              if (child.props.label !== state.activeTab) return null;
+              return child.props.children;
+            })}
+      </div>
+    </div>
+  );
 };
 
 Tabs.defaultProps = {

@@ -23,6 +23,7 @@ function App() {
   const [state, setState] = useState(false);
   const dispatch = useDispatch();
   const storage = JSON.parse(window.sessionStorage.getItem("redux"));
+  console.log(storage);
 
   const getConstants = () => {
     api

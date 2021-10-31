@@ -31,9 +31,7 @@ const ProfileSettings = () => {
         role: val.role.id,
         userId: user.id,
       })
-      .then((response) => {
-       
-      })
+      .then((response) => {})
       .catch((error) => error);
   };
 
@@ -45,7 +43,7 @@ const ProfileSettings = () => {
         onSubmit={saveSettings}
         initialValues={{
           ...user,
-          city: constants.cities.reduce((city) => city.name === user.city),
+          city: constants.cities.find((city) => city.name === user.city),
         }}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit} className={styles.form}>

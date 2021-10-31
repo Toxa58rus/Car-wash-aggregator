@@ -5,6 +5,9 @@
   width: 360px;
   display: flex;
   flex-direction: column;
+  background: $white;
+  padding: 15px;
+  border-radius: 8px;
 
   @media (max-width: $xl - 1) {
     width: 260px;

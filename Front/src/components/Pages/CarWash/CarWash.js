@@ -200,9 +200,9 @@ const CarWash = ({ history, match }) => {
     date: searchVal.date || getDate(new Date()),
   };
 
-  const washCity = constants.cities.reduce(
-    (item) => item.id === state.data.cityId
-  );
+  const washCity =
+    state.data &&
+    constants.cities.find((item) => item.id === state.data.cityId);
 
   return (
     <div className={styles.page} onClick={handleCloseCalendar}>
@@ -213,7 +213,7 @@ const CarWash = ({ history, match }) => {
         <div className={styles.wrap}>
           <h2 className={styles.tittlePage}>Бронирование автомойки</h2>
           <div className={styles.inner}>
-            {state.data && (
+            {state.data && state.data.img && (
               <img
                 className={styles.carWashIMG}
                 src={state.data.img}

@@ -100,12 +100,12 @@ const IndexPage = () => {
       get(storage, "constants.data")
     ) {
       getData({
-        cityId: constants.cities.reduce((i) => session.city === i.name),
+        cityId: constants.cities.find((i) => session.city === i.name),
       });
 
       setValues((prevState) => ({
         ...prevState,
-        cityId: constants.cities.reduce((i) => session.city === i.name),
+        cityId: constants.cities.find((i) => session.city === i.name),
       }));
     }
 

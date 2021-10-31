@@ -1,5 +1,5 @@
-@import 'src/styles/colors';
-@import 'src/styles/breakpoints.scss';
+@import "src/styles/colors";
+@import "src/styles/breakpoints.scss";
 
 .page {
   background: $bg-layout;
@@ -100,15 +100,11 @@
 
 .washCard {
   box-sizing: border-box;
-  padding: 20px;
-  background: $white;
-  border-radius: 10px;
   margin: 15px;
 
   @media (max-width: $lg - 1) {
     margin: 10px;
   }
-
 }
 
 .form {
@@ -124,7 +120,7 @@
   margin-bottom: 15px;
 }
 
-.inputs{
+.inputs {
   display: flex;
   margin-bottom: 15px;
 

@@ -51,6 +51,7 @@ api.interceptors.response.use(
       response.config.url !== sources.login &&
       response.config.url !== sources.register
     ) {
+      setUserCookie(response.data.refreshToken);
       return refreshRequest(response, response.config);
     }
     return response;
@@ -60,6 +61,7 @@ api.interceptors.response.use(
 
     if (get(error, "response.data.message") === "refresh_token_not_valid") {
       setUserCookie("not_valid");
+      debugger;
       window.location.replace(routes.root);
     }
 

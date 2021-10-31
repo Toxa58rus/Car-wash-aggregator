@@ -94,7 +94,11 @@ const IndexPage = () => {
   };
 
   useEffect(() => {
-    if (state.loading && get(storage, "session.data")) {
+    if (
+      state.loading &&
+      get(storage, "session.data") &&
+      get(storage, "constants.data")
+    ) {
       getData({
         cityId: constants.cities.reduce((i) => session.city === i.name),
       });
@@ -105,7 +109,11 @@ const IndexPage = () => {
       }));
     }
 
-    if (state.loading && !get(storage, "session.data")) {
+    if (
+      state.loading &&
+      !get(storage, "session.data") &&
+      get(storage, "constants.data")
+    ) {
       getData({});
     }
   }, [storage]);

@@ -13,6 +13,7 @@ import Button from "../Button/Button";
 import Select from "../Select/Select";
 import styles from "./AddCarWash.module.scss";
 import AddPhoto from "../AddPhoto/AddPhoto";
+import { CATEGORIES_OPTIONS } from "../../constants/CAR-CATEGORIES";
 
 const AddCarWash = ({ getCarWashList, onClose }) => {
   const session = useSelector(selectSession);
@@ -20,7 +21,7 @@ const AddCarWash = ({ getCarWashList, onClose }) => {
   const saveCarWash = (values) => {
     let arr = [];
     values.carCategories.map((i) => {
-      arr.push(i.name);
+      arr.push(i.id);
       return i;
     });
 
@@ -29,8 +30,9 @@ const AddCarWash = ({ getCarWashList, onClose }) => {
         ...values,
         partnerId: session.id,
         carCategories: arr,
-        image: values.photo.data_url,
+        image: values.photo && values.photo.data_url,
         cityId: values.cityId.id,
+        price: "0",
       })
       .then((response) => {
         if (response.status === 200) {
@@ -39,7 +41,7 @@ const AddCarWash = ({ getCarWashList, onClose }) => {
           onClose();
         }
       })
-      .catch((err) => toast.error(err.data.message));
+      .catch((err) => toast.error("Error save car wash"));
   };
   let currentForm = null;
 
@@ -113,7 +115,7 @@ const AddCarWash = ({ getCarWashList, onClose }) => {
                     return (
                       <Select
                         placeholder="Категории автомобилей*"
-                        options={constants.cars}
+                        options={CATEGORIES_OPTIONS}
                         isMulti
                         meta={meta}
                         {...input}
@@ -130,22 +132,6 @@ const AddCarWash = ({ getCarWashList, onClose }) => {
                     return (
                       <Input
                         placeholder="Телефон *"
-                        className={styles.input}
-                        meta={meta}
-                        {...input}
-                      />
-                    );
-                  }}
-                />
-              </div>
-              <div className={styles.inner}>
-                <Field
-                  name="price"
-                  validate={required}
-                  render={({ input, meta }) => {
-                    return (
-                      <Input
-                        placeholder="Цена *"
                         className={styles.input}
                         meta={meta}
                         {...input}

@@ -8,6 +8,7 @@ import vector from "../../icons/location.svg";
 import RateStars from "react-rating-stars-component";
 import styles from "./WashCard.module.scss";
 import { ROLES } from "../../constants/ROLES";
+import { CAR_CATEGORIES_NAMES } from "../../constants/CAR-CATEGORIES";
 
 const WashCard = ({ id, item }) => {
   const { name, description, address, rate, carCategories, img } = item;
@@ -48,7 +49,9 @@ const WashCard = ({ id, item }) => {
       </div>
       <div className={styles.carCategoties}>
         <span>Категории автомобилей:</span>
-        {carCategories.map((i) => ` ${i} `)}
+        {carCategories.map((i) => (
+          <span>{CAR_CATEGORIES_NAMES[i]}</span>
+        ))}
       </div>
 
       {role !== ROLES.PARTNER && (

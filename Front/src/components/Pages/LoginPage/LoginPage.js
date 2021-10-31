@@ -53,7 +53,9 @@ const LoginPage = ({ history }) => {
 
         history.push(routes.root);
       })
-      .catch((err) => toast.error(err.response.detail));
+      .catch((err) => {
+        toast.success(err.response.data.detail);
+      });
   };
 
   const register = (data) => {
@@ -71,7 +73,7 @@ const LoginPage = ({ history }) => {
           }, 1000);
         }
       })
-      .catch((err) => toast.error("Error"));
+      .catch((err) => toast.error(err.response.data.detail));
   };
 
   const loginBtnCn = cn(styles.containerBoxBtn, {

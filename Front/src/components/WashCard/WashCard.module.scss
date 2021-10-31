@@ -85,13 +85,20 @@
 }
 
 .carCategoties {
-  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
   margin-top: 15px;
 
   span {
-    font-weight: 400;
-    opacity: 0.6;
-    margin-right: 7px;
+    margin-top: 5px;
+
+    &:first-child {
+      font-weight: 400;
+      opacity: 0.6;
+      margin-right: 7px;
+      margin-top: 0;
+    }
   }
 }
 

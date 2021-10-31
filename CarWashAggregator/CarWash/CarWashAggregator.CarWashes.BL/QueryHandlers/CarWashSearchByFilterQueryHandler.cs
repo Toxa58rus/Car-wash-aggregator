@@ -35,7 +35,7 @@ namespace CarWashAggregator.CarWashes.BL.QueryHandlers
                 carWashes = carWashes.Where(x => x.CityId == request.CityId);
 
             if (request.CarWashName != String.Empty && request.CarWashName != null)
-                carWashes = carWashes.Where(x => x.Name == request.CarWashName);
+                carWashes = carWashes.Where(x => x.Name.ToLower().Contains(request.CarWashName.ToLower()));
 
             return new ResponseCarWashSearchByFilters() { Washes = _mapper.Map<List<CarWashDTO>>(carWashes) };
         }

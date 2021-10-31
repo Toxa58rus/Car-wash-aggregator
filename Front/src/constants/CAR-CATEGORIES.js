@@ -9,7 +9,7 @@ export const CAR_CATEGORIES_NAMES = {
   [CAR_CATEGORIES.A]: "Компактные автомобили",
   [CAR_CATEGORIES.B]: "Легковой автомобиль",
   [CAR_CATEGORIES.C]: "Кроссоверы",
-  [CAR_CATEGORIES.D]: "Ведорожники",
+  [CAR_CATEGORIES.D]: "Внедорожники",
 };
 
 export const CATEGORIES_OPTIONS = [

@@ -12,7 +12,6 @@ import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import styles from "./ProfilePage.module.scss";
 import Select from "../../Select/Select";
-import CITIES from "../../../constants/CITIES";
 
 const ProfileSettings = () => {
   const user = useSelector(selectSession);

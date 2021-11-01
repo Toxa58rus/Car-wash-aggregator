@@ -2,7 +2,7 @@ import format from "date-fns/format";
 
 export const getDate = (date) => format(date, "yyyy-MM-dd");
 
-export const getTime = (date) => format(date, "hh:mm");
+export const getTime = (date) => format(date, "HH:mm");
 
 export const formattDataTime = (date) => {
   const arr = date.split(`T`);

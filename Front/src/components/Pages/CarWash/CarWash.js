@@ -45,7 +45,7 @@ const CarWash = ({ history, match }) => {
     timeField: TIME_FIELDS,
   });
   let currentForm = null;
-  let filtredArr = TIME_FIELDS;
+  let filtredArr = [];
   const session = useSelector(selectSession);
   const role = session && session.role;
   const constants = useSelector(selectConstants);
@@ -80,27 +80,26 @@ const CarWash = ({ history, match }) => {
   };
 
   const filterTimeFields = (orders, date) => {
-    filtredArr = [];
     TIME_FIELDS.forEach((timeField) => {
       let obj = timeField;
       let nowTime = getTime(new Date());
 
-      if (getDate(new Date()) === date) {
-        if (orders) {
-          orders.map((order) => {
-            let formatTime = order.dateReservation.split("T");
-            if (
-              formatTime[1] === timeField.id &&
-              order.status === STATUSES.BOOKED
-            ) {
-              obj.status = STATUSES.BOOKED;
-            }
-            return order;
-          });
-        }
-        if (getMilliseconds(nowTime) < getMilliseconds(timeField.name)) {
-          filtredArr.push(obj);
-        }
+      if (orders) {
+        orders.map((order) => {
+          let formatTime = order.dateReservation.split("T");
+          if (
+            formatTime[1] === timeField.id &&
+            order.status === STATUSES.BOOKED
+          ) {
+            obj.status = STATUSES.BOOKED;
+          }
+          return order;
+        });
+      }
+      if (
+        getDate(new Date()) === date &&
+        getMilliseconds(nowTime) > getMilliseconds(timeField.name)
+      ) {
       } else {
         filtredArr.push(obj);
       }
@@ -198,6 +197,8 @@ const CarWash = ({ history, match }) => {
 
   const initialValues = {
     date: searchVal.date || getDate(new Date()),
+    time:
+      searchVal.time && filtredArr.find((item) => searchVal.time === item.name),
   };
 
   const washCity =
